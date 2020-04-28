@@ -24,6 +24,10 @@ const routes: Routes = [
   {
     path: 'sign-up-tab3',
     loadChildren: () => import('./pages/sign_up/sign-up-tab3/sign-up-tab3.module').then( m => m.SignUpTab3PageModule)
+  },
+  {
+    path: 'sign-up-tab4',
+    loadChildren: () => import('./pages/sign_up/sign-up-tab4/sign-up-tab4.module').then( m => m.SignUpTab4PageModule)
   }
 
 ];

@@ -25,14 +25,13 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-
 /*global override*/
 
-ion-content{
+ion-content {
     font-family: effra;
-    --padding-top:1vh;
-    --padding-bottom:1vh;
-    --padding-start:5vw;
+    --padding-top: 1vh;
+    --padding-bottom: 1vh;
+    --padding-start: 5vw;
     --padding-end: 5vw;
 }
 
@@ -41,18 +40,17 @@ ion-toolbar {
     --ion-color-base: transparent !important;
 }
 
-.header{
+.header {
     height: 13vh !important;
-    padding-left: 5vw; padding-right: 5vw;
+    padding-left: 5vw;
+    padding-right: 5vw;
 }
 
-.footer{
+.footer {
     height: 13vh !important;
-    padding-left: 5vw; padding-right: 5vw;
+    padding-left: 5vw;
+    padding-right: 5vw;
 }
-
-
-
 
 /*buttons*/
 .s-btn {
@@ -74,7 +72,7 @@ ion-toolbar {
 }
 
 .t-btn {
-    --background: #ffffff00;
+    --background: var(--ion-color-background);;
     --border-radius: 9px;
     color: #000000;
     font-size: 18px;
@@ -84,7 +82,6 @@ ion-toolbar {
     text-transform: none;
 }
 .secondary {
-
     --box-shadow: none;
 }
 
@@ -92,8 +89,8 @@ ion-toolbar {
     --box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.25);
 }
 
-.l-sp-btn{
-    --background: #ffffff00;
+.l-header-btn {
+    --background: var(--ion-background-color);
     --padding-start: 0px;
     --padding-bottom: 35px;
     --padding-top: 35px;
@@ -101,8 +98,8 @@ ion-toolbar {
     --box-shadow: none;
 }
 
-.r-sp-btn{
-    --background: #ffffff00;
+.r-header-btn {
+    --background: var(--ion-background-color);
     --padding-end: 0px;
     --padding-bottom: 35px;
     --padding-top: 35px;
@@ -110,12 +107,13 @@ ion-toolbar {
     --box-shadow: none;
 }
 
+/*currently not in use */
 ion-searchbar {
     border-radius: 30px !important;
     --background: red;
     --color: red;
     --icon-color: #red;
-    --placeholder-color: #cccccc;
+    --placeholder-color: var(--ion-color-light);
     --box-shadow: none;
 
     & input {
@@ -125,6 +123,14 @@ ion-searchbar {
 .searchbar-md .searchbar-input {
     color: #f00;
     border-radius: 25px;
+}
+
+.default-input {
+    background: var(--ion-color-light);
+    border-radius: 6px;
+    height: 50px;
+    font-size: 20px;
+    font-weight: 500;
 }
 
 /*typo*/
@@ -152,36 +158,33 @@ h3 {
 p {
     font-weight: normal;
     font-size: 16px;
-    line-height: 20px;;
+    line-height: 20px;
     opacity: 0.75;
 }
-
 
 /*margins and placeholders*/
 
 /*div heights*/
 
-.div20{
-    height:20vh;
-
+.div20 {
+    height: 20vh;
 }
-.div30{
-    height:30vh;
-
+.div30 {
+    height: 30vh;
 }
 
 /*margin-top*/
-.mt20{
+.mt20 {
     margin-top: 20px;
 }
 
-.mt40{
+.mt40 {
     margin-top: 40px;
 }
 
-.h10{
+.h10 {
     height: 10px;
 }
-.h20{
+.h20 {
     height: 20px;
 }
