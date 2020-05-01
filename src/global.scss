@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -24,3 +24,167 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+/*global override*/
+
+ion-content {
+    font-family: effra;
+    --padding-top: 1vh;
+    --padding-bottom: 1vh;
+    --padding-start: 5vw;
+    --padding-end: 5vw;
+}
+
+ion-toolbar {
+    --background: transparent;
+    --ion-color-base: transparent !important;
+}
+
+.header {
+    height: 13vh !important;
+    padding-left: 5vw;
+    padding-right: 5vw;
+}
+
+.footer {
+    height: 13vh !important;
+    padding-left: 5vw;
+    padding-right: 5vw;
+}
+
+/*buttons*/
+.s-btn {
+    --border-radius: 40px;
+    font-size: 18px;
+    /*Default padding seems nice*/
+    // --padding-bottom: 10px;
+    // --padding-top: 10px;
+    // --padding-end: 20px;
+    // --padding-start: 20px;
+    text-transform: none;
+}
+
+.b-btn {
+    --border-radius: 9px;
+    font-size: 18px;
+    --padding-bottom: 35px;
+    --padding-top: 35px;
+}
+
+.t-btn {
+    --background: var(--ion-color-background);;
+    --border-radius: 9px;
+    color: #000000;
+    font-size: 18px;
+    --padding-bottom: 35px;
+    --padding-top: 35px;
+    --box-shadow: none;
+    text-transform: none;
+}
+.secondary {
+    --box-shadow: none;
+}
+
+.primary {
+    --box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.25);
+}
+
+.l-header-btn {
+    --background: var(--ion-background-color);
+    --padding-start: 0px;
+    --padding-bottom: 35px;
+    --padding-top: 35px;
+    font-size: 18px;
+    --box-shadow: none;
+}
+
+.r-header-btn {
+    --background: var(--ion-background-color);
+    --padding-end: 0px;
+    --padding-bottom: 35px;
+    --padding-top: 35px;
+    font-size: 18px;
+    --box-shadow: none;
+}
+
+/*currently not in use */
+ion-searchbar {
+    border-radius: 30px !important;
+    --background: red;
+    --color: red;
+    --icon-color: #red;
+    --placeholder-color: var(--ion-color-light);
+    --box-shadow: none;
+
+    & input {
+        box-shadow: none !important;
+    }
+}
+.searchbar-md .searchbar-input {
+    color: #f00;
+    border-radius: 25px;
+}
+
+.default-input {
+    background: var(--ion-color-light);
+    border-radius: 6px;
+    height: 50px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+/*typo*/
+h1 {
+    font-family: effra;
+    font-weight: bold;
+    font-size: 40px;
+    opacity: 0.87;
+}
+
+h2 {
+    font-family: effra;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    opacity: 0.87;
+}
+h3 {
+    font-family: effra;
+    font-weight: 500;
+    font-size: 18px;
+    opacity: 0.87;
+}
+
+p {
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    opacity: 0.75;
+}
+
+/*margins and placeholders*/
+
+/*div heights*/
+
+.div20 {
+    height: 20vh;
+}
+.div30 {
+    height: 30vh;
+}
+
+/*margin-top*/
+.mt20 {
+    margin-top: 20px;
+}
+
+.mt40 {
+    margin-top: 40px;
+}
+
+.h10 {
+    height: 10px;
+}
+.h20 {
+    height: 20px;
+}

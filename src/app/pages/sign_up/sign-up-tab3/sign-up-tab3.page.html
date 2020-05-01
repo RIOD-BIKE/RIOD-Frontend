@@ -1,9 +1,57 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>sign_up_tab3</ion-title>
-  </ion-toolbar>
+<ion-header no-shadow class="header ion-no-border">
+  <ion-row>
+    <ion-col class="ion-text-left">
+      <ion-button (click)="back()" class="mt20 l-header-btn">
+        <ion-icon slot="icon-only" color="dark" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col class="ion-text-right">
+      <ion-button (click)="back()" class="mt20 r-header-btn">
+        <ion-icon slot="icon-only" color="dark" name="help"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
 </ion-header>
 
-<ion-content>
-
+<ion-content fullscreen class="signup-background">
+  <div class="div20"></div>
+  <ion-row>
+    <ion-col size="12">
+      <h1>Verifikation</h1>
+      <h2 class="mt20">
+        Gib den an deine Handynummer gesendeten CODE hier ein.
+      </h2>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col class="1"></ion-col>
+    <ion-col class="2">
+      <ion-input class="mt40 verifikation-input" placeholder="0"></ion-input>
+    </ion-col>
+    <ion-col class="2">
+      <ion-input class="mt40 verifikation-input" placeholder="0"></ion-input>
+    </ion-col>
+    <ion-col class="2">
+      <ion-input class="mt40 verifikation-input" placeholder="0"></ion-input>
+    </ion-col>
+    <ion-col class="2">
+      <ion-input class="mt40 verifikation-input" placeholder="0"></ion-input>
+    </ion-col>
+    <ion-col class="1"></ion-col>
+  </ion-row>
 </ion-content>
+
+<ion-footer class="footer" no-shadow>
+  <ion-row>
+    <ion-col class="12">
+      <ion-button class="s-btn secondary" color="light" shape="round">
+        erneut senden
+      </ion-button>
+    </ion-col>
+    <ion-col class="ion-text-right">
+      <ion-button (click)="DEMONextPage()" color="dark" class="b-btn primary">
+        <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-footer>
