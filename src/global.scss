@@ -26,12 +26,6 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 /*global override*/
-:root {
-    ion-input {
-        --background: #595959;
-    }
-
-}
 
 ion-content {
     font-family: effra;
@@ -41,18 +35,15 @@ ion-content {
     --padding-end: 5vw;
 }
 
-ion-buttons {
-    --background: #595959;
-}
-
 ion-toolbar {
-    --background: #454545;
+    --background: transparent;
     --ion-color-base: transparent !important;
 }
 
 .header {
     height: 13vh !important;
-    --background: #454545;
+    padding-left: 5vw;
+    padding-right: 5vw;
 }
 
 .footer {
@@ -63,10 +54,8 @@ ion-toolbar {
 
 /*buttons*/
 .s-btn {
-    --border-radius: 30px;
+    --border-radius: 40px;
     font-size: 18px;
-    width: 70px;
-    height:40px;
     /*Default padding seems nice*/
     // --padding-bottom: 10px;
     // --padding-top: 10px;
@@ -83,7 +72,7 @@ ion-toolbar {
 }
 
 .t-btn {
-    --background: var(--ion-color-background);
+    --background: var(--ion-color-background);;
     --border-radius: 9px;
     color: #000000;
     font-size: 18px;
@@ -92,14 +81,12 @@ ion-toolbar {
     --box-shadow: none;
     text-transform: none;
 }
-
 .secondary {
     --box-shadow: none;
 }
 
 .primary {
     --box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.25);
-    --background: #4f4f4f;
 }
 
 .l-header-btn {
@@ -133,7 +120,6 @@ ion-searchbar {
         box-shadow: none !important;
     }
 }
-
 .searchbar-md .searchbar-input {
     color: #f00;
     border-radius: 25px;
@@ -162,7 +148,6 @@ h2 {
     line-height: 24px;
     opacity: 0.87;
 }
-
 h3 {
     font-family: effra;
     font-weight: 500;
@@ -184,7 +169,6 @@ p {
 .div20 {
     height: 20vh;
 }
-
 .div30 {
     height: 30vh;
 }
@@ -201,7 +185,6 @@ p {
 .h10 {
     height: 10px;
 }
-
 .h20 {
     height: 20px;
 }

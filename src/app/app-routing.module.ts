@@ -28,10 +28,6 @@ const routes: Routes = [
   {
     path: 'sign-up-tab4',
     loadChildren: () => import('./pages/sign_up/sign-up-tab4/sign-up-tab4.module').then( m => m.SignUpTab4PageModule)
-  },
-  {
-    path: 'map-start',
-    loadChildren: () => import('./pages/map/map-start/map-start.module').then( m => m.MapStartPageModule)
   }
 
 ];
