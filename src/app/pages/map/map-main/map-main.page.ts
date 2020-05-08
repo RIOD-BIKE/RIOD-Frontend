@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { MapBoxComponent } from 'src/app/components/map-box/map-box.component';
+import { MapBoxComponent } from 'src/app/Components/map-box/map-box.component';
 
 @Component({
   selector: 'app-map-main',

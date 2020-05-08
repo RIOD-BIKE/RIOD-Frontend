@@ -7,8 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { MapStartPageRoutingModule } from './map-start-routing.module';
 
 import { MapStartPage } from './map-start.page';
-import { ComponentsModule } from 'src/app/components/components.module';
-import { MapBoxComponent } from 'src/app/components/map-box/map-box.component';
+import { ComponentsModule } from 'src/app/Components/components.module';
+import { MapBoxComponent } from 'src/app/Components/map-box/map-box.component';
 
 @NgModule({
   imports: [

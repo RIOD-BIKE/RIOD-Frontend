@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { MapMainPageRoutingModule } from './map-main-routing.module';
 
 import { MapMainPage } from './map-main.page';
-import { ComponentsModule } from 'src/app/components/components.module';
+import { ComponentsModule } from 'src/app/Components/components.module';
 
 
 @NgModule({

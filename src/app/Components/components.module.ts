@@ -1,8 +1,8 @@
-import { MapBoxComponent } from 'src/app/components/map-box/map-box.component';
-import { MainMenuComponent } from 'src/app/components/main-menu/main-menu.component';
-import { RouterInfoInBottomComponent } from 'src/app/components/router-info-in-bottom/router-info-in-bottom.component';
-import { SearchBarComponent } from 'src/app/components/search-bar/search-bar.component'
-import { RidingToggleComponent } from 'src/app/components/riding-toggle/riding-toggle.component';
+import { MapBoxComponent } from './map-box/map-box.component';
+import { MainMenuComponent } from './main-menu/main-menu.component';
+import { RouterInfoInBottomComponent } from './router-info-in-bottom/router-info-in-bottom.component';
+import { SearchBarComponent } from './search-bar/search-bar.component'
+import { RidingToggleComponent } from './riding-toggle/riding-toggle.component';
 
 import { NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
