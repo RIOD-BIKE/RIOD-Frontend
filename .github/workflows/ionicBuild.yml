@@ -1,0 +1,76 @@
+
+name: Ionic & Cordova Build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Ionic Build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Install Dependencies
+      run: npm ci
+      env:
+        NG_CLI_ANALYTICS: ci
+    - name: Run Ionic Build
+      run: npx ionic build
+
+  android:
+    name: Cordova Prepare Android
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    needs: build
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Install Dependencies
+      run: npm ci
+      env:
+        NG_CLI_ANALYTICS: ci
+    - name: Run Ionic Build
+      run: npx ionic build
+    - name: Cordova Add Android
+      run: npx ionic cordova platform add android
+    - name: Cordova Add Android
+      run: npx ionic cordova prepare android
+
+  ios:
+    name: Cordova Prepare iOS
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    needs: build
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Install Dependencies
+      run: npm ci
+      env:
+        NG_CLI_ANALYTICS: ci
+    - name: Run Ionic Build
+      run: npx ionic build
+    - name: Cordova Add iOS
+      run: npx ionic cordova platform add ios
+    - name: Cordova Prepare iOS
+      run: npx ionic cordova prepare ios
