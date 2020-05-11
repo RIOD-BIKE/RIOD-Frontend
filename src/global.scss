@@ -40,6 +40,16 @@ ion-content {
     --padding-start: 5vw;
     --padding-end: 5vw;
 }
+
+//Style for searchbar only in Global
+.searchbar-search-icon { display:none; width:0; height:0; }
+.searchbar-input {
+   padding-left: 9px !important;
+    height: 50px !important;
+    max-width: 400px;
+   // font-size: 1.25em !important;
+   
+}
     
 ion-buttons {
     --background: #595959;

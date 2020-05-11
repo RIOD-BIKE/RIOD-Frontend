@@ -1,72 +1,85 @@
-*, *:before, *:after {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+  
+*:before,
+*:after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
 
 
 .item {
-  align-self: stretch;
-  padding: 1rem 0;
-  margin-right: 1rem;
-  text-align: right;
-  
-  &:not(:last-of-type) {
-    border-bottom: 1px solid #ccc;
-  }
+    align-self: stretch;
+    padding: 1rem 0;
+    margin-right: 1rem;
+    text-align: right;
+
+    &:not(:last-of-type) {
+        border-bottom: 1px solid #ccc;
+    }
 }
 
-$input-bg-static: #ddd;
-$input-bg-pseudo-active: #FFe500;
-$input-bg-pseudo-static: #0F0F0F;
+$input-bg-static: #454545;
+$input-bg-pseudo-active: #FFe500; //yellow
+$input-bg-pseudo-static: #F2F2f2; //white
 
 
-$input-width: 4rem; // adjust only this number for dimensions
+$input-width: 90px; // adjust only this number for dimensions
 
-$input-radius: calc( #{$input-width} / 2 );
-$input-height: calc( #{$input-width} / 2 );
-$input-light-dims: calc( #{$input-height} / 2.5 );
+$input-radius: calc(#{$input-width} / 2.25);
+$input-height: calc(#{$input-width} / 2.25);
 
 .knob-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 
 
 input[type="checkbox"] {
-  position: relative;
-  appearance: none;
-  width: $input-width;
-  height: $input-height;
-  background-color: $input-bg-static;
-  border-radius: $input-radius;
-  outline: none; // bad accessibility
-  transition: background 450ms ease;
-  box-shadow: 0 0 0 3px darken($input-bg-static, 7.5%);
-  
-  &:before, &:after {
-    position: absolute;
-    display: block;
-    content: "";
-    border-radius: 100%;
-    transition:
-      background 450ms ease,
-      transform 450ms ease;
-  }
-  
-  &:before {
-    width: calc( #{$input-width} / 2 );
+    position: relative;
+    appearance: none;
+    width: $input-width;
     height: $input-height;
-    background-color: $input-bg-pseudo-static;
-  }
+    background-color: $input-bg-static;
+    border-radius: $input-radius;
+    outline: none; // 
+    transition: background 450ms ease;
+    box-shadow: 0 0 0 3px darken($input-bg-static, 7.5%);
 
-  &:checked {
-    
-    &:before {
-      background-color: $input-bg-pseudo-active;
-      transform: translateX(100%);
+    &:before,
+    &:after {
+        position: absolute;
+        display: block;
+        content: "";
+        border-radius: 100%;
+        background: url('../../../assets/icon/map.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        transition:
+            background 450ms ease,
+            transform 450ms ease;
+
     }
-  }
+
+
+    &:before {
+        width: calc(#{$input-width} / 2);
+        height: $input-height;
+        background-color: $input-bg-pseudo-static;
+
+
+    }
+
+    &:checked {
+
+        &:before {
+            background-color: $input-bg-pseudo-active;
+            transform: translateX(100%);
+            background: url('../../../assets/icon/riod.svg');
+            background-repeat: no-repeat;
+            background-position: center;
+
+        }
+    }
 }
