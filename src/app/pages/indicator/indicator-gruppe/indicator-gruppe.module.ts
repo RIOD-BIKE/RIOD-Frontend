@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { IndicatorGruppePageRoutingModule } from './indicator-gruppe-routing.module';
 
 import { IndicatorGruppePage } from './indicator-gruppe.page';
-import { ComponentsModule } from 'src/app/components/components.module';
+import { ComponentsModule } from 'src/app/Components/components.module';
 
 @NgModule({
   imports: [

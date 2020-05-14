@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { MapRidePageRoutingModule } from './map-ride-routing.module';
 
 import { MapRidePage } from './map-ride.page';
-import { ComponentsModule } from 'src/app/components/components.module';
+import { ComponentsModule } from 'src/app/Components/components.module';
 
 @NgModule({
   imports: [

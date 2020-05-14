@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { IndicatorSingle1PageRoutingModule } from './indicator-single1-routing.module';
 
 import { IndicatorSingle1Page } from './indicator-single1.page';
-import { ComponentsModule } from 'src/app/components/components.module';
+import { ComponentsModule } from 'src/app/Components/components.module';
 
 @NgModule({
   imports: [
