@@ -24,11 +24,29 @@
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-input
-      
+    <!-- <ion-input
+      [(ngModel)]="phonenumber"
+      id="phonenumber"
       class="default-input  mt40"
       placeholder="   +49 157 816 746 85"
-    ></ion-input>
+    ></ion-input> -->
+    Deine Telefonnummer ist {{ !f.form.valid ? "nicht" : "" }} gültig!
+    </ion-row>
+    <ion-row>
+      <form #f="ngForm" [formGroup]="phoneForm">
+        <ngx-intl-tel-input
+          [preferredCountries]="preferredCountries"
+          [enableAutoCountrySelect]="false"
+          [enablePlaceholder]="true"
+          [searchCountryFlag]="true"
+          [selectFirstCountry]="false"
+          [selectedCountryISO]="preferredCountries[0]"
+          [maxLength]="15"
+          [phoneValidation]="true"
+          [separateDialCode]="false"
+          name="phone" formControlName="phone">
+        </ngx-intl-tel-input>
+      </form>
   </ion-row>
 </ion-content>
 

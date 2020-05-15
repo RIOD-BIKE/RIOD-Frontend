@@ -8,12 +8,17 @@ import { SignUpTab2PageRoutingModule } from './sign-up-tab2-routing.module';
 
 import { SignUpTab2Page } from './sign-up-tab2.page';
 
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SignUpTab2PageRoutingModule
+    SignUpTab2PageRoutingModule,
+    ReactiveFormsModule,
+		NgxIntlTelInputModule,
   ],
   declarations: [SignUpTab2Page]
 })
