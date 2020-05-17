@@ -24,21 +24,7 @@
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col class="1"></ion-col>
-    <ion-col class="2">
-
-      <ion-input class="mt40 verifikation-input" placeholder="0"  type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}"></ion-input>
-    </ion-col>
-    <ion-col class="2">
-      <ion-input class="mt40 verifikation-input" placeholder="0"  type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}"></ion-input>
-    </ion-col>
-    <ion-col class="2">
-      <ion-input class="mt40 verifikation-input" placeholder="0"  type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}"></ion-input>
-    </ion-col>
-    <ion-col class="2">
-      <ion-input class="mt40 verifikation-input" placeholder="0"  type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}"></ion-input>
-    </ion-col>
-    <ion-col class="1"></ion-col>
+    <ion-input class="default-input  mt40" placeholder="VerificationNumber" [(ngModel)]="vNumb"></ion-input>
   </ion-row>
 </ion-content>
 
@@ -50,7 +36,7 @@
       </ion-button>
     </ion-col>
     <ion-col class="ion-text-right">
-      <ion-button (click)="DEMONextPage()" color="dark" class="b-btn primary">
+      <ion-button (click)="verifyUser()" color="dark" class="b-btn primary">
         <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
       </ion-button>
     </ion-col>

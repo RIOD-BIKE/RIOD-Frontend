@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SearchCountryField, TooltipLabel, CountryISO } from 'ngx-intl-tel-input';
-
+import * as firebase from 'firebase';
+import { NavController, AlertController } from '@ionic/angular';
+import { environment } from 'src/environments/environment';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-sign-up-tab2',
@@ -11,27 +14,24 @@ import { SearchCountryField, TooltipLabel, CountryISO } from 'ngx-intl-tel-input
 })
 export class SignUpTab2Page implements OnInit {
 
-  separateDialCode = true;
-	SearchCountryField = SearchCountryField;
-	TooltipLabel = TooltipLabel;
-	CountryISO = CountryISO;
-	preferredCountries: CountryISO[] = [CountryISO.Germany, CountryISO.Austria, CountryISO.Switzerland];
-	phoneForm = new FormGroup({
-		phone: new FormControl(undefined, [Validators.required])
-	});
 
-  constructor(private router: Router) { }
+
+  public recaptchaVerifier:firebase.auth.RecaptchaVerifier;
+  constructor(private router: Router, private authService: AuthService) { firebase.initializeApp(environment.firebase);}
 
   ngOnInit() {
+    this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
   }
 
-  DEMONextPage(){
-    console.log(this.phoneForm.controls["phone"].valid);
-    if (!this.phoneForm.valid) {
-      alert("Telefonnummer nicht gültig!" + this.phoneForm.errors);
-    } else {
-      // TODO: Code von Firebase anfragen und ggf. weiterleiten
+
+  signIn(phoneNumber: number){
+    const appVerifier = this.recaptchaVerifier;
+    const phoneNumberString = "+" + phoneNumber;
+    this.authService.getVerification(phoneNumberString,appVerifier).then(x=>{
+      if(x==true){
       this.router.navigate(['/sign-up-tab3']);
-    }
+      }
+    });
+
   }
 }

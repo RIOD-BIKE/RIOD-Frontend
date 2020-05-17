@@ -15,6 +15,7 @@
 
 <ion-content fullscreen class="signup-background">
   <div class="div20"></div>
+  <div id="recaptcha-container"></div>
   <ion-row>
     <ion-col size="12">
       <h1>Anmelden</h1>
@@ -24,29 +25,7 @@
     </ion-col>
   </ion-row>
   <ion-row>
-    <!-- <ion-input
-      [(ngModel)]="phonenumber"
-      id="phonenumber"
-      class="default-input  mt40"
-      placeholder="   +49 157 816 746 85"
-    ></ion-input> -->
-    Deine Telefonnummer ist {{ !f.form.valid ? "nicht" : "" }} gültig!
-    </ion-row>
-    <ion-row>
-      <form #f="ngForm" [formGroup]="phoneForm">
-        <ngx-intl-tel-input
-          [preferredCountries]="preferredCountries"
-          [enableAutoCountrySelect]="false"
-          [enablePlaceholder]="true"
-          [searchCountryFlag]="true"
-          [selectFirstCountry]="false"
-          [selectedCountryISO]="preferredCountries[0]"
-          [maxLength]="15"
-          [phoneValidation]="true"
-          [separateDialCode]="false"
-          name="phone" formControlName="phone">
-        </ngx-intl-tel-input>
-      </form>
+    <ion-input class="default-input  mt40" placeholder="   +49 157 816 746 85" [(ngModel)]="phoneNumber"></ion-input>
   </ion-row>
 </ion-content>
 
@@ -68,7 +47,7 @@
       </ion-row>
     </ion-col>
     <ion-col class="ion-text-right">
-      <ion-button (click)="DEMONextPage()" color="dark" class="b-btn primary">
+      <ion-button (click)="signIn(phoneNumber)" color="dark" class="b-btn primary">
         <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
       </ion-button>
     </ion-col>
