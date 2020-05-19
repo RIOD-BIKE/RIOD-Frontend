@@ -1,56 +1,50 @@
-<ion-header no-shadow class="header ion-no-border">
+<ion-header>
     <ion-grid>
         <ion-row>
             <ion-col size="9">
-                <ion-button (click)="help()">
-                    <ion-icon slot="icon-only" name="help-outline"></ion-icon>
-                </ion-button>
-                <p>Wofür die Daten?</p>
+                <button class="question"></button>
+                <h6>Wofür die Daten?</h6>
             </ion-col>
             <ion-col size="3">
-                <ion-button (click)="close()">
-                    <ion-icon slot="icon-only" name="close-outline"></ion-icon>
-                </ion-button>
+                <button class="cancel"></button>
             </ion-col>
         </ion-row>
     </ion-grid>
 </ion-header>
 <ion-content fullscreen>
-    <div style="text-align: center">
-        <img class="circle-pic" src="../../../../assets/settings/profile-pic.jpg">
-    </div>
-    <ion-row>
-        <ion-col>
-            <ion-button (click)="uploadPic()">
-                <ion-icon slot="icon-only" name="camera-outline"></ion-icon>
-            </ion-button>
-        </ion-col>
-        <ion-col>
-            <ion-button (click)="deletePic()">
-                <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-            </ion-button>
-        </ion-col>
-    </ion-row>
-    <ion-row>
-        <ion-input class="default-input  mt40" placeholder="   Mavin Offers"></ion-input>
-    </ion-row>
-    <ion-row>
-        <ion-input class="default-input  mt40" placeholder="   +49 157 816 746 85"></ion-input>
-    </ion-row>
+    <ion-grid>
+        <ion-row>
+            <ion-col size="12">
+                <div style="text-align: center">
+                    <div class="profil-border" style="text-align: center">
+                        <button class="avatar"></button>
+                    </div>
+                </div>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6">
+                <button class="take-picture"></button>
+            </ion-col>
+            <ion-col size="6">
+                <button class="delete"></button>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <input ion-input class="name mt60" placeholder="Mavin Offers" />
+        </ion-row>
+        <ion-row>
+            <input ion-input class="name mt20" placeholder=" +49 157 816 746 85" />
+        </ion-row>
+    </ion-grid>
 </ion-content>
 <ion-footer class="footer" no-shadow>
     <ion-row>
-        <ion-col class="12">
-            <ion-row>
-                <ion-button (click)="cancel()" class="b-btn primary">
-                    Abbrechen
-                </ion-button>
-            </ion-row>
+        <ion-col size="6">
+                <button class="abbrechen">ABBRECHEN</button>
         </ion-col>
-        <ion-col class="ion-text-right">
-            <ion-button (click)="save()" class="b-btn primary">
-                Speichern
-            </ion-button>
+        <ion-col size="6">
+                <button class="speichern">SPEICHERN</button>
         </ion-col>
     </ion-row>
 </ion-footer>

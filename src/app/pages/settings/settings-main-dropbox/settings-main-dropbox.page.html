@@ -2,105 +2,127 @@
     <ion-grid>
         <ion-row>
             <ion-col>
-                <div style="text-align: center">
-                    <img class="circle-pic" src="../../../../assets/settings/profile-pic.jpg">
+                <button class="cancel"></button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-grid>
+        <ion-row>
+            <ion-col size="9" style="padding-left: 5px;">
+                <div id="ava">
+                    <button class="avatar"></button>
+                </div>
+                <div style="padding-left: 75px;">
+                    <ion-row style="height: 25px; ">
+                        <h3 style="margin: 0px; line-height: 1.5;">Duc Thang Duong</h3>
+                    </ion-row>
+                    <ion-row style="height: 25px;">
+                        <p style="margin: 0px; line-height: 1.5;">+49 176 764 99803</p>
+                    </ion-row>
                 </div>
             </ion-col>
-            <ion-col>
-                <ion-label>Mavin Offers</ion-label>
+            <ion-col size="3">
+                <button class="edit"></button>
             </ion-col>
-            <ion-button (click)="editProfile()">
-                <ion-icon slot="icon-only" name="create-outline"></ion-icon>
-            </ion-button>
+        </ion-row>
+        <ion-row>
+            <div class="linie mt10"></div>
         </ion-row>
     </ion-grid>
 </ion-header>
-<ion-content fullscreen class="signup-background">
+<ion-content>
     <ion-grid>
         <ion-row>
-            <ion-icon style="font-size: 30px;" name="glasses-outline"></ion-icon>
-            <ion-col>
-                <ion-item>
-                    <ion-label>Anonymousfahren</ion-label>
-                </ion-item>
+            <ion-col size="2">
+                <ion-icon class="anonym"></ion-icon>
             </ion-col>
-            <ion-col>
-                <ion-item>
-                    <ion-toggle slot="end" name="Anonymousfahren" checked></ion-toggle>
-                </ion-item>
+            <ion-col size="7">
+                <h3 style="margin-top: 10px; text-align: center;">Anonymes fahren</h3>
             </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-icon style="font-size: 30px;" name="navigate-outline"></ion-icon>
-            <ion-col>
-                <ion-item>
-                    <ion-label>GPS anschalten</ion-label>
-                </ion-item>
-            </ion-col>
-            <ion-col>
-                <ion-item>
-                    <ion-toggle slot="end" name="gpsAnschalten" checked></ion-toggle>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-        <ion-item>
-            <ion-icon style="font-size: 30px;" name="volume-high-outline"></ion-icon>
-            <ion-range min="1000" max="2000" step="100" snaps="true" ticks="false" color="secondary"></ion-range>
-        </ion-item>
-        <ion-row>
-            <ion-icon style="font-size: 30px;" name="analytics-outline"></ion-icon>
-            <ion-col>
-                <ion-item>
-                    <ion-label>Vibration zulassen</ion-label>
-                </ion-item>
-            </ion-col>
-            <ion-col>
-                <ion-item>
-                    <ion-toggle slot="end" name="vibrationZulassen" checked></ion-toggle>
-                </ion-item>
+            <ion-col size="3">
+                <div class="item">
+                    <input type="checkbox" /> <!-- onclick='handleClick(this);' -->
+                </div>
             </ion-col>
         </ion-row>
         <ion-row>
-            <ion-icon style="font-size: 30px;" name="phone-portrait-outline"></ion-icon>
-            <ion-col>
-                <ion-item>
-                    <ion-label>Display anhalten</ion-label>
-                </ion-item>
+            <ion-col size="2">
+                <ion-icon class="gps"></ion-icon>
             </ion-col>
-            <ion-col>
-                <ion-item>
-                    <ion-toggle slot="end" name="displayAnhalten" checked></ion-toggle>
-                </ion-item>
+            <ion-col size="7">
+                <h3 style="margin-top: 10px; text-align: center;">GPS anschalten</h3>
             </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-icon style="font-size: 30px;" name="help-circle-outline"></ion-icon>
-            <ion-col>
-                <ion-item>
-                    <ion-label>Hilfe und Feedback</ion-label>
-                </ion-item>
-            </ion-col>
-            <ion-col>
-                <ion-button click="helpAndFeedback()">
-                    <ion-icon style="font-size: 30px;" name="arrow-forward-outline"></ion-icon>
-                </ion-button>
+            <ion-col size="3">
+                <div class="item">
+                    <input type="checkbox" /> <!-- onclick='handleClick(this);' -->
+                </div>
             </ion-col>
         </ion-row>
         <ion-row>
-            <ion-button click="deleteAccount()">
-                Account löschen
-            </ion-button>
+            <ion-col size="2">
+                <ion-icon class="volume"></ion-icon>
+            </ion-col>
+            <ion-col size="10">
+                <ion-range [(ngModel)]="rangeVolume" pin="true" min="0" max="10" color="#4F4F4F;"></ion-range>
+
+            </ion-col>
         </ion-row>
-      </ion-grid>
+         <ion-row>
+            <ion-col size="2">
+                <ion-icon class="vibra"></ion-icon>
+            </ion-col>
+            <ion-col size="7">
+                <h3 style="margin-top: 10px; text-align: center;">Vibration zulassen</h3>
+            </ion-col>
+            <ion-col size="3">
+                <div class="item">
+                    <input type="checkbox" /> <!-- onclick='handleClick(this);' -->
+                </div>
+            </ion-col>
+        </ion-row>
+         <ion-row>
+            <ion-col size="2">
+                <ion-icon class="display"></ion-icon>
+            </ion-col>
+            <ion-col size="7">
+                <h3 style="margin-top: 10px; text-align: center;">Display anhalten</h3>
+            </ion-col>
+            <ion-col size="3">
+                <div class="item">
+                    <input type="checkbox" /> <!-- onclick='handleClick(this);' -->
+                </div>
+            </ion-col>
+        </ion-row>
+         <ion-row>
+            <ion-col size="2">
+                <ion-icon class="hilfe"></ion-icon>
+            </ion-col>
+            <ion-col size="7">
+                <h3 style="margin-top: 10px; text-align: center;">Hilfe und Feedback</h3>
+            </ion-col>
+            <ion-col size="3">
+                <button ion-button class="next"></button>
+            </ion-col>
+        </ion-row>
+         <ion-row>
+            <ion-col size="6">
+                    <button ion-button class="accountDelete">Account löschen</button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>
 <ion-footer>
     <ion-grid>
         <ion-row>
+            <div class="linie mt5"></div>
+        </ion-row>
+        <ion-row>
             <ion-col size="6">
-                <a link="https://..">Datenschutzerklärung </a>
+                <h5 style="float: right;"><a link="https://..">Datenschutzerklärung</a></h5>
             </ion-col>
-            <ion-col size="6">
-                <a link="https://..">Nutzungsbedingung</a>
+            <h3 style="padding-top: 4px; font-weight: 300;">|</h3>
+            <ion-col size="5.5">
+                <h5 style="float: left;"><a link="https://..">Nutzungsbedingung</a></h5>
             </ion-col>
         </ion-row>
     </ion-grid>

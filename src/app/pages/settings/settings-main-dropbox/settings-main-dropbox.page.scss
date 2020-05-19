@@ -1,11 +1,233 @@
-.circle-pic {
-    height: 20px;
-    width: 20px;
-    background-color: transparent; 
-    border: none;
+ion-header {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 20px;
+
+}
+ion-footer {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+ion-content {
+    font-family: effra;
+    --padding-start: 30px; 
+    --padding-end: 30px;
+}
+ion-range{
+    padding: 0px;
+}
+.cancel {
+    float: right;
+    width: 50px;
+    height: 50px;
+    background: url('../../../../assets/settings/x-cancel.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.edit{
+    float: right;
+    width: 50px;
+    height: 50px;
+    background: url('../../../../assets/settings/edit.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+#ava {
+    float: left;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #454545;
+
+}
+.avatar{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: url('../../../../assets/settings/profile-pic.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 40px;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.anonym{
+    width: 40px;
+    height: 40px;
+    background: url('../../../../assets/settings/anonym.svg');
+    background-size: 26px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.gps{
+    width: 40px;
+    height: 40px;
+    background: url('../../../../assets/settings/gps.svg');
+    background-size: 26px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.volume{
+    width: 40px;
+    height: 40px;
+    background: url('../../../../assets/settings/volume.svg');
+    background-size: 26px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.vibra{
+    width: 40px;
+    height: 40px;
+    background: url('../../../../assets/settings/vibra.svg');
+    background-size: 26px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.display{
+    width: 40px;
+    height: 40px;
+    background: url('../../../../assets/settings/display.svg');
+    background-size: 26px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.hilfe{
+    width: 40px;
+    height: 40px;
+    background: url('../../../../assets/settings/hilfe.svg');
+    background-size: 26px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.accountDelete{
+    float: left;
+    width: 95%;
+    height: 40px;
+    border-radius: 20px;
+    font-family: effra;
+    font-size: 90%;
+    font-weight: 500;
+    background-color: #4F4F4F;
     color: white;
-    text-align: center;
-    display: inline-block;
-    margin: 4px 4px;
-    border-radius: 50%; 
+}
+
+.next{
+    float: right;
+    width: 60px;
+    height: 30px;
+    border-radius: 20px;
+
+    background: url('../../../../assets/settings/next.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #4F4F4F;
+    
+    
+}
+
+a {
+    color: white;
+}
+
+.linie{
+    width: 100%;
+    height: 1.5px;
+    border-radius: 1px;
+    background-color: #4F4F4F;
+}
+
+h3{
+    font-size: 4vw;
+    float: left;
+}
+h5{
+    font-weight: 300;
+}
+
+p{
+    font-size: 3.5vw;
+    float: left;
+}
+
+
+/* Toggle */
+  *:before,
+  *:after {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+  }
+  .item {
+      align-self: stretch;
+      text-align: right;
+      padding-top: 5px;
+      &:not(:last-of-type) {
+          border-bottom: 1px solid #ccc;
+      }
+  }
+
+  $input-bg-static: #4F4F4F;
+  $input-bg-pseudo-static: #454545; 
+
+  $input-width: 60px; // adjust only this number for dimensions
+
+  $input-radius: calc(#{$input-width} / 2);
+  $input-height: calc(#{$input-width} / 2);
+
+  .knob-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+
+
+
+  input[type="checkbox"] {
+      position: relative;
+      appearance: none;
+      width: $input-width;
+      height: $input-height;
+
+      border-radius: $input-radius;
+      background-color: $input-bg-static;
+      outline: none; // 
+      transition: background 450ms ease;
+      box-shadow: 0 0 0 2px darken($input-bg-static, 7.5%);
+
+      &:before,
+      &:after {
+          position: absolute;
+          display: block;
+          content: "";
+          content-position: center;
+          border-radius: 100%;
+          transition:
+              background 450ms ease,
+              transform 450ms ease;
+      }
+
+
+      &:before {
+          width: calc(#{$input-width} / 2);
+          height: $input-height;
+          background-color: $input-bg-pseudo-static;
+      }
+
+      &:after {
+          width: calc(#{$input-width} / 2);
+          height: $input-height;
+      }
+
+
+      &:checked {
+          &:before {
+             
+              background-color: #FFE500;
+              transform: translateX(100%);
+          }
+      }
   }

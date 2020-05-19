@@ -10,5 +10,7 @@ export class MainMenuComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {}
-
+  doSomething(event: any){
+  console.log('hallo');
+  }
 }

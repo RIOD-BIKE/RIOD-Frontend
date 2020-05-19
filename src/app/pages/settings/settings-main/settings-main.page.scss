@@ -1,12 +1,133 @@
-.circle-pic {
-    height: 150px;
-    width: 150px;
-    background-color: transparent; 
-    border: none;
+ion-header {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 20px;
+
+}
+
+ion-content {
+    --padding-start: 30px;
+    --padding-end: 30px;
+
+
+}
+
+.footer {
+    height: 13vh !important;
+    padding-left: 30px;
+    padding-right: 30px;
+
+
+}
+
+.question {
+    float: left;
+    width: 50px;
+    height: 50px;
+    background: url('../../../../assets/settings/question.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+
+}
+
+.cancel {
+    float: right;
+    width: 50px;
+    height: 50px;
+    background: url('../../../../assets/settings/x-cancel.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+h6 {
+    font-family: effra;
+    line-height: 15px;
+    opacity: 0.75;
+    padding-left: 60px;
+}
+
+input {
+    width: 100%;
+    height: 50px;
+
+}
+
+.name {
+    border-radius: 5px;
+    background-color: #4F4F4F;
+    border: 0px;
+    padding-left: 20px;
+}
+
+::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: white;
-    text-align: center;
-    display: inline-block;
-    margin: 4px 4px;
+    opacity: 0.75;
+    /* Firefox */
+    font-family: effra;
+
+}
+
+.profil-border {
+
+    height: 160px;
+    background: url('../../../../assets/settings/profil-border.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+
+}
+
+.avatar {
+    width: 140px;
+    height: 140px;
+    background: url('../../../../assets/settings/profile-pic.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
     border-radius: 50%;
-    
-  }
+    margin-top: 10px;
+    background-size: 140px;
+}
+
+.take-picture {
+    float: right;
+    width: 70px;
+    height: 40px;
+    margin-right: 10px;
+    background: url('../../../../assets/settings/take-picture-btn.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.delete {
+    float: left;
+    width: 70px;
+    height: 40px;
+    margin-left: 10px;
+    background: url('../../../../assets/settings/delete-btn.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.abbrechen {
+    float: left;
+    width: 95%;
+    height: 40px;
+    border-radius: 20px;
+    font-family: effra;
+    font-size: 90%;
+    font-weight: 500;
+    background-color: #4F4F4F;
+    color: white;
+}
+
+.speichern {
+    float: right;
+    width: 95%;
+    height: 40px;
+    border-radius: 20px;
+    font-family: effra;
+    font-size: 90%;
+    font-weight: 500;
+    background-color: #4F4F4F;
+    color: white;
+}
