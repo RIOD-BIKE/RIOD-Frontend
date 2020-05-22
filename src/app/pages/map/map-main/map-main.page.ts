@@ -5,7 +5,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { MapBoxComponent } from 'src/app/Components/map-box/map-box.component';
 import { ActivatedRoute } from '@angular/router';
 import { MainMenuComponent } from 'src/app/Components/main-menu/main-menu.component';
-import { UserService } from 'src/app/Services/user/user.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-map-main',

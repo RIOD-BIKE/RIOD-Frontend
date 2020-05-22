@@ -1,11 +1,11 @@
-import { MapDataFetchService } from './../../Services/map-data-fetch/map-data-fetch.service';
+import { MapDataFetchService } from './../../services/map-data-fetch/map-data-fetch.service';
 import { environment } from './../../../environments/environment';
 import { Component, OnInit } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
-import { MapIntegrationService } from '../../Services/map-integration/map-integration.service';
-import { Position, PositionI, GeoCluster, ClusterCollection, AssemblyPointCollection, RoutingGeoAssemblyPoint  } from '../../classess/map/map';
+import { MapIntegrationService } from '../../services/map-integration/map-integration.service';
+import { Position, PositionI, GeoCluster, ClusterCollection, AssemblyPointCollection, RoutingGeoAssemblyPoint  } from '../../Classess/map/map';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
-import { UserService } from './../../Services/user/user.service';
+import { UserService } from './../../services/user/user.service';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { resolve } from 'url';
 import { Platform } from '@ionic/angular';

@@ -1,10 +1,10 @@
 import { Component, OnInit,Input } from '@angular/core';
-import { UserService } from 'src/app/Services/user/user.service';
+import { UserService } from 'src/app/services/user/user.service';
 import { RoutingUserService } from 'src/app/services/routing-user/routing-user.service';
 import { MapBoxComponent } from '../map-box/map-box.component';
 import { Subscription } from 'rxjs';
-import { RoutingGeoAssemblyPoint } from 'src/app/classess/map/map';
-import { MapIntegrationService, Feature } from 'src/app/Services/map-integration/map-integration.service';
+import { RoutingGeoAssemblyPoint } from 'src/app/Classess/map/map';
+import { MapIntegrationService, Feature } from 'src/app/services/map-integration/map-integration.service';
 import { MapStartPage } from 'src/app/pages/map/map-start/map-start.page';
 @Component({
   selector: 'main-menu',

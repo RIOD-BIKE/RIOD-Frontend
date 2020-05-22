@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UserService } from '../user/user.service';
-import { RoutingGeoAssemblyPoint } from 'src/app/classess/map/map';
+import { RoutingGeoAssemblyPoint } from 'src/app/Classess/map/map';
 
 
 

@@ -3,7 +3,7 @@ import { ModalController, NavController } from '@ionic/angular';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 import { MapBoxComponent } from '../map-box/map-box.component';
 import { Router } from '@angular/router';
-import { MapIntegrationService, Feature  } from 'src/app/Services/map-integration/map-integration.service';
+import { MapIntegrationService, Feature  } from 'src/app/services/map-integration/map-integration.service';
 import { RoutingUserService } from 'src/app/services/routing-user/routing-user.service';
 import { MapStartPage } from 'src/app/pages/map/map-start/map-start.page';
 @Component({

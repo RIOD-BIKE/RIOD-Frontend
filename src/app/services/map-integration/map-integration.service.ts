@@ -1,4 +1,4 @@
-import { Position } from '../../classess/map/map';
+import { Position } from '../../Classess/map/map';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { MapDataFetchService } from '../map-data-fetch/map-data-fetch.service';

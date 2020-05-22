@@ -1,5 +1,5 @@
 
-import {  RouteCl, GeoCluster, GeoAssemblyPoint } from '../../classess/map/map';
+import {  RouteCl, GeoCluster, GeoAssemblyPoint } from '../../Classess/map/map';
 import { Injectable } from '@angular/core';
 import { Subscriber, Observable, BehaviorSubject, Subject } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection  } from '@angular/fire/firestore';
