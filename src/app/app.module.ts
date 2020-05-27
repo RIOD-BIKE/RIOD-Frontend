@@ -18,9 +18,12 @@ import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@io
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule} from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TutorialOverlay1Component } from './Components/tutorial/tutorial-overlay1/tutorial-overlay1.component';
+import { TutorialOverlay2Component } from './Components/tutorial/tutorial-overlay2/tutorial-overlay2.component';
+
 @NgModule({
-  declarations: [AppComponent,],
-  entryComponents: [],
+  declarations: [AppComponent, TutorialOverlay1Component, TutorialOverlay2Component],
+  entryComponents: [TutorialOverlay1Component, TutorialOverlay2Component],
   imports: [
     BrowserModule, 
     IonicModule.forRoot(), 
@@ -45,4 +48,3 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}

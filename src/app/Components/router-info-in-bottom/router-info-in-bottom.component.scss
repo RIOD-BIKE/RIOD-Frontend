@@ -1,8 +1,8 @@
 .over {
     background-color: #383838;
     width: 100%;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
     padding-top: 10px;
     padding-bottom: 60px;
     border-top-left-radius: 5px;
@@ -20,6 +20,8 @@
     background-color: white;
 }
 
+
+
 #btn2 {
     width: calc((50% - 20px)/2);
     float: left;
@@ -32,6 +34,7 @@
     background-color: #4F4F4F;
 }
 
+
 #btn3 {
     width: calc((50% - 20px)/2);
     float: left;
@@ -41,7 +44,6 @@
     background: url('../../../assets/icon/cancel.svg');
     background-repeat: no-repeat;
     background-position: center;
-    background-color: #4F4F4F;
+    background-color: #4F4F4F;	
 }
 
-h3 {}

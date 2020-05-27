@@ -3,6 +3,8 @@ import { MapBoxComponent } from 'src/app/Components/map-box/map-box.component';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { MainMenuComponent } from 'src/app/Components/main-menu/main-menu.component';
 import { RoutingUserService } from 'src/app/services/routing-user/routing-user.service';
+import { ModalController } from '@ionic/angular';
+import { TutorialOverlay1Component } from '../../../Components/tutorial/tutorial-overlay1/tutorial-overlay1.component';
 
 @Component({
   selector: 'app-map-start',
@@ -16,7 +18,7 @@ export class MapStartPage implements OnInit {
   public showMain=false;
   private 
   private showRide:false;
- constructor(private routingUserService:RoutingUserService, private mapBox: MapBoxComponent,private statusBar: StatusBar, private mainMenu: MainMenuComponent ) { 
+ constructor(private routingUserService:RoutingUserService, private mapBox: MapBoxComponent,private statusBar: StatusBar, private mainMenu: MainMenuComponent, private modalController: ModalController ) { 
 this.init();
  }
  init(){
@@ -59,8 +61,11 @@ this.init();
     });
   }
 
-
-
-
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: TutorialOverlay1Component
+    });
+    return await modal.present();
+  }
 
 }

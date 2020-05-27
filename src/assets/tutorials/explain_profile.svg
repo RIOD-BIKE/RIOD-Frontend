@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="230" height="230" viewBox="0 0 230 230">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rechteck_35" data-name="Rechteck 35" width="24" height="24" transform="translate(291 37)" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="Gruppe_99" data-name="Gruppe 99" transform="translate(-188 66)">
+    <g id="Ellipse_44" data-name="Ellipse 44" transform="translate(213 -41)" fill="#fff" stroke="rgba(255,255,255,0.2)" stroke-width="25">
+      <circle cx="90" cy="90" r="90" stroke="none"/>
+      <circle cx="90" cy="90" r="102.5" fill="none"/>
+    </g>
+    <g id="Gruppe_93" data-name="Gruppe 93">
+      <circle id="Ellipse_45" data-name="Ellipse 45" cx="30" cy="30" r="30" transform="translate(273 19)" fill="#383838"/>
+      <g id="Gruppe_maskieren_31" data-name="Gruppe maskieren 31" clip-path="url(#clip-path)">
+        <g id="user" transform="translate(288.6 34.6)">
+          <path id="Pfad_74" data-name="Pfad 74" d="M24,25.2V22.8A4.8,4.8,0,0,0,19.2,18H9.6a4.8,4.8,0,0,0-4.8,4.8v2.4" fill="none" stroke="#f2f2f2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"/>
+          <circle id="Ellipse_47" data-name="Ellipse 47" cx="4.8" cy="4.8" r="4.8" transform="translate(9.6 3.6)" stroke-width="2.4" stroke="#f2f2f2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

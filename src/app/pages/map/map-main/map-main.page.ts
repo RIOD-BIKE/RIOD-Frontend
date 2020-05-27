@@ -3,9 +3,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { MapBoxComponent } from 'src/app/Components/map-box/map-box.component';
-import { ActivatedRoute } from '@angular/router';
-import { MainMenuComponent } from 'src/app/Components/main-menu/main-menu.component';
-import { UserService } from 'src/app/services/user/user.service';
+import { ModalController } from '@ionic/angular';
+import { TutorialOverlay2Component } from 'src/app/Components/tutorial/tutorial-overlay2/tutorial-overlay2.component';
 
 @Component({
   selector: 'app-map-main',
@@ -13,20 +12,20 @@ import { UserService } from 'src/app/services/user/user.service';
   styleUrls: ['./map-main.page.scss'],
 })
 export class MapMainPage implements OnInit {
-  
 
-  constructor(private mapBox: MapBoxComponent,private statusBar: StatusBar, private activatedRoute: ActivatedRoute,private mainMenu: MainMenuComponent, private userService: UserService ) { this.init()}
+  constructor(private mapBox: MapBoxComponent,private statusBar: StatusBar, private modalController:ModalController ) { }
 
-  init(){
-    
-
+  ngOnInit() {
     this.statusBar.overlaysWebView(true);
     this.statusBar.backgroundColorByHexString('#44000000');
+    this.mapBox.setupMap();
   }
-  ngOnInit() {
 
-   
-  
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: TutorialOverlay2Component
+    });
+    return await modal.present();
   }
 
 
