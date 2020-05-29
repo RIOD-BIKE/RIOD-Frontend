@@ -22,8 +22,11 @@ export class SignUpTab4Page implements OnInit {
   ngOnInit() {
   }
 
-  DEMONextPage(){
-    this.router.navigate(['/map-start']);
+  saveName() {
+    this.authService.getUserUID().subscribe(async (uid) => {
+      await this.userDataFetch.firestore_setName(uid, this.name);
+      this.router.navigate(['/map-start']);
+    });
   }
 
 }

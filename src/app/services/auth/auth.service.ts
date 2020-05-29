@@ -140,7 +140,7 @@ export class AuthService {
   }
 
   getUser() { return this.user; }
-
+// TODO: UID nicht als Observable, sondern direkt als Wert
   getUserUID() {
     return this.user.pipe(take(1), map(user => {
       const uid = user['uid'];
