@@ -23,6 +23,8 @@ export class MapBoxComponent implements OnInit {
   private map: mapboxgl.Map;
   private myPosition: PositionI = new PositionI(0, 0);
 
+  private test = false;
+
   private clusterSource: any;
   public clusterMarkers: any;
   private firstTry: boolean = true;
@@ -43,21 +45,21 @@ export class MapBoxComponent implements OnInit {
 
   public async setupMap() {
     try {
-      if (this.userservice.getfirstTimeCalling() == true) {
+      // if (this.userservice.getfirstTimeCalling() == true) {
         await this.userservice.getUserPosition().then(y => {
           this.userservice.behaviorMyOwnPosition.subscribe(x => {
-            this.myPosition = new PositionI(x.coords.longitude, x.coords.latitude)
+            this.myPosition = new PositionI(x.coords.longitude, x.coords.latitude);
           });
           this.inizializeMap();
           if (this.map) { setTimeout(() => this.map.resize(), 0); } // Buggy MapBox draw-fix
         });
-      } else {
-        this.userservice.behaviorMyOwnPosition.subscribe(x => {
-          this.myPosition = new PositionI(x.coords.longitude, x.coords.latitude)
-        });
-        this.inizializeMap();
-        if (this.map) { setTimeout(() => this.map.resize(), 0); } // Buggy MapBox draw-fix
-      }
+      // } else {
+      //   this.userservice.behaviorMyOwnPosition.subscribe(x => {
+      //     this.myPosition = new PositionI(x.coords.longitude, x.coords.latitude);
+      //   });
+      //   this.inizializeMap();
+      //   if (this.map) { setTimeout(() => this.map.resize(), 0); } // Buggy MapBox draw-fix
+      // }
     } catch (e) { console.log(e); }
   }
 
@@ -70,7 +72,7 @@ export class MapBoxComponent implements OnInit {
         console.log(value);
         this.mapDataFetchService.clusterValueChange.subscribe(x => {
           if (this.firstTry === false) {
-            // this.updateCluster(x);      
+            // this.updateCluster(x);
           }
         })
       });
@@ -82,13 +84,17 @@ export class MapBoxComponent implements OnInit {
     });
   }
 
-  private inizializeMap() {
-    this.buildMap().then(x => {
+  private async inizializeMap() {
+    await this.buildMap().then(x => {
       this.pointFetch().then(() => {
         this.drawClusters();
         this.drawAssemblyPoints();
       });
+
     });
+    // console.log('map');
+    // console.log(this.map);
+    // this.drawUserPoint(this.map);
   }
 
 
@@ -102,6 +108,7 @@ export class MapBoxComponent implements OnInit {
         center: [this.myPosition.position.longitude, this.myPosition.position.latitude],
         accessToken: environment.mapbox.accessToken
       });
+      console.log('BuildMap');
       this.map.jumpTo({ center: [this.myPosition.position.longitude, this.myPosition.position.latitude] });
       resolve();
     });
@@ -109,9 +116,15 @@ export class MapBoxComponent implements OnInit {
 
 
   public async moveMapToCurrent() {
-    try {
-      this.myPosition = new PositionI(this.userservice.behaviorMyOwnPosition.value.coords.longitude, this.userservice.behaviorMyOwnPosition.value.coords.latitude);
-    } catch (e) { console.log(e); }
+    // try {
+    //   this.myPosition = new PositionI(this.userservice.behaviorMyOwnPosition.value.coords.longitude, this.userservice.behaviorMyOwnPosition.value.coords.latitude);
+    // } catch (e) { console.log(e); }
+
+    await this.userservice.getUserPosition().then(y => {
+      this.userservice.behaviorMyOwnPosition.subscribe(x => {
+        this.myPosition = new PositionI(x.coords.longitude, x.coords.latitude);
+      });
+    });
 
     this.map.flyTo({ zoom: 15, center: [this.myPosition.position.longitude, this.myPosition.position.latitude] });
 
@@ -160,7 +173,7 @@ export class MapBoxComponent implements OnInit {
     let data2 = new ClusterCollection(newMarkers);
     data2.features.forEach(x => { const el = document.createElement('div'); el.className = 'marker'; });
 
-    source.setData(newMarkers[0]); //ONLY ONE MARKER UPDATES - FeatureCollection--->>
+    source.setData(newMarkers[0]); // ONLY ONE MARKER UPDATES - FeatureCollection--->>
   }
 
   // draw all Clusters in perimeter
@@ -192,7 +205,46 @@ export class MapBoxComponent implements OnInit {
   }
 
   // draw User with Bearing
-  drawUserPoint() { }
+  drawUserPoint(paraMap: mapboxgl.Map) {
+    console.log('draw');
+    console.log(this.myPosition.position.longitude, this.myPosition.position.latitude);
+    const marker = new mapboxgl.Marker().setLngLat([this.myPosition.position.longitude, this.myPosition.position.latitude]).addTo(this.map);
+
+    // const geojson = {
+    //   type: 'FeatureCollection',
+    //   features: [{
+    //     type: 'Feature',
+    //     geometry: {
+    //       type: 'Point',
+    //       coordinates: {
+    //         longi: this.myPosition.position.longitude,
+    //         lati: this.myPosition.position.latitude
+    //       }
+    //     },
+    //     properties: {
+    //       title: 'Mapbox',
+    //       description: 'MyLocation'
+    //     }
+    //   }]
+    // };
+
+    // // add markers to map
+    // geojson.features.forEach(function (marker) {
+
+    //   // create a HTML element for each feature
+    //   const el = document.createElement('div');
+    //   el.className = 'marker';
+
+    // //   // make a marker for each feature and add to the map
+    //   console.log('Drawmap');
+    //   console.log(paraMap);
+
+    //   new mapboxgl.Marker(el)
+    //     .setLngLat([marker.geometry.coordinates.longi, marker.geometry.coordinates.lati])
+    //     .addTo(paraMap);
+    // });
+    // this.map = paraMap;
+  }
 
 
   drawFinishMarker() { }
