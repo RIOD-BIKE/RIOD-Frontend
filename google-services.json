@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "946261770679",
+    "firebase_url": "https://riod-bike.firebaseio.com",
+    "project_id": "riod-bike",
+    "storage_bucket": "riod-bike.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:946261770679:android:65448ffc51e59b7a622832",
+        "android_client_info": {
+          "package_name": "io.ionic.starter.nicolas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "946261770679-2rtr09k3g80r89sodjlkv2ik2f0jo4v3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoe9Gmdo08quRzc7-D4KR1t8C-B_Iodhk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "946261770679-2rtr09k3g80r89sodjlkv2ik2f0jo4v3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "946261770679-5gr9o5bbab0plqreovpnjs64n2lpa399.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "io.ionic.starter.nicolas"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

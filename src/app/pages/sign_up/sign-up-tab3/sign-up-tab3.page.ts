@@ -17,17 +17,24 @@ export class SignUpTab3Page implements OnInit {
   ngOnInit() { 
   }
 
-  verifyUser(verifyNumber:number){
-    this.authService.sendVerification(verifyNumber).then(x=>{
-    if(x==true){
+  // verifyUser(verifyNumber:number){
+  //   this.authService.sendVerification(verifyNumber).then(x=>{
+  //   if(x==true){
+  //     this.router.navigate(['/sign-up-tab4']);
+  //   } else if(x==false){
+  //     //fehlerfall abfangen
+  //   }
+  //   });
+  // }
+
+  async verifyUser(code: number) {
+    try {
+      await this.authService.checkVerficationCode(code);
       this.router.navigate(['/sign-up-tab4']);
-    } else if(x==false){
-      //fehlerfall abfangen
+    } catch (e) {
+      // TODO: Display error to user
+      console.log(`Error verifyUser: ${e}`);
     }
-        
-       
-      
-    });
   }
 
 }

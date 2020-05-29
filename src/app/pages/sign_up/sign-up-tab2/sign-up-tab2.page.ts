@@ -34,15 +34,25 @@ export class SignUpTab2Page implements OnInit {
   }
 
 
-  signIn(phoneNumber: number){
-    const appVerifier = this.recaptchaVerifier;
-    const phoneNumberString = "+" + phoneNumber;
-    this.authService.getVerification(phoneNumberString,appVerifier).then(x=>{
-      if(x==true){  //Rückgabewert ob SMS Send
-      this.router.navigate(['/sign-up-tab3']); // TODO: Errors catchen
-      }
-    });
+  // signIn(phoneNumber: number){
+  //   const appVerifier = this.recaptchaVerifier;
+  //   const phoneNumberString = "+" + phoneNumber;
+  //   this.authService.getVerification(phoneNumberString,appVerifier).then(x=>{
+  //     if(x==true){  //Rückgabewert ob SMS Send
+  //     this.router.navigate(['/sign-up-tab3']); // TODO: Errors catchen
+  //     }
+  //   });
 
+  // }
+
+  async signIn(phoneNumber: string) {
+    try {
+      await this.authService.requestPhoneVerification(phoneNumber);
+      this.router.navigate(['/sign-up-tab3']);
+    } catch (e) {
+      // TODO: Display error to user
+      console.log(`Error signIn: ${e}`);
+    }
   }
 
   async signInGoogle() {

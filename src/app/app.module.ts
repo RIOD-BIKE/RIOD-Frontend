@@ -1,3 +1,4 @@
+import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -44,7 +45,8 @@ import { TutorialOverlay2Component } from './Components/tutorial/tutorial-overla
     SplashScreen,
     Geolocation,
     NativeGeocoder,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    FirebaseAuthentication
   ],
   bootstrap: [AppComponent]
 })

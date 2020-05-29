@@ -12,6 +12,7 @@ import { TemplateDefinitionBuilder } from '@angular/compiler/src/render3/view/te
 import { UsersDataFetchService } from '../users-data-fetch/users-data-fetch.service';
 import { of } from 'rxjs';
 import { take, map } from 'rxjs/operators';
+import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
 
 const TOKEN_KEY='user-access-token';
 export enum ThirdParties {
@@ -26,9 +27,11 @@ export class AuthService {
   private confirmationResult:firebase.auth.ConfirmationResult;
   private authState = new BehaviorSubject(null);
   private user:Observable<any>;
+  private verificationId: string;
 
   constructor(private userDataFetch:UsersDataFetchService, public navCtrl:NavController, public alertCtrl:AlertController, 
-    private db: AngularFirestore, private storage:Storage, private router: Router, private angularFireAuth: AngularFireAuth ) 
+    private db: AngularFirestore, private storage:Storage, private router: Router, private angularFireAuth: AngularFireAuth,
+    private firebaseAuthentication: FirebaseAuthentication) 
     { 
       this.loadUser();
       this.user = this.authState.asObservable().pipe(filter(response => response));
@@ -45,39 +48,54 @@ export class AuthService {
     });
   }
 
-  getVerification(phoneNumberString:string,appVerifier:firebase.auth.RecaptchaVerifier):Promise<boolean>{
-    return new Promise(resolve => {
-     this.angularFireAuth.signInWithPhoneNumber(phoneNumberString, appVerifier)
-      .then( async confirmationResult => {
-        this.confirmationResult=confirmationResult;
-        resolve(true);
-      }).catch(function (error) {
-        console.error("SMS not sent", error); 
-        resolve(false);
-    });
-  });
+  // getVerification(phoneNumberString:string,appVerifier:firebase.auth.RecaptchaVerifier):Promise<boolean>{
+  //   return new Promise(resolve => {
+  //    this.angularFireAuth.signInWithPhoneNumber(phoneNumberString, appVerifier)
+  //     .then( async confirmationResult => {
+  //       this.confirmationResult=confirmationResult;
+  //       resolve(true);
+  //     }).catch(function (error) {
+  //       console.error("SMS not sent", error); 
+  //       resolve(false);
+  //   });
+  // });
+  // }
+  // 
+  // sendVerification(verifyNumber:number):Promise<any>{
+  //   return new Promise(resolve => {
+  //   this.confirmationResult.confirm(verifyNumber.toString()).then(x=>{
+  //     console.log("Verified Code!");
+  //     this.userDataFetch.rtdb_createUser(x.user.uid).then(y=>{
+  //       console.log("RTDB Entry created!");
+  //       this.userDataFetch.firestore_createUser(x.user.uid).then(z=>{
+  //         if(z==true) {} //NEWLY Created Structure of Firestore for User
+  //         if(z==false){} //NO NEW Structure of Firestore for User -> already exists
+  //         console.log("Firestore Entry created!");
+  //         this.signIn(x.user.uid).then(x=>{
+  //           resolve(true);
+  //         })
+  //       });
+  //     });
+  //   }).catch(x=>{
+  //     console.log(x);
+  //     resolve(false);
+  //   });
+  // });
+  // }
+
+  async requestPhoneVerification(phone: string) {
+    this.verificationId = await this.firebaseAuthentication.verifyPhoneNumber(phone, 0);
+    console.log(`Requested phone verification for ${phone}. Got verificationId ${this.verificationId}`);
   }
 
-  sendVerification(verifyNumber:number):Promise<any>{
-    return new Promise(resolve => {
-    this.confirmationResult.confirm(verifyNumber.toString()).then(x=>{
-      console.log("Verified Code!");
-      this.userDataFetch.rtdb_createUser(x.user.uid).then(y=>{
-        console.log("RTDB Entry created!");
-        this.userDataFetch.firestore_createUser(x.user.uid).then(z=>{
-          if(z==true) {} //NEWLY Created Structure of Firestore for User
-          if(z==false){} //NO NEW Structure of Firestore for User -> already exists
-          console.log("Firestore Entry created!");
-          this.signIn(x.user.uid).then(x=>{
-            resolve(true);
-          })
-        });
-      });
-    }).catch(x=>{
-      console.log(x);
-      resolve(false);
+  async checkVerficationCode(code: number) {
+    this.firebaseAuthentication.onAuthStateChanged().subscribe(async (result) => {
+      console.log(`UID ${result.uid} logged in!`);
+      await this.userDataFetch.rtdb_createUser(result.uid);
+      await this.userDataFetch.firestore_createUser(result.uid);
+      await this.signIn(result.uid);
     });
-  });
+    await this.firebaseAuthentication.signInWithVerificationId(this.verificationId, code.toString());
   }
 
   async handleThirdPartySignIn(thirdParty: ThirdParties) {
@@ -93,7 +111,8 @@ export class AuthService {
         provider = new firebase.auth.TwitterAuthProvider();
         break;
     }
-    const result = await firebase.auth().signInWithPopup(provider);
+    await firebase.auth().signInWithRedirect(provider);
+    const result = await firebase.auth().getRedirectResult();
     console.log(`${result.user.displayName} with UID ${result.user.uid} logged in!`);
     await this.userDataFetch.firestore_createUser(result.user.uid);
     await this.signIn(result.user.uid)
