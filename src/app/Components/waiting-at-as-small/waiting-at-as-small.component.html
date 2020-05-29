@@ -1,6 +1,7 @@
-<div class="over">
+<div class="over" id="myOver">
     <div class="wrap1">
-        <button ion-button id="btn1" (click)="showMore()"></button>
+        <button ion-button class="btn1" id="hide-div" (click)="hideMore()"></button>
+        <button ion-button class="btn1" id="show-div" (click)="showMore()"></button>
     </div>
     <div class="wrap wrap2">
         <div class="icon">
@@ -15,17 +16,15 @@
     </div>
     <div class="wrap wrap3">
         <div class="icon">
-            <button ion-button id="btn2">2:49</button>
+            <button ion-button id="btn2-toChange">2:49</button>
         </div>
     </div>
     <div class="wrap">
         <div class="item">
-            <input type="checkbox" /> <!-- onclick='handleClick(this);' -->
+            <input type="checkbox" class="riod-toggle" /> <!-- onclick='handleClick(this);' -->
         </div>
     </div>
 </div>
-
-<div class="wrap-progess">
-	
-	<div class="progess-full"></div>
+<div class="wrap-progess" id="hide">
+    <div class="progess-full"></div>
 </div>
