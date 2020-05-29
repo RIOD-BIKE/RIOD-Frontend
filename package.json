@@ -106,7 +106,6 @@
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-android-permissions": {},
       "cordova-plugin-geolocation": {},
-      "cordova-plugin-nativegeocoder": {},
       "cordova-plugin-firebase-authentication": {},
       "cordova-universal-links-plugin": {},
       "cordova-plugin-buildinfo": {},
@@ -114,6 +113,9 @@
       "cordova-plugin-inappbrowser": {},
       "cordova-plugin-customurlscheme": {
         "URL_SCHEME": "com.googleusercontent.apps.946261770679-5gr9o5bbab0plqreovpnjs64n2lpa399"
+      },
+      "cordova-plugin-nativegeocoder": {
+        "LOCATION_WHEN_IN_USE_DESCRIPTION": "Use geocoder service"
       }
     },
     "platforms": [

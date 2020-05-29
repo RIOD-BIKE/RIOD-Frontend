@@ -5,6 +5,7 @@ import { MainMenuComponent } from 'src/app/Components/main-menu/main-menu.compon
 import { RoutingUserService } from 'src/app/services/routing-user/routing-user.service';
 import { ModalController } from '@ionic/angular';
 import { TutorialOverlay1Component } from '../../../Components/tutorial/tutorial-overlay1/tutorial-overlay1.component';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 @Component({
   selector: 'app-map-start',

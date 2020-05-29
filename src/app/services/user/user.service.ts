@@ -26,9 +26,9 @@ export class UserService {
         enableHighAccuracy: true,
         timeout: 25000
       };
-      this.geolocation.watchPosition(options).subscribe(x=>{
+      this.geolocation.watchPosition(options).subscribe(x => {
         this.behaviorMyOwnPosition.next(x);
-        this.firstTimeCalling=false;
+        this.firstTimeCalling = false;
       //  console.log(x.coords);
         resolve();
       });

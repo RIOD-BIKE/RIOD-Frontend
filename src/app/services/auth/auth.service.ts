@@ -1,11 +1,11 @@
 import { Injectable, ErrorHandler } from '@angular/core';
 import * as firebase from 'firebase';
 import { NavController, AlertController } from '@ionic/angular';
-import { AngularFirestore, QuerySnapshot  } from '@angular/fire/firestore';
+import { AngularFirestore, QuerySnapshot } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { Storage } from'@ionic/storage';
+import { Storage } from '@ionic/storage';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database/database';
 import { TemplateDefinitionBuilder } from '@angular/compiler/src/render3/view/template';
@@ -14,7 +14,7 @@ import { of } from 'rxjs';
 import { take, map } from 'rxjs/operators';
 import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
 
-const TOKEN_KEY='user-access-token';
+const TOKEN_KEY = 'user-access-token';
 export enum ThirdParties {
   Google,
   Twitter,
@@ -24,26 +24,25 @@ export enum ThirdParties {
   providedIn: 'root'
 })
 export class AuthService {
-  private confirmationResult:firebase.auth.ConfirmationResult;
+  private confirmationResult: firebase.auth.ConfirmationResult;
   private authState = new BehaviorSubject(null);
-  private user:Observable<any>;
+  private user: Observable<any>;
   private verificationId: string;
 
-  constructor(private userDataFetch:UsersDataFetchService, public navCtrl:NavController, public alertCtrl:AlertController, 
-    private db: AngularFirestore, private storage:Storage, private router: Router, private angularFireAuth: AngularFireAuth,
-    private firebaseAuthentication: FirebaseAuthentication) 
-    { 
-      this.loadUser();
-      this.user = this.authState.asObservable().pipe(filter(response => response));
+  constructor(private userDataFetch: UsersDataFetchService, public navCtrl: NavController, public alertCtrl: AlertController,
+    private db: AngularFirestore, private storage: Storage, private router: Router, private angularFireAuth: AngularFireAuth,
+    private firebaseAuthentication: FirebaseAuthentication) {
+    this.loadUser();
+    this.user = this.authState.asObservable().pipe(filter(response => response));
   }
 
-  loadUser(){
-    this.storage.get(TOKEN_KEY).then(data =>{
-      console.log("Loaded User: "+data);
-      if(data){
+  loadUser() {
+    this.storage.get(TOKEN_KEY).then(data => {
+      console.log('Loaded User: ' + data);
+      if (data) {
         this.authState.next(data);
-      } else{
-        this.authState.next({role:null});
+      } else {
+        this.authState.next({ role: null });
       }
     });
   }
@@ -115,42 +114,42 @@ export class AuthService {
     const result = await firebase.auth().getRedirectResult();
     console.log(`${result.user.displayName} with UID ${result.user.uid} logged in!`);
     await this.userDataFetch.firestore_createUser(result.user.uid);
-    await this.signIn(result.user.uid)
+    await this.signIn(result.user.uid);
     await this.userDataFetch.firestore_setName(result.user.uid, result.user.displayName);
   }
 
-  signIn(uid:string):Promise<any>{
+  signIn(uid: string): Promise<any> {
     return new Promise(resolve => {
-    let user=null;
-    this.db.collection("users").doc(uid).valueChanges().subscribe(x=>{
-      var isUser = Object(x)["isUser"];
-      var isAdmin = Object(x)["isAdmin"];
-      if(isUser==true && isAdmin !== true){
-          user={role:'USER', uid:uid}
-          console.log("isUser");
-      }
-      if(isAdmin==true && isUser !== true){
-          user={role:'ADMIN',uid:uid}
-          console.log("isAdmin");
-      }
-      this.authState.next(user);
-      this.storage.set(TOKEN_KEY,user);
-      resolve()
+      let user = null;
+      this.db.collection('users').doc(uid).valueChanges().subscribe(x => {
+        let isUser = Object(x)['isUser'];
+        let isAdmin = Object(x)['isAdmin'];
+        if (isUser == true && isAdmin !== true) {
+          user = { role: 'USER', uid: uid };
+          console.log('isUser');
+        }
+        if (isAdmin == true && isUser !== true) {
+          user = { role: 'ADMIN', uid: uid };
+          console.log('isAdmin');
+        }
+        this.authState.next(user);
+        this.storage.set(TOKEN_KEY, user);
+        resolve();
+      });
     });
-  });
   }
 
-  getUser(){return this.user;}
+  getUser() { return this.user; }
 
-  getUserUID(){
+  getUserUID() {
     return this.user.pipe(take(1), map(user => {
-      let uid = user['uid'];
+      const uid = user['uid'];
       return uid;
-    }))
+    }));
   }
 
-  async signout(){
-    await this.storage.set(TOKEN_KEY,null);
+  async signout() {
+    await this.storage.set(TOKEN_KEY, null);
     this.authState.next(null);
     this.router.navigate(['/sign-up-tab2']); // TODO: Alert SignOut
   }
