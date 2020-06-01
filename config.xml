@@ -97,6 +97,18 @@
         <splash height="1242" src="resources/ios/splash/Default-Landscape-2688h~iphone.png" width="2688" />
         <splash height="1792" src="resources/ios/splash/Default-1792h~iphone.png" width="828" />
         <splash height="828" src="resources/ios/splash/Default-Landscape-1792h~iphone.png" width="1792" />
+        <config-file parent="CFBundleURLTypes" target="*-Info.plist">
+            <array>
+                <dict>
+                    <key>CFBundleTypeRole</key>
+                    <string>Editor</string>
+                    <key>CFBundleURLSchemes</key>
+                    <array>
+                        <string>com.googleusercontent.apps.946261770679-siqd4v4m75ctvmoab7q8h94d38jvc5i7</string>
+                    </array>
+                </dict>
+            </array>
+        </config-file>
     </platform>
     <plugin name="cordova-plugin-whitelist" spec="1.3.3" />
     <plugin name="cordova-plugin-statusbar" spec="2.4.2" />
