@@ -8,29 +8,28 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./search-bar-main-map.component.scss'],
 })
 export class SearchBarMainMapComponent implements OnInit {
- displayColor:string;
- showRecentNav:boolean;
- private searchInput:string;
+ displayColor: string;
+ showRecentNav: boolean;
+ private searchInput: string;
  private recentRoutes;
-  constructor(  @Inject(DOCUMENT) private document: Document) { 
-    this.displayColor='#66000000'; 
-    this.showRecentNav=false;
-    this.document.documentElement.style.setProperty('--displayColor',this.displayColor);}
+  constructor(  @Inject(DOCUMENT) private document: Document) {
+    this.displayColor = '#66000000';
+    this.showRecentNav = false;
+    this.document.documentElement.style.setProperty('--displayColor', this.displayColor); }
 
   ngOnInit() {}
 
-  getshowRecentNav(){
+  getshowRecentNav() {
     return this.showRecentNav;
   }
 
 
-  searchInputHandler(){
+  searchInputHandler() {
     let searchInputLower = this.searchInput.toLowerCase();
   }
 
   //
-  loadRoute(id){
-    
+  loadRoute(id) {
   }
 
  
