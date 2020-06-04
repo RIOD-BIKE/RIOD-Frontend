@@ -92,9 +92,7 @@ export class MapBoxComponent implements OnInit {
       });
 
     });
-    // console.log('map');
-    // console.log(this.map);
-    // this.drawUserPoint(this.map);
+    this.drawUserPoint(this.map);
   }
 
 
@@ -208,7 +206,31 @@ export class MapBoxComponent implements OnInit {
   drawUserPoint(paraMap: mapboxgl.Map) {
     console.log('draw');
     console.log(this.myPosition.position.longitude, this.myPosition.position.latitude);
-    const marker = new mapboxgl.Marker().setLngLat([this.myPosition.position.longitude, this.myPosition.position.latitude]).addTo(this.map);
+
+    const geolocate = new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true
+      },
+      trackUserLocation: true,
+      showAccuracyCircle: true,
+      showUserLocation: true
+    });
+
+    this.map.addControl(geolocate);
+    this.map.on('load', (event) => {
+      geolocate.trigger();
+    });
+
+    geolocate.on('geolocate', (event) => {
+      console.log(event);
+    });
+
+
+
+
+
+
+    // const marker = new mapboxgl.Marker().setLngLat([this.myPosition.position.longitude, this.myPosition.position.latitude]).addTo(this.map);
 
     // const geojson = {
     //   type: 'FeatureCollection',

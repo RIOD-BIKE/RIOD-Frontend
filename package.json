@@ -21,6 +21,8 @@
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
+    "@capacitor/android": "^2.1.2",
+    "@capacitor/core": "2.1.2",
     "@ionic-native/android-permissions": "^5.26.0",
     "@ionic-native/core": "^5.24.0",
     "@ionic-native/firebase-authentication": "^5.26.0",
@@ -32,7 +34,6 @@
     "@ionic/cli": "^6.9.2",
     "@ionic/storage": "^2.2.0",
     "cordova": "^9.0.0",
-    "cordova-android": "^8.1.0",
     "cordova-ios": "^5.1.1",
     "cordova-plugin-add-swift-support": "^2.0.2",
     "cordova-plugin-android-permissions": "^1.0.2",
@@ -70,6 +71,7 @@
     "@angular/compiler": "~8.2.14",
     "@angular/compiler-cli": "~8.2.14",
     "@angular/language-service": "~8.2.14",
+    "@capacitor/cli": "2.1.2",
     "@ionic/angular-toolkit": "^2.1.1",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
@@ -110,7 +112,6 @@
       "cordova-plugin-firebase-authentication": {
         "FIREBASE_AUTH_VERSION": "19.3.+"
       },
-      "cordova-universal-links-plugin": {},
       "cordova-plugin-buildinfo": {},
       "cordova-plugin-browsertab": {},
       "cordova-plugin-inappbrowser": {},
@@ -125,7 +126,6 @@
       }
     },
     "platforms": [
-      "android",
       "ios"
     ]
   }

@@ -20,7 +20,6 @@ export class UserService {
 
  async getUserPosition(): Promise<any> {
     return new Promise<any>(resolve => {
-    //console.log('GetUser');
     this.platform.ready().then(rdy => {
       const options = {
         enableHighAccuracy: true,
@@ -29,7 +28,6 @@ export class UserService {
       this.geolocation.watchPosition(options).subscribe(x => {
         this.behaviorMyOwnPosition.next(x);
         this.firstTimeCalling = false;
-      //  console.log(x.coords);
         resolve();
       });
     });
