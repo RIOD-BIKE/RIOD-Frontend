@@ -3,7 +3,7 @@
     "apps": [],
     "details": [
       {
-        "appID": "<YOUR_TEAM_ID_FROM_MEMBER_CENTER>.bike.riod.app",
+        "appID": "676A87K448.bike.riod.app",
         "paths": [
           "*",
           "/"
