@@ -26,8 +26,8 @@ import { TutorialOverlay2Component } from './Components/tutorial/tutorial-overla
   declarations: [AppComponent, TutorialOverlay1Component, TutorialOverlay2Component],
   entryComponents: [TutorialOverlay1Component, TutorialOverlay2Component],
   imports: [
-    BrowserModule, 
-    IonicModule.forRoot(), 
+    BrowserModule,
+    IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
     AppRoutingModule,
     AngularFirestoreModule,
@@ -39,7 +39,7 @@ import { TutorialOverlay2Component } from './Components/tutorial/tutorial-overla
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule],
-    
+
   providers: [
     StatusBar,
     SplashScreen,

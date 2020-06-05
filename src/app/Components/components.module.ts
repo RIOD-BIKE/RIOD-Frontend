@@ -14,9 +14,15 @@ import { RideMapAssemblyComponent } from './ride-map-assembly/ride-map-assembly.
 import { RideMapFinalComponent } from './ride-map-final/ride-map-final.component';
 
 @NgModule({
-  declarations: [MapBoxComponent, MainMenuComponent, RouterInfoInBottomComponent, SearchBarComponent, RidingToggleComponent, RideIndicatorAssemblyComponent, RideIndicatorFinalComponent, RideIndicatorFreeComponent, RideMapAssemblyComponent, RideMapFinalComponent],
+  declarations: [MapBoxComponent, MainMenuComponent, RouterInfoInBottomComponent, SearchBarComponent,
+    RidingToggleComponent, RideIndicatorAssemblyComponent, RideIndicatorFinalComponent, RideIndicatorFreeComponent,
+    RideMapAssemblyComponent, RideMapFinalComponent],
   imports: [IonicModule, CommonModule, FormsModule],
-  exports: [MapBoxComponent, MainMenuComponent, RouterInfoInBottomComponent, SearchBarComponent, RidingToggleComponent, RideIndicatorAssemblyComponent, RideIndicatorFinalComponent, RideIndicatorFreeComponent, RideMapAssemblyComponent, RideMapFinalComponent],
-  providers: [MapBoxComponent, MainMenuComponent]
+  exports: [MapBoxComponent, MainMenuComponent, RouterInfoInBottomComponent, SearchBarComponent,
+    RidingToggleComponent, RideIndicatorAssemblyComponent, RideIndicatorFinalComponent, RideIndicatorFreeComponent,
+    RideMapAssemblyComponent, RideMapFinalComponent],
+  providers: [MapBoxComponent, MainMenuComponent, RouterInfoInBottomComponent, SearchBarComponent,
+    RidingToggleComponent, RideIndicatorAssemblyComponent, RideIndicatorFinalComponent, RideIndicatorFreeComponent,
+    RideMapAssemblyComponent, RideMapFinalComponent]
 })
 export class ComponentsModule { }

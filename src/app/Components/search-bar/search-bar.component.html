@@ -1,6 +1,7 @@
 <div class="over">
     <div class="wrap" >
-        <ion-input class="search" debounce=500   [(ngModel)]="selectedAddresses" (ionChange)="search($event)"  placeholder="Hier suchen.." ></ion-input>
+        <!-- <ion-input class="search" debounce=500   [(ngModel)]="selectedAddresses" (ionChange)="search($event)"  placeholder="Hier suchen.." ></ion-input> -->
+        <ion-input class="search" debounce=500 (ionChange)="search($event)"  placeholder="Hier suchen.." ></ion-input>
         <div style="position:absolute; width:100%; z-index:999;margin-top:7.5em ;left:0%">
             <ion-list lines="none" *ngIf="addressesString.length > 0"> 
                 <ion-item button *ngFor="let address of addressesString" (click)="onSelect(address)">

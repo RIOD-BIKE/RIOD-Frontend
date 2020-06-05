@@ -15,14 +15,14 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 export class MapStartPage implements OnInit {
 
 
-  public showStart=true;
-  public showMain=false;
-  private 
-  private showRide:false;
- constructor(private routingUserService:RoutingUserService, private mapBox: MapBoxComponent,private statusBar: StatusBar, private mainMenu: MainMenuComponent, private modalController: ModalController ) { 
-this.init();
+  public showStart = true;
+  public showMain = false;
+  private showRide: false;
+ constructor(private routingUserService: RoutingUserService, private mapBox: MapBoxComponent,
+             private statusBar: StatusBar, private mainMenu: MainMenuComponent, private modalController: ModalController ) {
+  this.init();
  }
- init(){
+ init() {
   this.statusBar.overlaysWebView(true);
   this.statusBar.backgroundColorByHexString('#44000000');
   this.mapBox.setupMap();
@@ -36,28 +36,29 @@ this.init();
   }
 
 
-  setShowChange():Promise<any>{
+  setShowChange(): Promise<any>{
     return new Promise(resolve => {
-    this.showMain=!this.showMain;
-    this.showStart=!this.showStart;
+    this.showMain = !this.showMain;
+    this.showStart = !this.showStart;
     resolve();
     });
   }
 
 
-  setShowMain():Promise<any>{
+  setShowMain(): Promise<any>{
     return new Promise(resolve => {
       this.mainMenu.setUpStart();
-    this.showMain=true;
-    this.showStart=false;
-    resolve();
+      this.showMain = true;
+      this.showStart = false;
+      resolve();
     });
   }
-  setShowStart():Promise<any>{
+
+  setShowStart(): Promise<any>{
     return new Promise(resolve => {
-    this.showMain=false;
-    this.showStart=true;
- 
+    this.showMain = false;
+    this.showStart = true;
+
     resolve();
     });
   }

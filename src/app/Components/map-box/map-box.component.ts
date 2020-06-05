@@ -6,8 +6,6 @@ import { MapIntegrationService } from '../../services/map-integration/map-integr
 import { Position, PositionI, GeoCluster, ClusterCollection, AssemblyPointCollection, RoutingGeoAssemblyPoint } from '../../Classess/map/map';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { UserService } from './../../services/user/user.service';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { resolve } from 'url';
 import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { RoutingUserService } from 'src/app/services/routing-user/routing-user.service';
@@ -67,7 +65,7 @@ export class MapBoxComponent implements OnInit {
   private pointFetch(): Promise<any> {
     return new Promise<any>(resolve => {
       this.mapDataFetchService.retrieveClusters().subscribe((value) => {
-        console.log("CLUSTER" + value.entries);
+        console.log('CLUSTER' + value.entries);
         this.clusterMarkers = value;
         console.log(value);
         this.mapDataFetchService.clusterValueChange.subscribe(x => {
@@ -92,7 +90,7 @@ export class MapBoxComponent implements OnInit {
       });
 
     });
-    this.drawUserPoint(this.map);
+    this.drawUserPoint();
   }
 
 
@@ -153,7 +151,7 @@ export class MapBoxComponent implements OnInit {
         source: 'clusters',
         type: 'symbol',
         layout: {
-          'visibility': 'visible',
+          visibility: 'visible',
           'icon-image': 'rocket-15',
           'icon-allow-overlap': true
         },
@@ -165,10 +163,10 @@ export class MapBoxComponent implements OnInit {
 
   updateCluster(newMarkers) {
     console.log(newMarkers);
-    console.log("UpdatedCluster");
+    console.log('UpdatedCluster');
 
-    let source = <mapboxgl.GeoJSONSource>this.map.getSource("clusters");
-    let data2 = new ClusterCollection(newMarkers);
+    const source = this.map.getSource('clusters') as mapboxgl.GeoJSONSource;
+    const data2 = new ClusterCollection(newMarkers);
     data2.features.forEach(x => { const el = document.createElement('div'); el.className = 'marker'; });
 
     source.setData(newMarkers[0]); // ONLY ONE MARKER UPDATES - FeatureCollection--->>
@@ -203,7 +201,7 @@ export class MapBoxComponent implements OnInit {
   }
 
   // draw User with Bearing
-  drawUserPoint(paraMap: mapboxgl.Map) {
+  drawUserPoint() {
     console.log('draw');
     console.log(this.myPosition.position.longitude, this.myPosition.position.latitude);
 
@@ -275,7 +273,7 @@ export class MapBoxComponent implements OnInit {
 
   deleteAllLayers() { }
 
-  //Draw Feature AssemblyPoints with Clickable Touch interface to Select one AP
+  // Draw Feature AssemblyPoints with Clickable Touch interface to Select one AP
   drawChooseAssemblyPoints() {
 
     if (this.map.loaded() === true) { }

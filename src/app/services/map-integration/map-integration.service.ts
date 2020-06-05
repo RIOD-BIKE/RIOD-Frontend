@@ -6,16 +6,16 @@ import { Storage } from '@ionic/storage';
 import * as mapboxgl from 'mapbox-gl';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-const MAP_KEY='map-reload-token';
+const MAP_KEY = 'map-reload-token';
 
 export interface MapboxOutput{
-  attribution:string;
-  features: Feature[],
-  query:[];
+  attribution: string;
+  features: Feature[];
+  query: [];
 }
 export interface Feature {
-  place_name:string;
-  geometry:any;
+  place_name: string;
+  geometry: any;
 }
 
 @Injectable({
@@ -41,51 +41,46 @@ export class MapIntegrationService {
   }
 
 
-  cacheMap(map:any){
+  cacheMap(map: any) {
     console.log(map);
     //this.storage.set(MAP_KEY,map);
   }
-  
+
 
 
   //generalised Method to draw Marker
-  drawMarker(x:number,y:number){
+  drawMarker(x: number, y: number) {
     return new mapboxgl.Marker().setLngLat([x,y]);
   }
 
   //return Marker for End and Start using getEndStartCoordinates() - Return to MapBox-Component
-  drawEndStartMarker(){
+  drawEndStartMarker() {
 
   }
 
 
   //return Positions for End and Start Coordinates - API?
-  getEndStartCoordinates(){
+  getEndStartCoordinates() {
 
   }
 
   //return Route to MapBox-Component using getRouteMapBox()
-  drawRoute(){
+  drawRoute() {
 
   }
 
   //Get MapBox route via Point A and C over Point B
-  getRouteMapBox(){
+  getRouteMapBox() {
 
   }
-  
+
 
   searchAddress(query: string){
     const url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
-    return this.http.get(url+query+'.json?types=address&access_token=' + environment.mapbox.accessToken).pipe(map((res:MapboxOutput)=>{
-      console.log(res.query.values)
-      return res.features; 
-    }))
+    return this.http.get(url + query + '.json?types=address&access_token=' + environment.mapbox.accessToken)
+      .pipe(map((res: MapboxOutput) => {
+        console.log(res.query.values);
+        return res.features;
+    }));
   }
-  
-  
-
-
-
-
 }

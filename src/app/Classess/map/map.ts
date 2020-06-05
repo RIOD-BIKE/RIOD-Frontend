@@ -21,11 +21,12 @@ export class PositionI {
 export class RouteCl {
     position: Position;
     name: string;
-    timestamp: Time;             ///     ///             /// DATATYPE NOT FINAL! --> Maybe Firestore Timestamp to rxjs Timestamp conversion? | Feature Discussion
+    timestamp: Time;
+    //     ///             /// DATATYPE NOT FINAL! --> Maybe Firestore Timestamp to rxjs Timestamp conversion? | Feature Discussion
     constructor( long: number, lat: number, name: string) {
         this.position = {longitude: long, latitude: lat};
         this.name = name;
-        //this.timestamp = timestamp;
+        // this.timestamp = timestamp;
      }
 }
 
@@ -74,14 +75,14 @@ export interface IGeoJsonCluster {
     type: string;
     geometry: IGeometry;
     properties?: Array<string>;
-    members?:Array<String>;
+    members?: Array<string>;
 }
 
 export interface IGeoJsonAssemblyPoint {
     type: string;
     geometry: IGeometry;
-    properties?:Array<any>;
-    direction:String;
+    properties?: Array<any>;
+    direction: string;
 }
 
 export class GeoCluster implements IGeoJsonCluster {
@@ -94,11 +95,11 @@ export class GeoCluster implements IGeoJsonCluster {
   constructor(coordinates,properties? ) {
     this.geometry = {
       type: 'Point',
-      coordinates:coordinates,
+      // coordinates: coordinates
+      coordinates,
     };
-    properties=properties;
+    properties = properties;
     console.log(properties);
-    
   }
 }
 
@@ -112,11 +113,12 @@ export class GeoAssemblyPoint implements IGeoJsonAssemblyPoint {
     constructor(coordinates, properties? ) {
       this.geometry = {
         type: 'Point',
-        coordinates:coordinates,
+        // coordinates: coordinates,
+        coordinates,
       };
-      
-      this.properties={name:properties[0].name,longitude:coordinates[0],latitude:coordinates[1]};
-     
+
+      this.properties = {name:properties[0].name, longitude: coordinates[0], latitude: coordinates[1]};
+
 
     }
   }
@@ -136,13 +138,13 @@ export class AssemblyPointCollection {
 
 
 export class RoutingGeoAssemblyPoint {
-  position:Position;
-  name:string;
-  constructor(longitude:number,latitude:number,name:string){
-    this.position= {
-      longitude,latitude
+  position: Position;
+  name: string;
+  constructor(longitude: number, latitude: number, name: string){
+    this.position = {
+      longitude, latitude
     },
-    this.name=name;
+    this.name = name;
   }
 
 }

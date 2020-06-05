@@ -15,7 +15,7 @@ export class TutorialOverlay2Component implements OnInit {
 
   dismiss() {
   this.modalController.dismiss({
-      'dismissed': true
+      dismissed: true
     });
   }
 

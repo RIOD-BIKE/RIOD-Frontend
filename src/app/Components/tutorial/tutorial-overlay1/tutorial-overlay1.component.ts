@@ -16,11 +16,11 @@ export class TutorialOverlay1Component implements OnInit {
 
   dismiss() {
   this.modalController.dismiss({
-      'dismissed': true
+      dismissed: true
     });
   }
 
-  swipeNext(){
+  swipeNext() {
     this.slides.slideNext();
   }
 
