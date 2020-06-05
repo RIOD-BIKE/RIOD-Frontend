@@ -13,6 +13,11 @@ export class AuthGuard implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const expectedData = next.data.role;
+    // if (this.auth.getCurrentUser()['role'] !== expectedData) {
+    //   this.router.parseUrl('/sign-up-tab1');
+    //   return false;
+    // }
+    // return true;
     return this.auth.getUser().pipe(
       take(1),
       map(user =>{

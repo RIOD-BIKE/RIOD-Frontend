@@ -14,19 +14,15 @@ export class SignUpTab4Page implements OnInit {
   private name: string;
 
   constructor(private router: Router, private userDataFetch: UsersDataFetchService, private authService: AuthService) {
-    this.authService.getUserUID().subscribe(async (uid) => {
-      this.name = await this.userDataFetch.firestore_getName(uid);
-    });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.name = await this.userDataFetch.firestore_getName(this.authService.getCurrentUID());
   }
 
-  saveName() {
-    this.authService.getUserUID().subscribe(async (uid) => {
-      await this.userDataFetch.firestore_setName(uid, this.name);
-      this.router.navigate(['/map-start']);
-    });
+  async saveName() {
+    await this.userDataFetch.firestore_setName(this.authService.getCurrentUID(), this.name);
+    this.router.navigate(['/map-start']);
   }
 
 }

@@ -28,6 +28,7 @@ export class AuthService {
   private authState = new BehaviorSubject(null);
   private user: Observable<any>;
   private verificationId: string;
+  private currentUser: {};
 
   constructor(private userDataFetch: UsersDataFetchService, public navCtrl: NavController, public alertCtrl: AlertController,
     private db: AngularFirestore, private storage: Storage, private router: Router, private angularFireAuth: AngularFireAuth,
@@ -46,41 +47,6 @@ export class AuthService {
       }
     });
   }
-
-  // getVerification(phoneNumberString:string,appVerifier:firebase.auth.RecaptchaVerifier):Promise<boolean>{
-  //   return new Promise(resolve => {
-  //    this.angularFireAuth.signInWithPhoneNumber(phoneNumberString, appVerifier)
-  //     .then( async confirmationResult => {
-  //       this.confirmationResult=confirmationResult;
-  //       resolve(true);
-  //     }).catch(function (error) {
-  //       console.error("SMS not sent", error); 
-  //       resolve(false);
-  //   });
-  // });
-  // }
-  // 
-  // sendVerification(verifyNumber:number):Promise<any>{
-  //   return new Promise(resolve => {
-  //   this.confirmationResult.confirm(verifyNumber.toString()).then(x=>{
-  //     console.log("Verified Code!");
-  //     this.userDataFetch.rtdb_createUser(x.user.uid).then(y=>{
-  //       console.log("RTDB Entry created!");
-  //       this.userDataFetch.firestore_createUser(x.user.uid).then(z=>{
-  //         if(z==true) {} //NEWLY Created Structure of Firestore for User
-  //         if(z==false){} //NO NEW Structure of Firestore for User -> already exists
-  //         console.log("Firestore Entry created!");
-  //         this.signIn(x.user.uid).then(x=>{
-  //           resolve(true);
-  //         })
-  //       });
-  //     });
-  //   }).catch(x=>{
-  //     console.log(x);
-  //     resolve(false);
-  //   });
-  // });
-  // }
 
   async requestPhoneVerification(phone: string) {
     this.verificationId = await this.firebaseAuthentication.verifyPhoneNumber(phone, 0);
@@ -134,18 +100,25 @@ export class AuthService {
         }
         this.authState.next(user);
         this.storage.set(TOKEN_KEY, user);
+        this.currentUser = user;
         resolve();
       });
     });
   }
 
   getUser() { return this.user; }
-// TODO: UID nicht als Observable, sondern direkt als Wert
   getUserUID() {
     return this.user.pipe(take(1), map(user => {
       const uid = user['uid'];
       return uid;
     }));
+  }
+
+  getCurrentUser() {
+    return this.currentUser;
+  }
+  getCurrentUID(): string {
+    return this.currentUser['uid'];
   }
 
   async signout() {
