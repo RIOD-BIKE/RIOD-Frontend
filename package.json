@@ -54,6 +54,7 @@
     "cordova-support-android-plugin": "^1.0.2",
     "cordova-support-google-services": "^1.4.0",
     "cordova-universal-links-plugin": "git+https://github.com/flipflopapp/cordova-universal-links-plugin.git",
+    "cordova-universal-links-plugin-fix": "^1.2.1",
     "core-js": "^2.5.4",
     "firebase": "^7.14.4",
     "google-libphonenumber": "^3.2.9",
@@ -117,14 +118,15 @@
       "cordova-plugin-browsertab": {},
       "cordova-plugin-inappbrowser": {},
       "cordova-plugin-customurlscheme": {
-        "URL_SCHEME": "com.googleusercontent.apps.946261770679-5gr9o5bbab0plqreovpnjs64n2lpa399",
+        "URL_SCHEME": "bike.riod.app",
         "ANDROID_SCHEME": " ",
         "ANDROID_HOST": " ",
         "ANDROID_PATHPREFIX": "/"
       },
       "cordova-plugin-nativegeocoder": {
         "LOCATION_WHEN_IN_USE_DESCRIPTION": "Use geocoder service"
-      }
+      },
+      "cordova-universal-links-plugin": {}
     },
     "platforms": [
       "ios",
