@@ -2,7 +2,7 @@
 import {  RouteCl, GeoCluster, GeoAssemblyPoint } from '../../Classess/map/map';
 import { Injectable } from '@angular/core';
 import { Subscriber, Observable, BehaviorSubject, Subject } from 'rxjs';
-import { AngularFirestore, AngularFirestoreCollection  } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, DocumentReference  } from '@angular/fire/firestore';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable({
@@ -65,21 +65,23 @@ export class MapDataFetchService {
 
 
   // get All AssemblyPoints of User via Firestore
-  retrieveAssemblyPoints():BehaviorSubject<Array<GeoAssemblyPoint>> {
-    this.auth.getUserUID().toPromise().then(uid => {
-      console.log(uid);
-      const apCollection = this.db.collection('users').doc(uid).collection('assemblyPoints');
+  retrieveAssemblyPoints(): BehaviorSubject<Array<GeoAssemblyPoint>> {
+    this.auth.getUserUID().toPromise().then(async uid => {
+      const apCollection = this.db.collection('users').doc(uid);
       apCollection.valueChanges().subscribe(data => {
-        data.forEach(x => {
-          console.log(x.properties);
-          this.aps.push(new GeoAssemblyPoint(x.coordinates,x.properties));
-        });
-        console.log('Firestore new Assembly Values' + this.aps);
-        return this.apsValueChange.next(this.aps);
-   });
-  });
+        for (const path of data['assemblyPoints']) {
+          const ref = this.db.doc(path);
+          ref.get().toPromise().then(apData => {
+            const ap = apData.data();
+            console.log(ap);
+            this.aps.push(new GeoAssemblyPoint(ap['coordinates'].reverse(), [ap['name']]));
+            this.apsValueChange.next(this.aps);
+          });
+        }
+      });
+    });
     return this.apsValueChange = new BehaviorSubject<Array<GeoAssemblyPoint>>(this.aps);
-}
+  }
 
 
   // get Recent Routes Ionic Storage
