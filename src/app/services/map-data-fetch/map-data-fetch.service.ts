@@ -54,7 +54,7 @@ export class MapDataFetchService {
           ref.get().toPromise().then(cData => {
             const c = cData.data();
             // console.log(c);
-            this.cluster.push(new GeoCluster(c['coordinates'].reverse(), [c['count']]));
+            this.cluster.push(new GeoCluster(c.coordinates.reverse(), [c.count]));
             this.clusterValueChange.next(this.cluster);
           });
         }
@@ -77,7 +77,7 @@ export class MapDataFetchService {
           ref.get().toPromise().then(apData => {
             const ap = apData.data();
             // console.log(ap);
-            this.aps.push(new GeoAssemblyPoint(ap['coordinates'].reverse(), [ap['name']]));
+            this.aps.push(new GeoAssemblyPoint(ap.coordinates.reverse(), [ap.name]));
             this.apsValueChange.next(this.aps);
           });
         }
