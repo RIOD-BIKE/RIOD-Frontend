@@ -22,21 +22,27 @@ export class MapDataFetchService {
 
 // AssemblyPoint Array and BehaviorSubject
   aps: Array<GeoAssemblyPoint>; apsValueChange: BehaviorSubject<Array<GeoAssemblyPoint>>;
-
+  private clusterStatus: BehaviorSubject<boolean>;
 
 
 
   constructor(private db: AngularFirestore, private auth: AuthService, private rtDB: AngularFireDatabase, private userService: UserService) {
     this.aps = new Array<GeoAssemblyPoint>();
     this.cluster = new Array<GeoCluster>();
+    this.clusterStatus = new BehaviorSubject<boolean>(false);
     this.auth.getUserUID().toPromise().then(uid => {
       this.userFirestore = this.db.collection('users').doc(uid).valueChanges();
     });
   }
 
-  // sets Status if User is in Cluster - via Firestore
-  getUserClusterStatus() {
-
+  getUserClusterStatus(): BehaviorSubject<boolean> {
+    this.userFirestore.subscribe(data => {
+      const isInCluster = (data['activeCluster'] === null) ? false : true;
+      if (this.clusterStatus.getValue() !== isInCluster) {
+        this.clusterStatus.next(isInCluster);
+      }
+    });
+    return this.clusterStatus;
   }
 
 
