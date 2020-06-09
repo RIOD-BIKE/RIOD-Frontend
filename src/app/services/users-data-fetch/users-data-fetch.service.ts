@@ -13,13 +13,20 @@ export class UsersDataFetchService {
   this.usersRef = rtdb.list('/users');
   }
 
-  rtdb_createUser(uid: string): Promise<any> {
-    return new Promise(resolve => {
-      let userR;
-      // TODO: CHECK IF USER STRUCTURE IN REALTIME DATABSE EXISTS
-      userR = this.rtdb.object(`users/${uid}`).set({latitude: 0, longitude: 0, bearing: 0});
-      resolve(userR);
-    })
+  // rtdb_createUser(uid: string): Promise<any> {
+  //   return new Promise(resolve => {
+  //     let userR;
+  //     // TODO: CHECK IF USER STRUCTURE IN REALTIME DATABSE EXISTS
+  //     userR = this.rtdb.object(`users/${uid}`).set({latitude: 0, longitude: 0, bearing: 0});
+  //     resolve(userR);
+  //   })
+  // }
+  async rtdb_createUser(uid: string) {
+    await this.rtdb.object('users/' + uid).set({
+      bearing: 0,
+      latitude: 0,
+      longitude: 0
+    });
   }
 
   // firestore_createUser(uid: string): Promise<any> {
