@@ -84,7 +84,7 @@ export class MapDataFetchService {
         ref.get().toPromise().then(apData => {
           const ap = apData.data();
            //console.log(ap.name+"NAME");
-          this.aps.push(new GeoAssemblyPoint(ap.coordinates.reverse(), [ap.name]));
+          this.aps.push(new GeoAssemblyPoint([ap.coordinates.longitude, ap.coordinates.latitude], [ap.name]));
           this.apsValueChange.next(this.aps);
         });
       }
