@@ -64,7 +64,7 @@ export class MapDataFetchService {
         ref.get().toPromise().then(cData => {
           const c = cData.data();
           // console.log(c);
-          this.cluster.push(new GeoCluster(c.coordinates.reverse(), [c.count]));
+          this.cluster.push(new GeoCluster([c.coordinates.longitude, c.coordinates.latitude], [c.count]));
           this.clusterValueChange.next(this.cluster);
         });
       }

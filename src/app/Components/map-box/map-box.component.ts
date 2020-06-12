@@ -8,7 +8,6 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { UserService } from './../../services/user/user.service';
 import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
-import * as turf from '@turf/turf'; 
 import { RoutingUserService } from 'src/app/services/routing-user/routing-user.service';
 const MAP_KEY = 'map-reload-token';
 
@@ -93,10 +92,13 @@ export class MapBoxComponent implements OnInit {
 
   private async inizializeMap() {
     await this.buildMap().then(x => {
+      // setTimeout(() => {
       this.pointFetch().then(() => {
-        this.drawClusters();
-        this.drawAssemblyPoints();
-      });
+
+          this.drawClusters();
+          this.drawAssemblyPoints();
+        });
+      // }, 5000);
       this.drawUserPoint();
     });
   }
@@ -151,27 +153,27 @@ export class MapBoxComponent implements OnInit {
           features: []
         }
       });
+      setTimeout(() => {
+        this.clusterSource = this.map.getSource('clusters');
+        const data = new ClusterCollection(this.clusterMarkers);
+        this.clusterSource.setData(data);
 
-      this.clusterSource = this.map.getSource('clusters');
-      const data = new ClusterCollection(this.clusterMarkers);
-      this.clusterSource.setData(data);
+        data.features.forEach(x => {
+          const el = document.createElement('div');
+          el.className = 'marker';
+        });
 
-      data.features.forEach(x => {
-        const el = document.createElement('div');
-        el.className = 'marker';
-      });
-
-      this.map.addLayer({
-        id: 'clusters',
-        source: 'clusters',
-        type: 'symbol',
-        layout: {
-          visibility: 'visible',
-          'icon-image': 'rocket-15',
-          'icon-allow-overlap': true
-        },
-      });
-
+        this.map.addLayer({
+          id: 'clusters',
+          source: 'clusters',
+          type: 'symbol',
+          layout: {
+            visibility: 'visible',
+            'icon-image': 'rocket-15',
+            'icon-allow-overlap': true
+          },
+        });
+      }, 2000);
     });
   }
 
@@ -201,28 +203,29 @@ export class MapBoxComponent implements OnInit {
           features: []
         }
       });
+      setTimeout(() => {
+        // Should be Observable Calling -> FirebaseList
+        this.assemblyPointSource = this.map.getSource('assemblyPoints');
+        const data2 = new AssemblyPointCollection(this.assemblyPointMarkers);
+        this.assemblyPointSource.setData(data2);
 
-      // Should be Observable Calling -> FirebaseList
-      this.assemblyPointSource = this.map.getSource('assemblyPoints');
-      const data2 = new AssemblyPointCollection(this.assemblyPointMarkers);
-      this.assemblyPointSource.setData(data2);
+        data2.features.forEach(x => {
+          const el = document.createElement('div');
+          el.className = 'marker';
+        });
 
-      data2.features.forEach(x => {
-        const el = document.createElement('div');
-        el.className = 'marker';
-      });
-
-      this.map.addLayer({
-        id: 'assemblyPoints',
-        source: 'assemblyPoints',
-        type: 'symbol',
-        layout: {
-          // 'visibility': 'visible',
-          visibility: 'visible',
-          'icon-image': 'bicycle-15',
-          'icon-allow-overlap': true
-        },
-      });
+        this.map.addLayer({
+          id: 'assemblyPoints',
+          source: 'assemblyPoints',
+          type: 'symbol',
+          layout: {
+            // 'visibility': 'visible',
+            visibility: 'visible',
+            'icon-image': 'bicycle-15',
+            'icon-allow-overlap': true
+          },
+        });
+      }, 2000);
     });
   }
 
