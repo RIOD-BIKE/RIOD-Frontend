@@ -48,7 +48,7 @@ jobs:
       run: npx ionic build
     - name: Cordova Add Android
       run: npx ionic cordova platform add android
-    - name: Cordova Add Android
+    - name: Cordova Prepare Android
       run: npx ionic cordova prepare android
 
   ios:

@@ -53,7 +53,7 @@
     "cordova-plugin-whitelist": "1.3.3",
     "cordova-support-android-plugin": "^1.0.2",
     "cordova-support-google-services": "^1.4.0",
-    "cordova-universal-links-plugin": "git+https://github.com/flipflopapp/cordova-universal-links-plugin.git",
+    "cordova-universal-links-plugin": "git+https://github.com/artifacthealth/cordova-universal-links-plugin.git",
     "cordova-universal-links-plugin-fix": "^1.2.1",
     "core-js": "^2.5.4",
     "firebase": "^7.14.4",
