@@ -1,14 +1,16 @@
 <div class="over">
+   <div class="wrap" *ngFor="let a of [infoArray]">
+      <h3>
+         {{a[0]}}<span style="font-weight: 100;"> {{a[1]}}</span>
+        </h3>
+     </div>
+   <div class="wrap">
+      <button ion-button id="btn1" (click)=startRoute()></button> 
+   </div>
     <div class="wrap">
-       <h3>7 Minuten<span style="font-weight: 100;"> (12 Kilometer)</span></h3>
-    </div>
+      <button ion-button id="btn2" (click)=saveRoute()></button> 
+   </div>
     <div class="wrap">
-       <button ion-button id="btn1" (click)=startRoute()></button> 
-    </div>
-     <div class="wrap">
-       <button ion-button id="btn2" (click)=saveRoute()></button> 
-    </div>
-     <div class="wrap">
-       <button ion-button id="btn3" (click)="closeView()"></button> 
-    </div>
+      <button ion-button id="btn3" (click)="closeView()"></button> 
+   </div>
 </div>

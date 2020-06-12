@@ -84,6 +84,13 @@ export interface IGeoJsonAssemblyPoint {
     properties?: Array<any>;
     direction: string;
 }
+export interface IGeoPointMarker {
+  type: string;
+  geometry: IGeometry;
+  properties?: Array<any>;
+
+}
+
 
 export class GeoCluster implements IGeoJsonCluster {
     //Variable Definition for Cluster
@@ -116,8 +123,26 @@ export class GeoAssemblyPoint implements IGeoJsonAssemblyPoint {
         // coordinates: coordinates,
         coordinates,
       };
+      
+      this.properties = {name: properties[0],longitude: coordinates[0],latitude:coordinates[1]};
 
-      this.properties = {name: properties[0].name, longitude: coordinates[0], latitude: coordinates[1]};
+
+    }
+  }
+  export class GeoPointMarker implements IGeoPointMarker {
+    type = 'Feature';
+    geometry: IGeometry;
+    properties;
+
+
+    constructor(coordinates, properties? ) {
+      this.geometry = {
+        type: 'Point',
+        // coordinates: coordinates,
+        coordinates,
+      };
+
+      this.properties = {};
 
 
     }
@@ -132,7 +157,10 @@ export class AssemblyPointCollection {
     type = 'FeatureCollection';
     constructor(public features: Array<GeoAssemblyPoint>) {}
 }
-
+export class PointMarker {
+  type = 'FeatureCollection';
+  constructor(public features: Array<GeoPointMarker>) {}
+}
 
 export class RoutingGeoAssemblyPoint {
   position: Position;

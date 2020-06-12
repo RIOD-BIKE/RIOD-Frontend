@@ -1,4 +1,4 @@
-import { PositionI } from './../../Classess/map/map';
+import { PositionI, RoutingGeoAssemblyPoint } from './../../Classess/map/map';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
@@ -16,8 +16,7 @@ export class UserService {
 
   public behaviorMyOwnPosition = new BehaviorSubject(null);
   private firstTimeCalling = true;
-  // private firstCall = true;
-  // private oldTimestamp;
+
 
   async getUserPosition(): Promise<PositionI> {
     return new Promise<PositionI>(resolve => {
@@ -29,7 +28,6 @@ export class UserService {
         this.geolocation.watchPosition(options).subscribe(x => {
           this.behaviorMyOwnPosition.next(x);
           this.firstTimeCalling = false;
-        //   resolve();
         });
         this.geolocation.getCurrentPosition().then((resp) => {
           resolve(new PositionI(resp.coords.longitude, resp.coords.latitude));
@@ -38,8 +36,13 @@ export class UserService {
     });
   }
 
-  public saveRoute(newRoute: string) {
+  public saveRoute(newRoute: string,points:RoutingGeoAssemblyPoint[]) {
     console.log("Route Saved Adress: " + newRoute);
+    var temp="Points: ";
+    points.forEach(x=>{
+      temp+=x.name+", ";
+    });
+    console.log(temp);
   }
 
   public getfirstTimeCalling() {

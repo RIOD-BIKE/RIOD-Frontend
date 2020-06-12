@@ -1,30 +1,34 @@
 <div class="over">
     <div class="wrap">
         <button ion-button class="btn1"></button>
-        <!-- <input class="search" type="text"  name="finish" [(ngModel)]="newStart" (ngModelChange) ="setNewStart(newStart)"  placeholder="Mein Standort"/> -->
-        <input class="search" type="text"  name="finish" placeholder="Mein Standort"/>
-    </div>
-    
-    <div class="wrap">
-        <button ion-button class="btn2"></button>
         
+        <ion-input style="color:#ffffff; font-weight:500" class="search" type="text" debounce=500   [(ngModel)]="selectedStartAddresses" (ionChange)="searchStart($event)"  placeholder="Mein Standort" ></ion-input>
+        <div style="position:absolute; width:100%; z-index:999;margin-top:7.5em ;left:0%">
+            <ion-list lines="none" *ngIf="addressesStartString.length > 0"> 
+                <ion-item button *ngFor="let address of addressesStartString" (click)="onStartSelect(address)">
+                    <ion-icon name ="pin"></ion-icon>
+                    {{address[1]}}
+                </ion-item>
+            </ion-list>
+        </div>
+      
+    </div>
+    <div class="wrap" >
+        <button ion-button class="btn2"></button>
+        <div *ngFor="let point of points; let i=index">
         <div class="point" (click)="chooseAP()" >
-            <h3 > +++ </h3>
+            <h3 > {{point.name}} </h3>
         </div>
        
-        <div class="point">
-            <h3> - </h3>
-        </div>
-        <div class="point">
-            <h3> - </h3>
-        </div>
+       
+    </div>
     </div>
     <div class="wrap">
         <button ion-button class="btn3">
         </button>
-        <ion-input class="search" debounce=500   [(ngModel)]="selectedAddresses" (ionChange)="search($event)"  placeholder="Hier suchen.." ></ion-input>
+        <ion-input style="color:#ffffff; font-weight:500" class="search" type="text" debounce=500   [(ngModel)]="selectedAddresses" (ionChange)="search($event)"  placeholder="Hier suchen.." ></ion-input>
         <div style="position:absolute; width:100%; z-index:999;margin-top:7.5em ;left:0%">
-            <ion-list lines="none" *ngIf="addressesString.length > 0"> 
+            <ion-list lines="none" *ngIf="addressesString.length > 1"> 
                 <ion-item button *ngFor="let address of addressesString" (click)="onSelect(address)">
                     <ion-icon name ="pin"></ion-icon>
                     {{address[1]}}

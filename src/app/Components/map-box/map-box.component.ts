@@ -3,11 +3,12 @@ import { environment } from './../../../environments/environment';
 import { Component, OnInit } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { MapIntegrationService } from '../../services/map-integration/map-integration.service';
-import { Position, PositionI, GeoCluster, ClusterCollection, AssemblyPointCollection, RoutingGeoAssemblyPoint } from '../../Classess/map/map';
+import { Position, PositionI, GeoCluster, ClusterCollection, AssemblyPointCollection, RoutingGeoAssemblyPoint, PointMarker, GeoPointMarker } from '../../Classess/map/map';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { UserService } from './../../services/user/user.service';
 import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import * as turf from '@turf/turf'; 
 import { RoutingUserService } from 'src/app/services/routing-user/routing-user.service';
 const MAP_KEY = 'map-reload-token';
 
@@ -26,6 +27,11 @@ export class MapBoxComponent implements OnInit {
   private firstTry = true;
   private assemblyPointSource: any;
   private assemblyPointMarkers: any;
+  private finishPointSource: any;
+  private finishPointMarker: any;
+  private startingPointSource: any;
+  private startingPointMarker: any;
+  private coords:any;
 
   constructor(private routingUserService: RoutingUserService, private geolocation: Geolocation, private userservice: UserService,
     private mapIntegrationService: MapIntegrationService, private mapDataFetchService: MapDataFetchService,
@@ -122,11 +128,10 @@ export class MapBoxComponent implements OnInit {
     // });
 
     try {
-      this.myPosition = await this.userservice.getUserPosition();
+      let temp = await this.userservice.behaviorMyOwnPosition.getValue().coords;
     } catch (e) {
       console.log(e);
     }
-
     this.map.flyTo({ zoom: 15, center: [this.myPosition.position.longitude, this.myPosition.position.latitude] });
   }
 
@@ -169,6 +174,7 @@ export class MapBoxComponent implements OnInit {
 
     });
   }
+
 
 
   updateCluster(newMarkers) {
@@ -230,39 +236,24 @@ export class MapBoxComponent implements OnInit {
       showAccuracyCircle: true,
       showUserLocation: true
     });
-
     this.map.addControl(geolocate);
-
     this.map.on('load', (event) => {
       geolocate.trigger();
     });
-
-    // geolocate.on('geolocate', (event) => {
-    //   console.log(event);
-    // });
   }
 
 
-  drawFinishMarker() { }
-
-  drawStartMarker() { }
-
-  deleteAllLayers() { }
-
-  // Draw Feature AssemblyPoints with Clickable Touch interface to Select one AP
   drawChooseAssemblyPoints() {
-
     if (this.map.loaded() === true) { }
-
     this.map.addSource('clickable', {
       type: 'geojson',
       data: { type: 'FeatureCollection', features: [] }
     });
-
     this.assemblyPointSource = this.map.getSource('clickable');
     const data2 = new AssemblyPointCollection(this.assemblyPointMarkers);
+    console.log(data2);
     this.assemblyPointSource.setData(data2);
-
+    console.log(data2);
     data2.features.forEach(x => { const el = document.createElement('div'); el.className = 'marker'; });
     this.map.addLayer({
       id: 'clickable',
@@ -288,6 +279,189 @@ export class MapBoxComponent implements OnInit {
       this.toggleAssemblyPointLayerVisibility();
     });
   }
+
+
+
+  async drawRoute(pointString):Promise<any> {
+    return new Promise(resolve => {
+    this.routingUserService.getstartPoint().then(y=>{
+    this.routingUserService.getfinishPoint().then(x=>{
+      var start=y[0]; //StartCoords
+      var end=x[0]; //FinishCoords
+      var completeDirectionString = start[0] + ',' + start[1] + ';'+pointString + end[0] + ',' + end[1];
+      console.log(completeDirectionString);
+      var url = 'https://api.mapbox.com/directions/v5/mapbox/cycling/' + 
+      completeDirectionString+
+      '?steps=true&geometries=geojson&access_token=' + environment.mapbox.accessToken.toString();
+      console.log(url);
+      if(this.map.loaded()){
+
+        this.drawRouteHelpMethod(url,this.drawRouteFunctionMap,this.map,this.drawStartMarker,this.drawFinishMarker,this.routingUserService).then(()=>{resolve();})
+      }
+
+    });
+  });
+});
+  }
+
+ 
+
+  drawRouteHelpMethod(url, cFunction,map,start,finish,routing):Promise<any>{
+    return new Promise(resolve => {
+
+    //XMLHttpRequest is a bitch  
+    var xhttp = new XMLHttpRequest();
+    xhttp.responseType = 'json';
+    xhttp.open("GET",url,true);
+    xhttp.onreadystatechange = function() {
+    xhttp.onload=function(){
+      var jsonResponse = xhttp.response;
+      var distance = jsonResponse.routes[0].distance*0.001; // Convert to KM
+      var duration = jsonResponse.routes[0].duration/60;  // Convert to Minutes
+      var coords = jsonResponse.routes[0].geometry;
+        if ((xhttp.readyState ===4) && (xhttp.status===200)) {
+        routing.setDuration(duration);  //Set Duration Value
+        routing.setDistance(distance);  //Set Distance Value
+
+        // For printing Start-/FinishMarker
+        var first = coords.coordinates[0]; //First GeoLine Point
+        var last = coords.coordinates[coords.coordinates.length-1]; //Last GeoLine Point
+        
+       
+        cFunction(coords,map); //Übergabe von drawRouteFunctionMap() Function
+        start(first,map); //Übergabe von drawStartMarker() Function
+        finish(last,map); //Übergabe von drawFinishMarker() Function
+        resolve();
+
+      }
+    };
+  }
+    xhttp.send();
+    
+});
+  }
+
+  drawRouteFunctionMap(coords,map){
+
+    //check and delete if Layer exists
+    if(map.getLayer("route")!=undefined){
+      map.removeLayer("route");
+      map.removeSource("routeSource");
+      console.log("removed.......");
+
+    }
+
+    map.addSource('routeSource', {type: 'geojson',data: { type: 'Feature', properties: {},geometry: coords }});
+
+      map.addLayer({
+          id: "route",
+          type: "line",
+          source:"routeSource",
+          layout: {
+            "line-join": "round",
+            "line-cap": "round"
+          },
+          paint: {
+            "line-color": "#3b9ddd",
+            "line-width": 8,
+            "line-opacity": 0.8
+          }
+        });
+
+        //Move Route Layer infront of APs and Cluster
+        map.moveLayer("route","assemblyPoints");
+        map.moveLayer("route","clusters");
+
+  };
+
+
+
+drawFinishMarker(finishPoint,map) { 
+
+  if(map.getLayer("finishMarker")!=undefined){
+    //map.removeLayer("finishMarker");
+   // map.removeSource("finishMarker");
+    console.log("FinishMarker exists");
+
+  }
+    console.log("FinishPoint: "+finishPoint);
+    map.addSource('finishMarker', {
+      type: 'geojson',
+      data: { type: 'FeatureCollection', features: [] }
+    });
+    let finishPointSource;
+    finishPointSource= map.getSource('finishMarker') as mapboxgl.GeoJSONSource;
+    const finishPointdata = new PointMarker(Array(new GeoPointMarker(finishPoint[0])));
+    console.log(finishPointdata);
+    finishPointdata.features.forEach(x => { const el = document.createElement('div'); el.className = 'marker'; });
+  
+    finishPointSource.setData(finishPointdata);
+
+    map.addLayer({
+      id: 'finishMarker',
+      source: 'finishMarker',
+      type: 'symbol',
+      layout: {
+        'visibility': 'visible',
+        'icon-image': 'marker-15',
+        'icon-size': 2,
+        'icon-allow-overlap': true
+      },
+    });
+
+}
+
+drawStartMarker(startPoint,map) { 
+
+  if(map.getLayer("startMarker")!=undefined){
+    //map.removeLayer("startMarker");
+   // map.removeSource("startMarker");
+    console.log("StartMarker exists");
+
+  }
+  console.log("Startpoint"+startPoint);
+   
+    map.addSource('startMarker', {
+      type: 'geojson',
+      data: { type: 'FeatureCollection', features: [] }
+    });
+    let startingPointSource;
+    startingPointSource= map.getSource('startMarker') as mapboxgl.GeoJSONSource;
+    const startPointData = new PointMarker(Array(new GeoPointMarker(startPoint[0])));
+    console.log(startPointData);
+    startPointData.features.forEach(x => { const el = document.createElement('div'); el.className = 'marker'; });
+  
+    startingPointSource.setData(startPointData);
+
+    map.addLayer({
+      id: 'startMarker',
+      source: 'startMarker',
+      type: 'symbol',
+      layout: {
+        'visibility': 'visible',
+        'icon-image': 'marker-15',
+        'icon-size': 2,
+        'icon-allow-overlap': true
+      },
+    });
+  
+
+}
+
+removeRoute(){
+  if(this.map.getLayer("startMarker")!=undefined){
+    this.map.removeLayer("startMarker");
+    this.map.removeSource("startMarker");
+  }
+  if(this.map.getLayer("finishMarker")!=undefined){
+    this.map.removeLayer("finishMarker");
+    this.map.removeSource("finishMarker");
+  }
+  if(this.map.getLayer("route")!=undefined){
+    this.map.removeLayer("route");
+    this.map.removeSource("routeSource");
+  }
+}
 
   toggleAssemblyPointLayerVisibility() {
     const visibility = this.map.getLayoutProperty('assemblyPoints', 'visibility');
