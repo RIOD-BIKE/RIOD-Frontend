@@ -62,6 +62,7 @@
     "google-libphonenumber": "^3.2.9",
     "intl-tel-input": "^14.1.0",
     "ionic-native": "^2.9.0",
+    "libphonenumber-js": "^1.7.53",
     "mapbox-gl": "^1.10.1",
     "ngx-bootstrap": "^5.6.1",
     "ngx-intl-tel-input": "^2.3.4",
