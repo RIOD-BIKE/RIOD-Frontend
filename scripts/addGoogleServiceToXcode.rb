@@ -11,5 +11,5 @@ project.targets.first.resources_build_phase.files.to_a.map do |pbx_build_file|
     end
 end
 project.targets.first.add_resources([file])
-puts 'added ' + file_name + ' to Xcode project\n'
+puts 'added ' + file_name + ' to Xcode project'
 project.save()
