@@ -4,8 +4,8 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'map-start', pathMatch: 'full',
-  // { path: '', redirectTo: 'sign-up-tab1', pathMatch: 'full',
+  // { path: '', redirectTo: 'map-start', pathMatch: 'full',
+  { path: '', redirectTo: 'first-screen', pathMatch: 'full',
   canActivate: [AuthGuard],
   data: {role: 'USER', authGuradRedirect: 'sing-up-tab1'}
   },
@@ -78,6 +78,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/map/map-ride/map-ride.module').then( m => m.MapRidePageModule),
     canActivate: [AuthGuard],
     data: {role: 'USER'}
+  },
+  {
+    path: 'first-screen',
+    loadChildren: () => import('./pages/sign_up/first-screen/first-screen.module').then( m => m.FirstScreenPageModule)
   }
 
 

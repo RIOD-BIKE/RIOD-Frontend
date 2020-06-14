@@ -1,0 +1,59 @@
+ion-content {
+    --padding-top: 0vh;
+    --padding-bottom: 0vh;
+    --padding-start: 0vw;
+    --padding-end: 0vw;
+    --background: rgba(0, 0, 0, 0.7) !important;
+  }
+  
+  .circle {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      margin-top: 85vh;
+       margin-left: 50%; 
+       text-align: center;
+    }
+  
+  
+    .circle .tick {
+      background:white;
+      position: absolute;
+      border-radius: 50%;
+    }
+  
+    .small-button {
+      --background:white;
+    }
+  
+    .circle .tick:nth-child(1) {
+      transform: rotate(0deg) translate(100px);
+    }
+    .circle .tick:nth-child(2) {
+      transform: rotate(-45deg) translate(100px) rotate(-45deg);
+      
+    }
+    .circle .tick:nth-child(3) {
+      transform: rotate(-90deg) translate(100px) rotate(90deg);
+    }
+    .circle .tick:nth-child(4) {
+      transform: rotate(-135deg) translate(100px) rotate(135deg);
+    }
+    .circle .tick:nth-child(5) {
+      transform: rotate(-180deg) translate(100px) rotate(-180deg);
+    }
+  
+  
+    ion-icon {
+      color:black;
+      background-color: white;
+    }
+  
+    .test {
+    --background:chartreuse;
+    height: 40px;
+    margin-top: 20px;
+    margin-left: -25%;
+    position: absolute;
+    }
+  

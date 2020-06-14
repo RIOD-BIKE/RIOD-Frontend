@@ -1,47 +1,49 @@
 ion-content {
-    font-family: effra;
-    --padding-top: 0vh;
-    --padding-bottom: 0vh;
-    --padding-start: 0vw;
-    --padding-end: 0vw;
-    --background: rgba(0, 0, 0, 0.7) !important;
+  font-family: effra;
+  --padding-top: 0vh;
+  --padding-bottom: 0vh;
+  --padding-start: 0vw;
+  --padding-end: 0vw;
+  --background: rgba(0, 0, 0, 0.7) !important;
 }
 
 
 ion-slides {
-    height: 100%;
-  }
+  height: 100%;
+}
 
-  .swiper-slide {
-    display: block;
-  }
+.swiper-slide {
+  display: block;
+}
 
-  .swiper-slide h2 {
-    margin-top: 2.8rem;
-  }
+.swiper-slide h2 {
+  margin-top: 2.8rem;
+}
 
- .pstyle1 {
-        font-family: effra;
-        font-size: 20px;
-        color:white;
-        text-align: left;
-        padding-left:10vw;
-        padding-right:5vw;
-  }
 
-  .pstyle2 {
-    font-family: effra;
-    font-size: 20px;
-    color:white;
-    text-align: left;
-    padding-left:20vw;
-    padding-right:5vw;
+
+.pstyle1 {
+      font-family: effra;
+      font-size: 20px;
+      color:white;
+      text-align: left;
+      padding-left:10vw;
+      padding-right:5vw;
+}
+
+.pstyle2 {
+  font-family: effra;
+  font-size: 20px;
+  color:white;
+  text-align: left;
+  padding-left:20vw;
+  padding-right:5vw;
 }
 
 .primary {
-  --box-shadow: white;
-  --background:white;
-  padding-right: 8%;
-  padding-bottom: 8%;
+--box-shadow: white;
+--background:white;
+padding-right: 8%;
+padding-bottom: 8%;
 }
 

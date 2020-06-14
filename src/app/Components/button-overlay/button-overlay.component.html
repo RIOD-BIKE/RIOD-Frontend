@@ -1,0 +1,21 @@
+<ion-content fullscreen scroll-y="false" scroll-x="false">
+  <ion-slides   pager="false" #mySlider>
+
+    <ion-slide>
+      <div (click)="dismiss()" style="margin-top: 118vh;"></div>
+
+      <div class="circle" (click)="dismiss()">
+        <div class="tick"><ion-fab-button class ="small-button" size="small"><ion-icon  name="star-outline"></ion-icon></ion-fab-button></div>
+        <div class="tick"><ion-fab-button class ="small-button" size="small"><ion-icon name="pricetags-outline"></ion-icon></ion-fab-button></div>
+        <div class="tick"><ion-fab-button class ="small-button" size="small"><ion-icon name="briefcase-outline"></ion-icon></ion-fab-button></div>
+        <div class="tick"><ion-fab-button class ="small-button" size="small"><ion-icon name="heart-outline"></ion-icon></ion-fab-button></div>
+        <div class="tick"><ion-fab-button class ="small-button" size="small"><ion-icon name="home-outline"></ion-icon></ion-fab-button></div>
+        <ion-button class="test" shape="round">
+          <ion-icon style="background-color:chartreuse;color:white "name="checkmark-outline"></ion-icon>
+      </ion-button>
+      </div>
+
+    </ion-slide>
+
+  </ion-slides>
+</ion-content>

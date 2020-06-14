@@ -1,3 +1,5 @@
+import { ModalController } from '@ionic/angular';
+import { ButtonOverlayComponent } from './../button-overlay/button-overlay.component';
 import { Component, OnInit, Input } from '@angular/core';
 import { MapStartPage } from 'src/app/pages/map/map-start/map-start.page';
 import { RoutingUserService } from 'src/app/services/routing-user/routing-user.service';
@@ -15,7 +17,7 @@ export class RouterInfoInBottomComponent implements OnInit {
   private duration:number;
   private distance:number;
   private infoArray=["null1","null2"];
-  constructor(private mapStart: MapStartPage,private mainMenu:MainMenuComponent,private mapBox: MapBoxComponent, private routingUserService: RoutingUserService, private userService:UserService) { }
+  constructor(private mapStart: MapStartPage,private mainMenu:MainMenuComponent,private mapBox: MapBoxComponent, private routingUserService: RoutingUserService, private userService:UserService, private modalController :ModalController) { }
 
   ngOnInit() {
     this.routingUserService.getDistance();
@@ -59,5 +61,10 @@ export class RouterInfoInBottomComponent implements OnInit {
       
     })
   }
-
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: ButtonOverlayComponent
+    });
+    return await modal.present();
+  }
 }

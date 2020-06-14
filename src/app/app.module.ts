@@ -21,10 +21,12 @@ import { HttpClientModule} from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TutorialOverlay1Component } from './Components/tutorial/tutorial-overlay1/tutorial-overlay1.component';
 import { TutorialOverlay2Component } from './Components/tutorial/tutorial-overlay2/tutorial-overlay2.component';
+import { ButtonOverlayComponent } from './Components/button-overlay/button-overlay.component';
+import { ExplainSlidesComponent } from './Components/explain-slides/explain-slides.component';
 
 @NgModule({
-  declarations: [AppComponent, TutorialOverlay1Component, TutorialOverlay2Component],
-  entryComponents: [TutorialOverlay1Component, TutorialOverlay2Component],
+  declarations: [AppComponent, TutorialOverlay1Component, TutorialOverlay2Component, ButtonOverlayComponent, ExplainSlidesComponent],
+  entryComponents: [TutorialOverlay1Component, TutorialOverlay2Component, ButtonOverlayComponent, ExplainSlidesComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),

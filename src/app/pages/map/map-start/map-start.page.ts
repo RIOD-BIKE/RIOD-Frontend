@@ -28,6 +28,7 @@ export class MapStartPage implements OnInit {
   this.statusBar.overlaysWebView(true);
   this.statusBar.backgroundColorByHexString('#44000000');
   this.mapBox.setupMap();
+  this.presentModal();
  }
 
   ngOnInit() {

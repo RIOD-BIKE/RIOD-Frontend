@@ -1,0 +1,222 @@
+.over {
+    background-color: #383838;
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 60px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+    .wrap1 {
+        width: 100%;
+        height: 20px;
+    }
+
+    .wrap {
+        width: calc((100%)/3);
+        height: 50px;
+        float: left;
+        z-index: 4;
+        position: relative;
+        .icon {
+            width: 50px;
+            height: 50px;
+            float: left;
+        }
+
+        .h15 {
+            height: 15px;
+            margin-left: 55px;
+        }
+
+        .h35 {
+            height: 35px;
+            margin-left: 55px;
+        }
+
+    }
+
+    .wrap2 {
+        padding-left: 10px;
+    }
+
+    .wrap3 {
+        display: flex;
+        justify-content: center;
+        padding-right: 30px;
+        padding-top: 10px;
+    }
+}
+
+.btn1 {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: url('../../../assets/icon/swipe-btn.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 4;
+}
+
+#btn2-toChange {
+    color: white;
+    width: 80px;
+    height: 30px;
+    padding: 0px;
+    float: left;
+    background-color: #4F4F4F;
+    border-radius: 50px;
+    background-position: center;
+}
+
+#btn3 {
+    width: 50px;
+    height: 50px;
+    padding: 0px;
+    float: left;
+    background: url('../../../assets/icon/bicycle.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+p {
+
+    font-size: 2.5vw;
+    margin: 0px;
+    line-height: 25px;
+}
+
+h2 {
+    font-size: 5.5vw;
+    margin: 0px;
+    line-height: 36px;
+}
+
+
+
+
+/* Toggle */
+
+
+*:before,
+*:after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.item {
+    align-self: stretch;
+    padding: 0 0;
+    /*
+      margin-right: 1rem;
+      */
+    text-align: right;
+
+    &:not(:last-of-type) {
+        border-bottom: 1px solid #ccc;
+    }
+}
+
+$input-bg-static: #4F4F4F;
+$input-bg-pseudo-active: #FFe500; //yellow
+$input-bg-pseudo-static: #F2F2f2; //white
+
+
+$input-width: 80px; // adjust only this number for dimensions
+
+$input-radius: calc(#{$input-width} / 2);
+$input-height: calc(#{$input-width} / 2);
+
+
+
+
+.riod-toggle {
+    margin-top: 5px;
+    position: relative;
+    appearance: none;
+    width: $input-width;
+    height: $input-height;
+    background: url('../../../assets/icon/map-riod.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: $input-radius;
+    background-color: $input-bg-static;
+    outline: none; // 
+    transition: background 450ms ease;
+    box-shadow: 0 0 0 2px darken($input-bg-static, 7.5%);
+
+    &:before,
+    &:after {
+        position: absolute;
+        display: block;
+        content: "";
+        border-radius: 100%;
+        transition:
+            background 450ms ease,
+            transform 450ms ease;
+    }
+
+
+    &:before {
+        width: calc(#{$input-width} / 2);
+        height: $input-height;
+        background: url('../../../assets/icon/map.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: $input-bg-pseudo-static;
+    }
+
+    &:after {
+        width: calc(#{$input-width} / 2);
+        height: $input-height;
+    }
+
+
+    &:checked {
+        &:before {
+            background: url('../../../assets/icon/riod.svg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: $input-bg-pseudo-static;
+            transform: translateX(100%);
+        }
+    }
+}
+/* Progess */
+.wrap-progess {
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+    height: 10px;
+    text-align: center;
+    background: #383838;
+}
+
+.progess-full{
+    height: 10px;
+    margin: 0 auto;
+}
+
+.progessCircle{
+    margin: auto;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    opacity: 0.7;
+}
+.timerCircle { 
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    background-color: #4F4F4F;
+    position: fixed;
+    left: 50%;
+    margin-left: -30px;
+    z-index: 3;
+    bottom: 9%;
+}
+
