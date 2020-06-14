@@ -322,6 +322,16 @@ export class MapBoxComponent implements OnInit {
       var distance = jsonResponse.routes[0].distance*0.001; // Convert to KM
       var duration = jsonResponse.routes[0].duration/60;  // Convert to Minutes
       var coords = jsonResponse.routes[0].geometry;
+      var routeCoords={coordinates:[],type:"LineString"}
+      jsonResponse.routes[0].legs.forEach(element=>{
+        element.steps.forEach(step=>{
+          step.geometry.coordinates.forEach(coordinate=>{
+            routeCoords.coordinates.push(coordinate);
+          })
+        })
+      });
+      console.log(routeCoords);
+      console.log(coords);
         if ((xhttp.readyState ===4) && (xhttp.status===200)) {
         routing.setDuration(duration);  //Set Duration Value
         routing.setDistance(distance);  //Set Distance Value
@@ -331,7 +341,7 @@ export class MapBoxComponent implements OnInit {
         var last = coords.coordinates[coords.coordinates.length-1]; //Last GeoLine Point
         
        
-        cFunction(coords,map); //Übergabe von drawRouteFunctionMap() Function
+        cFunction(routeCoords,map); //Übergabe von drawRouteFunctionMap() Function
         start(first,map); //Übergabe von drawStartMarker() Function
         finish(last,map); //Übergabe von drawFinishMarker() Function
         resolve();
