@@ -33,8 +33,8 @@ export class MapBoxComponent implements OnInit {
   private coords:any;
 
   constructor(private routingUserService: RoutingUserService, private geolocation: Geolocation, private userservice: UserService,
-    private mapIntegrationService: MapIntegrationService, private mapDataFetchService: MapDataFetchService,
-    private storage: Storage) {
+              private mapIntegrationService: MapIntegrationService, private mapDataFetchService: MapDataFetchService,
+              private storage: Storage) {
     this.init();
   }
 
@@ -131,6 +131,8 @@ export class MapBoxComponent implements OnInit {
 
     try {
       let temp = await this.userservice.behaviorMyOwnPosition.getValue().coords;
+
+      this.myPosition = await this.userservice.getUserPosition();
     } catch (e) {
       console.log(e);
     }
@@ -263,7 +265,8 @@ export class MapBoxComponent implements OnInit {
       source: 'clickable',
       type: 'symbol',
       layout: {
-        'visibility': 'visible',
+        // 'visibility': 'visible',
+        visibility: 'visible',
         'icon-image': 'beach-15',
         'icon-size': 2,
         'icon-allow-overlap': true
@@ -276,7 +279,7 @@ export class MapBoxComponent implements OnInit {
       let l = e.features[0].properties.latitude;
       let s = e.features[0].properties.longitude;
       let n = e.features[0].properties.name;
-      let temp = [l, s, n]
+      let temp = [l, s, n];
       centerPoint = new RoutingGeoAssemblyPoint(s, l, n);
       this.routingUserService.addAssemblyPoint(centerPoint);
       this.toggleAssemblyPointLayerVisibility();
@@ -285,21 +288,22 @@ export class MapBoxComponent implements OnInit {
 
 
 
-  async drawRoute(pointString):Promise<any> {
+  async drawRoute(pointString): Promise<any> {
     return new Promise(resolve => {
-    this.routingUserService.getstartPoint().then(y=>{
-    this.routingUserService.getfinishPoint().then(x=>{
-      var start=y[0]; //StartCoords
-      var end=x[0]; //FinishCoords
-      var completeDirectionString = start[0] + ',' + start[1] + ';'+pointString + end[0] + ',' + end[1];
+    this.routingUserService.getstartPoint().then(y => {
+    this.routingUserService.getfinishPoint().then(x => {
+      const start = y[0]; // StartCoords
+      const end = x[0]; // FinishCoords
+      const completeDirectionString = start[0] + ',' + start[1] + ';' + pointString + end[0] + ',' + end[1];
       console.log(completeDirectionString);
-      var url = 'https://api.mapbox.com/directions/v5/mapbox/cycling/' + 
+      const url = 'https://api.mapbox.com/directions/v5/mapbox/cycling/' +
       completeDirectionString+
       '?steps=true&geometries=geojson&access_token=' + environment.mapbox.accessToken.toString();
       console.log(url);
-      if(this.map.loaded()){
+      if (this.map.loaded()) {
 
-        this.drawRouteHelpMethod(url,this.drawRouteFunctionMap,this.map,this.drawStartMarker,this.drawFinishMarker,this.routingUserService).then(()=>{resolve();})
+        this.drawRouteHelpMethod(url, this.drawRouteFunctionMap, this.map,
+          this.drawStartMarker, this.drawFinishMarker, this.routingUserService).then( () => {resolve(); });
       }
 
     });
@@ -309,113 +313,113 @@ export class MapBoxComponent implements OnInit {
 
  
 
-  drawRouteHelpMethod(url, cFunction,map,start,finish,routing):Promise<any>{
+  drawRouteHelpMethod(url, cFunction, map, start, finish, routing): Promise<any> {
     return new Promise(resolve => {
 
-    //XMLHttpRequest is a bitch  
-    var xhttp = new XMLHttpRequest();
+    // XMLHttpRequest is a bitch
+    const xhttp = new XMLHttpRequest();
     xhttp.responseType = 'json';
-    xhttp.open("GET",url,true);
-    xhttp.onreadystatechange = function() {
-    xhttp.onload=function(){
-      var jsonResponse = xhttp.response;
-      var distance = jsonResponse.routes[0].distance*0.001; // Convert to KM
-      var duration = jsonResponse.routes[0].duration/60;  // Convert to Minutes
-      var coords = jsonResponse.routes[0].geometry;
-      var routeCoords={coordinates:[],type:"LineString"}
-      jsonResponse.routes[0].legs.forEach(element=>{
-        element.steps.forEach(step=>{
-          step.geometry.coordinates.forEach(coordinate=>{
+    xhttp.open('GET', url, true);
+    xhttp.onreadystatechange = () => {
+    xhttp.onload = () => {
+      const jsonResponse = xhttp.response;
+      const distance = jsonResponse.routes[0].distance * 0.001; // Convert to KM
+      const duration = jsonResponse.routes[0].duration / 60;  // Convert to Minutes
+      const coords = jsonResponse.routes[0].geometry;
+      const routeCoords = {coordinates: [], type: 'LineString'};
+      jsonResponse.routes[0].legs.forEach(element => {
+        element.steps.forEach( step => {
+          step.geometry.coordinates.forEach(coordinate => {
             routeCoords.coordinates.push(coordinate);
-          })
-        })
+          });
+        });
       });
       console.log(routeCoords);
       console.log(coords);
-        if ((xhttp.readyState ===4) && (xhttp.status===200)) {
-        routing.setDuration(duration);  //Set Duration Value
-        routing.setDistance(distance);  //Set Distance Value
+      if ((xhttp.readyState === 4) && (xhttp.status === 200)) {
+        routing.setDuration(duration);  // Set Duration Value
+        routing.setDistance(distance);  // Set Distance Value
 
         // For printing Start-/FinishMarker
-        var first = coords.coordinates[0]; //First GeoLine Point
-        var last = coords.coordinates[coords.coordinates.length-1]; //Last GeoLine Point
-        
-       
-        cFunction(routeCoords,map); //Übergabe von drawRouteFunctionMap() Function
-        start(first,map); //Übergabe von drawStartMarker() Function
-        finish(last,map); //Übergabe von drawFinishMarker() Function
+        const first = coords.coordinates[0]; // First GeoLine Point
+        const last = coords.coordinates[coords.coordinates.length - 1 ]; // Last GeoLine Point
+
+
+        cFunction(routeCoords, map); // Übergabe von drawRouteFunctionMap() Function
+        start(first, map); // Übergabe von drawStartMarker() Function
+        finish(last, map); // Übergabe von drawFinishMarker() Function
         resolve();
 
       }
     };
-  }
+  };
     xhttp.send();
-    
 });
   }
 
-  drawRouteFunctionMap(coords,map){
+  drawRouteFunctionMap(coords, map){
 
-    //check and delete if Layer exists
-    if(map.getLayer("route")!=undefined){
-      map.removeLayer("route");
-      map.removeSource("routeSource");
-      console.log("removed.......");
+    // check and delete if Layer exists
+    if( map.getLayer('route') != undefined){
+      map.removeLayer('route');
+      map.removeSource('routeSource');
+      console.log('removed.......');
 
     }
 
-    map.addSource('routeSource', {type: 'geojson',data: { type: 'Feature', properties: {},geometry: coords }});
+    map.addSource('routeSource', {type: 'geojson', data: { type: 'Feature', properties: {}, geometry: coords }});
 
-      map.addLayer({
-          id: "route",
-          type: "line",
-          source:"routeSource",
+    map.addLayer({
+          id: 'route',
+          type: 'line',
+          source: 'routeSource',
           layout: {
-            "line-join": "round",
-            "line-cap": "round"
+            'line-join': 'round',
+            'line-cap': 'round'
           },
           paint: {
-            "line-color": "#3b9ddd",
-            "line-width": 8,
-            "line-opacity": 0.8
+            'line-color': '#3b9ddd',
+            'line-width': 8,
+            'line-opacity': 0.8
           }
         });
 
-        //Move Route Layer infront of APs and Cluster
-        map.moveLayer("route","assemblyPoints");
-        map.moveLayer("route","clusters");
-
-  };
-
-
-
-drawFinishMarker(finishPoint,map) { 
-
-  if(map.getLayer("finishMarker")!=undefined){
-    //map.removeLayer("finishMarker");
-   // map.removeSource("finishMarker");
-    console.log("FinishMarker exists");
+        // Move Route Layer infront of APs and Cluster
+    map.moveLayer('route', 'assemblyPoints');
+    map.moveLayer('route', 'clusters');
 
   }
-    console.log("FinishPoint: "+finishPoint);
-    map.addSource('finishMarker', {
+
+
+
+drawFinishMarker(finishPoint, map) {
+
+  if(map.getLayer('finishMarker') != undefined){
+    // map.removeLayer("finishMarker");
+   // map.removeSource("finishMarker");
+    console.log('FinishMarker exists');
+
+  }
+  console.log('FinishPoint: ' + finishPoint);
+  map.addSource('finishMarker', {
       type: 'geojson',
       data: { type: 'FeatureCollection', features: [] }
     });
-    let finishPointSource;
-    finishPointSource= map.getSource('finishMarker') as mapboxgl.GeoJSONSource;
-    const finishPointdata = new PointMarker(Array(new GeoPointMarker(finishPoint[0])));
-    console.log(finishPointdata);
-    finishPointdata.features.forEach(x => { const el = document.createElement('div'); el.className = 'marker'; });
-  
-    finishPointSource.setData(finishPointdata);
+  let finishPointSource;
+  finishPointSource = map.getSource('finishMarker') as mapboxgl.GeoJSONSource;
+  const finishPointdata = new PointMarker(Array(new GeoPointMarker(finishPoint[0])));
+  console.log(finishPointdata);
+  finishPointdata.features.forEach(x => { const el = document.createElement('div'); el.className = 'marker'; });
 
-    map.addLayer({
+  finishPointSource.setData(finishPointdata);
+
+  map.addLayer({
       id: 'finishMarker',
       source: 'finishMarker',
       type: 'symbol',
       layout: {
-        'visibility': 'visible',
+        // 'visibility': 'visible',
+        visibility: 'visible',
         'icon-image': 'marker-15',
         'icon-size': 2,
         'icon-allow-overlap': true
@@ -424,34 +428,35 @@ drawFinishMarker(finishPoint,map) {
 
 }
 
-drawStartMarker(startPoint,map) { 
+drawStartMarker(startPoint, map) {
 
-  if(map.getLayer("startMarker")!=undefined){
-    //map.removeLayer("startMarker");
+  if(map.getLayer('startMarker') != undefined) {
+    // map.removeLayer("startMarker");
    // map.removeSource("startMarker");
-    console.log("StartMarker exists");
+    console.log('StartMarker exists');
 
   }
-  console.log("Startpoint"+startPoint);
-   
-    map.addSource('startMarker', {
+  console.log('Startpoint' + startPoint);
+
+  map.addSource('startMarker', {
       type: 'geojson',
       data: { type: 'FeatureCollection', features: [] }
     });
-    let startingPointSource;
-    startingPointSource= map.getSource('startMarker') as mapboxgl.GeoJSONSource;
-    const startPointData = new PointMarker(Array(new GeoPointMarker(startPoint[0])));
-    console.log(startPointData);
-    startPointData.features.forEach(x => { const el = document.createElement('div'); el.className = 'marker'; });
-  
-    startingPointSource.setData(startPointData);
+  let startingPointSource;
+  startingPointSource = map.getSource('startMarker') as mapboxgl.GeoJSONSource;
+  const startPointData = new PointMarker(Array(new GeoPointMarker(startPoint[0])));
+  console.log(startPointData);
+  startPointData.features.forEach(x => { const el = document.createElement('div'); el.className = 'marker'; });
 
-    map.addLayer({
+  startingPointSource.setData(startPointData);
+
+  map.addLayer({
       id: 'startMarker',
       source: 'startMarker',
       type: 'symbol',
       layout: {
-        'visibility': 'visible',
+        // 'visibility': 'visible',
+        visibility: 'visible',
         'icon-image': 'marker-15',
         'icon-size': 2,
         'icon-allow-overlap': true
@@ -462,24 +467,24 @@ drawStartMarker(startPoint,map) {
 }
 
 removeRoute(){
-  if(this.map.getLayer("startMarker")!=undefined){
-    this.map.removeLayer("startMarker");
-    this.map.removeSource("startMarker");
+  if(this.map.getLayer('startMarker') != undefined) {
+    this.map.removeLayer('startMarker');
+    this.map.removeSource('startMarker');
   }
-  if(this.map.getLayer("finishMarker")!=undefined){
-    this.map.removeLayer("finishMarker");
-    this.map.removeSource("finishMarker");
+  if(this.map.getLayer('finishMarker') != undefined) {
+    this.map.removeLayer('finishMarker');
+    this.map.removeSource('finishMarker');
   }
-  if(this.map.getLayer("route")!=undefined){
-    this.map.removeLayer("route");
-    this.map.removeSource("routeSource");
+  if(this.map.getLayer('route') != undefined) {
+    this.map.removeLayer('route');
+    this.map.removeSource('routeSource');
   }
 }
 
   toggleAssemblyPointLayerVisibility() {
     const visibility = this.map.getLayoutProperty('assemblyPoints', 'visibility');
     if (visibility === 'visible') {
-      console.log("APs hidden");
+      console.log('APs hidden');
       if (this.firstTry === true) {
         this.drawChooseAssemblyPoints();
         this.firstTry = false;
@@ -488,7 +493,7 @@ removeRoute(){
       }
       this.map.setLayoutProperty('assemblyPoints', 'visibility', 'none');
     } else {
-      console.log("Aps showing");
+      console.log('Aps showing');
       this.map.setLayoutProperty('clickable', 'visibility', 'none');
       this.map.setLayoutProperty('assemblyPoints', 'visibility', 'visible');
     }
