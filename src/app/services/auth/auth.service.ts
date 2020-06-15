@@ -84,7 +84,6 @@ export class AuthService {
       await firebase.auth().signInWithRedirect(provider);
       result = await firebase.auth().getRedirectResult();
     }
-    console.log(result);
     console.log(`${result.user.displayName} with UID ${result.user.uid} logged in!`);
     await this.userDataFetch.firestore_createUser(result.user.uid);
     await this.signIn(result.user.uid);
