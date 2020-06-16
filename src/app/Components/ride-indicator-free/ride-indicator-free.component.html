@@ -1,8 +1,10 @@
-<div class="over">
+<div class="over" [style.background-color]="statusColor">
     <button ion-button id="logo"></button>
-    <div class="wrap">
+    <!-- <div class="wrap">
         <div class="item">
-            <input type="checkbox" /> <!-- onclick='handleClick(this);' -->
+            <input (click)="dismiss()" type="checkbox" value="off"/>
         </div>
-    </div>
+    </div> -->
+    <ride-indicator-assembly [hidden]="!showAssembly"></ride-indicator-assembly>
+    <ride-indicator-final [hidden]="!showFinal"></ride-indicator-final>
 </div>

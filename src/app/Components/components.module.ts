@@ -16,14 +16,14 @@ import { WaitingAtAsSmallComponent } from './waiting-at-as-small/waiting-at-as-s
 
 @NgModule({
   declarations: [MapBoxComponent, MainMenuComponent, RouterInfoInBottomComponent, SearchBarComponent,
-    RidingToggleComponent, RideIndicatorAssemblyComponent, RideIndicatorFinalComponent, RideIndicatorFreeComponent,
+    RidingToggleComponent,
     RideMapAssemblyComponent, RideMapFinalComponent, WaitingAtAsSmallComponent],
   imports: [IonicModule, CommonModule, FormsModule],
   exports: [MapBoxComponent, MainMenuComponent, RouterInfoInBottomComponent, SearchBarComponent,
-    RidingToggleComponent, RideIndicatorAssemblyComponent, RideIndicatorFinalComponent, RideIndicatorFreeComponent,
+    RidingToggleComponent,
     RideMapAssemblyComponent, RideMapFinalComponent, WaitingAtAsSmallComponent],
   providers: [MapBoxComponent, MainMenuComponent, RouterInfoInBottomComponent, SearchBarComponent,
-    RidingToggleComponent, RideIndicatorAssemblyComponent, RideIndicatorFinalComponent, RideIndicatorFreeComponent,
+    RidingToggleComponent,
     RideMapAssemblyComponent, RideMapFinalComponent]
 })
 export class ComponentsModule { }

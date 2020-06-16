@@ -1,3 +1,4 @@
+import { RideIndicatorAssemblyComponent } from './Components/ride-indicator-assembly/ride-indicator-assembly.component';
 import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -24,10 +25,16 @@ import { TutorialOverlay2Component } from './Components/tutorial/tutorial-overla
 import { ButtonOverlayComponent } from './Components/button-overlay/button-overlay.component';
 import { ExplainSlidesComponent } from './Components/explain-slides/explain-slides.component';
 import { SearchBarMainMapComponent } from './Components/search-bar-main-map/search-bar-main-map.component';
+import { RideIndicatorFinalComponent } from './Components/ride-indicator-final/ride-indicator-final.component';
+import { RideIndicatorFreeComponent } from './Components/ride-indicator-free/ride-indicator-free.component';
 
 @NgModule({
-  declarations: [AppComponent, TutorialOverlay1Component, TutorialOverlay2Component, ButtonOverlayComponent, ExplainSlidesComponent, SearchBarMainMapComponent],
-  entryComponents: [TutorialOverlay1Component, TutorialOverlay2Component, ButtonOverlayComponent, ExplainSlidesComponent],
+  declarations: [
+    AppComponent, TutorialOverlay1Component, TutorialOverlay2Component, ButtonOverlayComponent, ExplainSlidesComponent, SearchBarMainMapComponent,
+    RideIndicatorFinalComponent, RideIndicatorFreeComponent, RideIndicatorAssemblyComponent],
+  entryComponents: [
+    TutorialOverlay1Component, TutorialOverlay2Component, ButtonOverlayComponent, ExplainSlidesComponent, RideIndicatorFinalComponent,
+    RideIndicatorFreeComponent, RideIndicatorAssemblyComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
