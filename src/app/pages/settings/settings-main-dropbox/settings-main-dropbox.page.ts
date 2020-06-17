@@ -2,21 +2,26 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UsersDataFetchService } from 'src/app/services/users-data-fetch/users-data-fetch.service';
 import { Component, OnInit } from '@angular/core';
-import { Platform, AlertController } from '@ionic/angular';
+import { Platform, AlertController, NavController } from '@ionic/angular';
 @Component({
   selector: 'app-settings-main-dropbox',
   templateUrl: './settings-main-dropbox.page.html',
   styleUrls: ['./settings-main-dropbox.page.scss'],
 })
 export class SettingsMainDropboxPage implements OnInit {
+
   rangeVolume: string;
-  constructor(public platform: Platform, private userDataFetch: UsersDataFetchService, private authService: AuthService, private router: Router, private alertController: AlertController) {
+  name: string;
+
+  constructor(public platform: Platform, private userDataFetch: UsersDataFetchService, private authService: AuthService,
+    private router: Router, private alertController: AlertController, private navController: NavController) {
     this.platform.ready().then(() => {
       this.rangeVolume = "5";
     })
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.name = await this.userDataFetch.firestore_getName(this.authService.getCurrentUID());
   }
 
   async deleteAccount() {
@@ -46,11 +51,10 @@ export class SettingsMainDropboxPage implements OnInit {
   }
 
   openUserSettings() {
-    this.router.navigate(['settings-main']);
+    this.navController.navigateForward('settings-main');
   }
 
   cancel() {
-    // TODO: fix ugly back navigation
-    this.router.navigate(['map-start']);
+    this.navController.back();
   }
 }

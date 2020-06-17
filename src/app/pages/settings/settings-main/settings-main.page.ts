@@ -1,3 +1,4 @@
+import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from './../../../services/auth/auth.service';
 import { UsersDataFetchService } from './../../../services/users-data-fetch/users-data-fetch.service';
@@ -13,15 +14,14 @@ export class SettingsMainPage implements OnInit {
   name: string;
   phone: string;
 
-  constructor(private router: Router, private userDateFetch: UsersDataFetchService, private authService: AuthService) { }
+  constructor(private router: Router, private userDateFetch: UsersDataFetchService, private authService: AuthService, private navController: NavController) { }
 
   async ngOnInit() {
     this.name = await this.userDateFetch.firestore_getName(this.authService.getCurrentUID());
   }
 
   cancel() {
-    // TODO: optimized navigating back
-    this.router.navigate(['settings-main-dropbox']);
+    this.navController.back();
   }
 
   async save() {
