@@ -4,10 +4,12 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-  // { path: '', redirectTo: 'map-start', pathMatch: 'full',
   {
-    path: '', redirectTo: 'map-start', pathMatch: 'full'
+    path: '', redirectTo: 'first-screen', pathMatch: 'full'
   },
+  // {
+  //   path: '', redirectTo: 'map-start', pathMatch: 'full'
+  // },
   {
     path: 'map-main',
     loadChildren: () => import('./pages/map/map-main/map-main.module').then( m => m.MapMainPageModule),

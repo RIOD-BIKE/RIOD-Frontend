@@ -13,30 +13,33 @@ export class AuthGuard implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const expectedData = next.data.role;
-    // if (this.auth.getCurrentUser()['role'] !== expectedData) {
-    //   this.router.parseUrl('/sign-up-tab1');
-    //   return false;
-    // }
-    // return true;
-    return this.auth.getUser().pipe(
-      take(1),
-      map(user =>{
-          console.log('log',user);
-          if(user){
-            let role = user['role'];
-            if(expectedData == role){
-              this.auth.signIn
-              return true;
-            }else{
-              //user Alert - SHow Why? - Not right User Role - Need special Role / Not logged in ...
-              return this.router.parseUrl('/sign-up-tab1');     // SHOW USER Altert
-            }
-          }else{
-            //user Alert - SHow Why? - Not right User Role - Need special Role / Not logged in ...
-            return this.router.parseUrl('/sign-up-tab1');     // SHOW USER Altert
-          }
-      })
-    )
+    // TODO: Check, if AuthService has already loaded user to fix racing condition.
+    const role = this.auth.getCurrentUser()['role'];
+    if (role !== expectedData) {
+      console.log(`User with role ${role} not authorized (expected ${expectedData})`);
+      this.router.parseUrl('/sign-up-tab1');
+      return false;
+    }
+    return true;
+    // return this.auth.getUser().pipe(
+    //   take(1),
+    //   map(user =>{
+    //       console.log('log',user);
+    //       if(user){
+    //         let role = user['role'];
+    //         if(expectedData == role){
+    //           this.auth.signIn
+    //           return true;
+    //         }else{
+    //           //user Alert - SHow Why? - Not right User Role - Need special Role / Not logged in ...
+    //           return this.router.parseUrl('/sign-up-tab1');     // SHOW USER Altert
+    //         }
+    //       }else{
+    //         //user Alert - SHow Why? - Not right User Role - Need special Role / Not logged in ...
+    //         return this.router.parseUrl('/sign-up-tab1');     // SHOW USER Altert
+    //       }
+    //   })
+    // )
 
     
   }
