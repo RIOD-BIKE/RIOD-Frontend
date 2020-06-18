@@ -32,29 +32,29 @@ export class MainMenuComponent implements OnInit {
   }
 
   setUpStart(){
-    this.routingUserService.getfinishPoint().then(x=>{
-      if(this.userService.getfirstTimeCalling() ==true){
-        this.userService.getUserPosition().then(()=>{
-          this.start = this.userService.behaviorMyOwnPosition.value; 
+    this.routingUserService.getfinishPoint().then(x => {
+      if(this.userService.getfirstTimeCalling() == true) {
+        this.userService.getUserPosition().then(() => {
+          this.start = this.userService.behaviorMyOwnPosition.value;
         });
-      } else{
+      } else {
         this.start = this.userService.behaviorMyOwnPosition.value;
       }
     })
   }
 
   init(){
-    this.routingUserService.getCenterPointObs().subscribe((newAP)=>{
-      for(let i=0; i<this.points.length && i<=2;i++){
-        if(this.points[i].name==="+++"){
-          for(let y=0;y<this.points.length;y++){
-            if(this.points[y].name === newAP.name){
-              console.log("CATCH - Dieser AP ist schon ausgewählt worden");
+    this.routingUserService.getCenterPointObs().subscribe((newAP) => {
+      for(let i = 0; i < this.points.length && i <= 2; i++) {
+        if(this.points[i].name === '+++') {
+          for(let y=0;y<this.points.length;y++) {
+            if (this.points[y].name === newAP.name) {
+              console.log('CATCH - Dieser AP ist schon ausgewählt worden');
               return;
-              }else{
-                this.points[i]=newAP;
-                if(i<2){
-                  //this.points[i+1]=new RoutingGeoAssemblyPoint(0,0,"+++",null);
+              }else {
+                this.points[i] = newAP;
+                if (i < 2) {
+                  // this.points[i+1]=new RoutingGeoAssemblyPoint(0,0,"+++",null);
                 }
                 this.routingUserService.setPoints(newAP);
                 return;
@@ -67,17 +67,17 @@ export class MainMenuComponent implements OnInit {
 
   chooseAP(){
     this.mapBox.toggleAssemblyPointLayerVisibility();
-    console.log("Choose AssemblyPoint");
+    console.log('Choose AssemblyPoint');
   }
 
-  searchStart(event:any){
-    if(this.routingStartAddress!=this.selectedStartAddresses){
-    const searchTerm= event.target.value.toLowerCase();
-    if(searchTerm && searchTerm.length >0){
-      this.mapIntegration.searchAddress(searchTerm).subscribe((features:Feature[])=>{
+  searchStart(event: any) {
+    if (this.routingStartAddress != this.selectedStartAddresses){
+    const searchTerm = event.target.value.toLowerCase();
+    if (searchTerm && searchTerm.length >0) {
+      this.mapIntegration.searchAddress(searchTerm).subscribe((features: Feature[]) => {
         console.log(features);
-        this.addresses=features.map(feat=> feat.place_name);
-        this.addressesStartString = features.map(feat => [feat.geometry.coordinates,feat.place_name]);
+        this.addresses = features.map(feat => feat.place_name);
+        this.addressesStartString = features.map(feat => [feat.geometry.coordinates, feat.place_name]);
         console.log(this.addressesStartString);
       });
     } else{
@@ -85,63 +85,63 @@ export class MainMenuComponent implements OnInit {
     }
     }
   }
-  onStartSelect(address:any){
+  onStartSelect(address: any) {
   
-     this.routingUserService.setStartPoint().then(()=>{
-      this.selectedStartAddresses=address[1];
-      this.routingStartAddress=address[1];
+     this.routingUserService.setStartPoint().then(() => {
+      this.selectedStartAddresses = address[1];
+      this.routingStartAddress = address[1];
 
       this.routingUserService.setStartPoint(address);
-      this.routingUserService.getstartPoint().then(x=>{
+      this.routingUserService.getstartPoint().then(x => {
         console.log(x);
       })
-      console.log("Selected StartPoint"+this.routingUserService.getstartPoint());
-      this.addresses=[];
-      this.addressesStartString=[];
+      console.log('Selected StartPoint' + this.routingUserService.getstartPoint());
+      this.addresses = [];
+      this.addressesStartString = [];
     });
   }
 
  
 
-  search(event:any){
-    if(this.routingAddress!=this.selectedAddresses){
-    const searchTerm= event.target.value.toLowerCase();
-    if(searchTerm && searchTerm.length >0){
-      this.mapIntegration.searchAddress(searchTerm).subscribe((features:Feature[])=>{
+  search(event: any) {
+    if (this.routingAddress != this.selectedAddresses) {
+    const searchTerm = event.target.value.toLowerCase();
+    if (searchTerm && searchTerm.length > 0) {
+      this.mapIntegration.searchAddress(searchTerm).subscribe((features: Feature[]) => {
         console.log(features);
-        this.addresses=features.map(feat=> feat.place_name);
+        this.addresses = features.map(feat => feat.place_name);
         this.addressesString = features.map(feat => [feat.geometry.coordinates,feat.place_name]);
         console.log(this.addressesString);
       });
-    } else{
-      this.addresses=[];
+    } else {
+      this.addresses = [];
     }
     }
   }
 
-  onSelect(address:any){
-    this.routingUserService.setFinishPoint(address).then(()=>{
-      this.selectedAddresses=address[1];
-      this.routingAddress=address[1];
+  onSelect(address: any) {
+    this.routingUserService.setFinishPoint(address).then( () => {
+      this.selectedAddresses = address[1];
+      this.routingAddress = address[1];
       
-      console.log("Selected FinishPoint"+this.routingUserService.getfinishPoint());
-      this.addresses=[];
-      this.addressesString=[];
-    }); 
+      console.log('Selected FinishPoint' + this.routingUserService.getfinishPoint());
+      this.addresses = [];
+      this.addressesString = [];
+    });
   }
-  closeView(){
-    this.addressesStartString=[];
-    this.addressesString=[];
-    this.points=[];
-    this.routingStartAddress=null;
-    this.routingAddress=null;
-    console.log("closed");
- 
+  closeView() {
+    this.addressesStartString = [];
+    this.addressesString = [];
+    this.points = [];
+    this.routingStartAddress = null;
+    this.routingAddress = null;
+    console.log('closed');
+
   }
 
 
   ngOnInit() { }
-  
+
 
 
 
