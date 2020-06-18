@@ -101,8 +101,10 @@ export class AuthService {
     return new Promise(resolve => {
       let user = null;
       this.db.collection('users').doc(uid).valueChanges().subscribe(x => {
-        let isUser = Object(x)['isUser'];
-        let isAdmin = Object(x)['isAdmin'];
+        const key1 = 'isUser';
+        const key2 = 'isAdmin';
+        const isUser = Object(x)[key1];
+        const isAdmin = Object(x)[key2];
         if (isUser == true && isAdmin !== true) {
           user = { role: 'USER', uid: uid };
           console.log('isUser');
@@ -122,7 +124,8 @@ export class AuthService {
   getUser() { return this.user; }
   getUserUID() {
     return this.user.pipe(take(1), map(user => {
-      const uid = user['uid'];
+      const key = 'uid';
+      const uid = user[key];
       return uid;
     }));
   }
@@ -131,7 +134,8 @@ export class AuthService {
     return this.currentUser;
   }
   getCurrentUID(): string {
-    return this.currentUser['uid'];
+    const key = 'uid';
+    return this.currentUser[key];
   }
 
   async signout() {

@@ -36,11 +36,11 @@ export class UserService {
     });
   }
 
-  public saveRoute(newRoute: string,points:RoutingGeoAssemblyPoint[]) {
-    console.log("Route Saved Adress: " + newRoute);
-    var temp="Points: ";
-    points.forEach(x=>{
-      temp+=x.name+", ";
+  public saveRoute(newRoute: string, points:RoutingGeoAssemblyPoint[]) {
+    console.log('Route Saved Adress: ' + newRoute);
+    let temp = 'Points: ';
+    points.forEach(x => {
+      temp += x.name + ', ';
     });
     console.log(temp);
   }

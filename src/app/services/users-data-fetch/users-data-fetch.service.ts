@@ -27,7 +27,9 @@ export class UsersDataFetchService {
 
   async firestore_createUser(uid: string) {
     const userExists = (await this.afs.collection('users').doc(uid).get().toPromise()).exists;
-    if (userExists) return false;
+    if (userExists) {
+      return false;
+    }
     await this.afs.collection('users').doc(uid).set({
       activeCluster: null,
       assemblyPoints: [],

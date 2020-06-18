@@ -26,7 +26,8 @@ export class MapDataFetchService {
 
 
 
-  constructor(private db: AngularFirestore, private auth: AuthService, private rtDB: AngularFireDatabase, private userService: UserService) {
+  constructor(private db: AngularFirestore, private auth: AuthService, 
+              private rtDB: AngularFireDatabase, private userService: UserService) {
     this.aps = new Array<GeoAssemblyPoint>();
     this.cluster = new Array<GeoCluster>();
     this.clusterStatus = new BehaviorSubject<boolean>(false);
@@ -37,7 +38,8 @@ export class MapDataFetchService {
 
   getUserClusterStatus(): BehaviorSubject<boolean> {
     this.userFirestore.subscribe(data => {
-      const isInCluster = (data['activeCluster'] === null) ? false : true;
+      const key = 'activeCluster';
+      const isInCluster = (data[key] === null) ? false : true;
       if (this.clusterStatus.getValue() !== isInCluster) {
         this.clusterStatus.next(isInCluster);
       }
@@ -59,7 +61,8 @@ export class MapDataFetchService {
   retrieveClusters(): BehaviorSubject<Array<GeoCluster>> {
     //console.log(this.userFirestore);
     this.userFirestore.subscribe(data => {
-      for (const path of data['clusters']) {
+      const key = 'clusters';
+      for (const path of data[key]) {
         const ref = this.db.doc(path);
         ref.get().toPromise().then(cData => {
           const c = cData.data();
@@ -79,12 +82,13 @@ export class MapDataFetchService {
   // get All AssemblyPoints of User via Firestore
   retrieveAssemblyPoints(): BehaviorSubject<Array<GeoAssemblyPoint>> {
     this.userFirestore.subscribe(data => {
-      this.aps=[];
-      for (const path of data['assemblyPoints']) {
+      this.aps = [];
+      const key = 'assemblyPoints';
+      for (const path of data[key]) {
         const ref = this.db.doc(path);
         ref.get().toPromise().then(apData => {
           const ap = apData.data();
-          this.aps.push(new GeoAssemblyPoint([ap.coordinates.longitude, ap.coordinates.latitude],"","marker_DAP",[ap.name],[ap.available]));
+          this.aps.push(new GeoAssemblyPoint([ap.coordinates.longitude, ap.coordinates.latitude],'','marker_DAP',[ap.name],[ap.available]));
           this.apsValueChange.next(this.aps);
         });
       }
@@ -120,9 +124,9 @@ export class MapDataFetchService {
     // note: is blocking until user moved!
     const position = await this.userService.getUserPosition();
     this.rtDB.object('users/' + uid).set({
-      'bearing': 0,
-      'latitude': position.position.latitude,
-      'longitude': position.position.longitude
+      bearing: 0,
+      latitude: position.position.latitude,
+      longitude: position.position.longitude
     });
   }
 
