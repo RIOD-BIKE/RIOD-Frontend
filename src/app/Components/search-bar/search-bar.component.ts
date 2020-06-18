@@ -10,13 +10,13 @@ import { RoutingUserService } from 'src/app/services/routing-user/routing-user.s
   styleUrls: ['./search-bar.component.scss'],
 })
 export class SearchBarComponent implements OnInit {
-  @Input() searchBarInputV:string="";
-  private addressesString:String[][]=[];
+  @Input() searchBarInputV = '';
+  public addressesString: string[][] = [];
   constructor(private routingUserService: RoutingUserService,
-              private mapIntegration: MapIntegrationService,private mapBox: MapBoxComponent,private change:NgZone) { }
+              private mapIntegration: MapIntegrationService, private mapBox: MapBoxComponent, private change:NgZone) { }
 
   ngOnInit() {
-  
+
   }
 
   search(event) {
@@ -30,16 +30,15 @@ export class SearchBarComponent implements OnInit {
 
   onSelect(address: any){
     this.routingUserService.setFinishPoint(address).then(() => {
-      this.routingUserService.deleteAllPoints().then(()=>{
-        this.mapBox.removeRoute().then(()=>{
-          this.mapBox.disableAssemblyClick().then(()=>{
+      this.routingUserService.deleteAllPoints().then(() => {
+        this.mapBox.removeRoute().then(() => {
+          this.mapBox.disableAssemblyClick().then(() => {
             this.mapBox.updateAssemblyPoints();
-            this.routingUserService.getfinishPoint().then(x=>{
+            this.routingUserService.getfinishPoint().then(x => {
               this.mapBox.drawFinishMarker();
               this.addressesString = [];
-              //this.mapStart.setShowMain();
-              this.routingUserService.setDisplayType("Main");
-             
+              // this.mapStart.setShowMain();
+              this.routingUserService.setDisplayType('Main');
             });
           });
         });
@@ -49,13 +48,13 @@ export class SearchBarComponent implements OnInit {
 
 
 
-  reset(){
-    console.log("hup")
-    this.searchBarInputV="";
-    console.log(this.searchBarInputV)
-    this.change.run(()=>{
-      this.searchBarInputV="";
-    })
+  reset() {
+    console.log('hup');
+    this.searchBarInputV = '';
+    console.log(this.searchBarInputV);
+    this.change.run(() => {
+      this.searchBarInputV = '';
+    });
 
   }
 

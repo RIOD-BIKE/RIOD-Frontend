@@ -29,40 +29,39 @@ export class RouterStartComponent implements OnInit {
     this.mainMenu.closeView();
     this.routingUserService.resetAll();
     this.mapBox.removeRoute();
-    //this.mapStart.setShowStart();
-    this.mapBox.disableAssemblyClick().then(()=>{
+    // this.mapStart.setShowStart();
+    this.mapBox.disableAssemblyClick().then(() => {
     this.mapBox.updateAssemblyPoints();
     });
     this.search.reset();
   }
 
   startRoute(){
-    this.routingUserService.getPoints().then(x=>{
-      let pointString="";
+    this.routingUserService.getPoints().then(x => {
+      let pointString = '';
       for(let i =0; i<x.length;i++){
-        if(x[i].name!=("+++")){
-          pointString+= (x[i].position.longitude+","+x[i].position.latitude+";");
+        if (x[i].name !== ('+++')) {
+          pointString += (x[i].position.longitude + ',' + x[i].position.latitude + ';');
         }
       }
-      this.mapBox.drawRoute(pointString).then(()=>{
-        this.routingUserService.getDuration().then(x=>{
-          this.routingUserService.getDistance().then(y=>{
-            this.infoArray=[x+" Minuten","("+y+" km)"];
+      this.mapBox.drawRoute(pointString).then(() => {
+        this.routingUserService.getDuration().then(x => {
+          this.routingUserService.getDistance().then(y => {
+            this.infoArray=[x + ' Minuten' , '(' + y + ' km)'];
           });
-        });      
+        });
       });
-      this.routingUserService.setDisplayType("Route_Info");
+      this.routingUserService.setDisplayType('Route_Info');
     });
   }
 
   saveRoute(){
     this.presentModal();
-    this.routingUserService.getfinishPoint().then(x=>{
-      this.routingUserService.getPoints().then(y=>{
-        this.userService.saveRoute(x,y);
-      })
-      
-    })
+    this.routingUserService.getfinishPoint().then(x => {
+      this.routingUserService.getPoints().then(y => {
+        this.userService.saveRoute(x, y);
+      });
+    });
   }
   async presentModal() {
     const modal = await this.modalController.create({

@@ -111,12 +111,14 @@ export class MapBoxComponent implements OnInit {
     // });
 
     try {
-      const temp = await this.userservice.behaviorMyOwnPosition.getValue().coords;
-      this.map.flyTo({ zoom: 15, center: [temp.longitude, temp.latitude] });
+      // const temp = await this.userservice.behaviorMyOwnPosition.getValue().coords;
+      // this.map.flyTo({ zoom: 15, center: [temp.longitude, temp.latitude] });
+
+      this.myPosition = await this.userservice.getUserPosition();
     } catch (e) {
       console.log(e);
     }
-    // this.map.flyTo({ zoom: 15, center: [this.myPosition.position.longitude, this.myPosition.position.latitude] });
+    this.map.flyTo({ zoom: 15, center: [this.myPosition.position.longitude, this.myPosition.position.latitude] });
   }
 
 
@@ -129,12 +131,7 @@ export class MapBoxComponent implements OnInit {
   drawClusters() {
     this.map.on('load', (event) => {
 
-      console.log('true or false');
-      console.log(this.map.getLayer('clusters') || this.map.getSource('clusters'));
-
-      if (this.map.getLayer('clusters') || this.map.getSource('clusters')) {
-
-      } else {
+      if (this.map.getLayer('clusters') === undefined && this.map.getSource('clusters') === undefined) {
         this.map.addSource('clusters', {
           type: 'geojson',
           data: {
@@ -206,10 +203,8 @@ export class MapBoxComponent implements OnInit {
 
 
   updateCluster() {
-    if (this.map.getSource('clusters')) {
 
-      console.log('cluster');
-      console.log(this.map.getSource('clusters'));
+    if (this.map.getSource('clusters') !== undefined) {
 
       this.clusterSource = this.map.getSource('clusters');
       const data2 = new ClusterCollection(this.clusterMarkers);
@@ -219,7 +214,7 @@ export class MapBoxComponent implements OnInit {
   }
 
   updateAssemblyPoints() {
-    if (this.map.getSource('assemblyPoints')) {
+    if (this.map.getSource('assemblyPoints') !== undefined) {
 
       this.assemblyPointTempSource = this.map.getSource('assemblyPoints');
       const temp = this.assemblyPointMarkers;
@@ -232,18 +227,14 @@ export class MapBoxComponent implements OnInit {
       const drawnBuilding = Object.assign({}, data3);
       this.assemblyPointTempSource.setData(drawnBuilding);
 
-      console.log('AP updated in View');
+      // console.log('AP updated in View');
     }
   }
   // draw all Clusters in perimeter
   drawAssemblyPoints() {
     this.map.on('load', (event) => {
-      if (this.map.getSource('assemblyPoints')) {
 
-        console.log('drawAssembly');
-        console.log(this.map.getSource('assemblyPoints'));
-        
-      } else {
+      if (this.map.getSource('assemblyPoints') === undefined ) {
         this.map.addSource('assemblyPoints', {
           type: 'geojson',
           data: {
@@ -258,10 +249,8 @@ export class MapBoxComponent implements OnInit {
         const data2 = new AssemblyPointCollection(this.assemblyPointMarkers);
         this.assemblyPointSource.setData(data2);
 
-        if (this.map.hasImage('marker_CAP') && this.map.hasImage('marker_DAP') && this.map.hasImage('marker_UNAP')) {
-          if (this.map.getLayer('assemblyPoints')) {
-
-          } else {
+        if (this.map.hasImage('marker_CAP')  && this.map.hasImage('marker_DAP') && this.map.hasImage('marker_UNAP')) {
+          if (this.map.getLayer('assemblyPoints') === undefined) {
             this.mapDrawAssemblyPointsHelper();
           }
         } else {
@@ -274,8 +263,7 @@ export class MapBoxComponent implements OnInit {
                 // let img = new Image(20,20);
                 // img.onload=()=>this.map.addImage('test',img);
                 // img.src='assets/icon/cancel.svg';
-                if (this.map.getLayer('assemblyPoints')) {
-                } else {
+                if (this.map.getLayer('assemblyPoints') === undefined) {
                   this.mapDrawAssemblyPointsHelper();
                 }
               });
@@ -310,7 +298,7 @@ export class MapBoxComponent implements OnInit {
   }
 
   drawUpdateChooseAssemblyPoints() {
-    if (this.map.getSource('assemblyPoints')) {
+    if (this.map.getSource('assemblyPoints') !== undefined) {
       let data2;
       data2 = new AssemblyPointCollection(this.assemblyPointMarkers);
       const temp: mapboxgl.GeoJSONSource = this.map.getSource('assemblyPoints') as mapboxgl.GeoJSONSource;
@@ -320,26 +308,26 @@ export class MapBoxComponent implements OnInit {
 
 
   drawChooseAssemblyPoints = (e) => {
-    if (e.features[0].properties.iconName == 'marker_UNAP') {
+    if (e.features[0].properties.iconName === 'marker_UNAP') {
     } else {
       if (e.features[0].properties.iconName === 'marker_CAP') {
-        let n = e.features[0].properties.textField;
-        let l = e.features[0].properties.title;
-        let arr = [];
-        let temp2 = this.assemblyPointMarkers;
+        const n = e.features[0].properties.textField;
+        const l = e.features[0].properties.title;
+        const arr = [];
+        const temp2 = this.assemblyPointMarkers;
         this.routingUserService.deletePoints(parseInt(n)).then(() => {
           this.routingUserService.getPoints().then(x2 => {
-            if (x2.length != null && x2.length != 0) {
+            if (x2.length != null && x2.length !== 0) {
               let length = 0;
               length = x2.length;
               this.assemblyPointMarkers.forEach(x => {
-                if (x.properties.textField == length.toString()) {
+                if (x.properties.textField === length.toString()) {
                   for (let i = 0; i < x.properties.available_count; i++) {
                     arr.push(x.properties['available_' + (i + 1)]);
                   }
                 }
                 for (let i = 0; i < temp2.length; i++) {
-                  if (temp2[i].properties.iconName == 'marker_CAP') {
+                  if (temp2[i].properties.iconName === 'marker_CAP') {
                     if (temp2[i].properties.title === l || parseInt(temp2[i].properties.textField) > parseInt(n)) {
                       temp2[i].properties.iconName = 'marker_DAP';
                       temp2[i].properties.textField = '';
@@ -366,12 +354,12 @@ export class MapBoxComponent implements OnInit {
         });
       } else {
         e.features[0].properties.iconName = 'marker_CAP';
-        let s = e.features[0].properties.latitude;
-        let l = e.features[0].properties.longitude;
-        let n = e.features[0].properties.title;
-        let m = e.features[0].properties.iconName;
-        let count = e.features[0].properties.available_count;
-        let arr = [];
+        const s = e.features[0].properties.latitude;
+        const l = e.features[0].properties.longitude;
+        const n = e.features[0].properties.title;
+        const m = e.features[0].properties.iconName;
+        const count = e.features[0].properties.available_count;
+        const arr = [];
         for (let i = 0; i < count; i++) {
           arr.push(e.features[0].properties['available_' + (i + 1)]);
         }
@@ -397,7 +385,7 @@ export class MapBoxComponent implements OnInit {
             } else {
               temp2[i].properties.iconName = 'marker_UNAP';
               for (let j = 0; j < arr.length; j++) {
-                if (arr[j] == temp2[i].properties.title) {
+                if (arr[j] === temp2[i].properties.title) {
                   temp2[i].properties.iconName = 'marker_DAP';
                 }
               }
@@ -420,7 +408,7 @@ export class MapBoxComponent implements OnInit {
           const completeDirectionString = start[0] + ',' + start[1] + ';' + pointString + end[0] + ',' + end[1];
           const url = 'https://api.mapbox.com/directions/v5/mapbox/cycling/' +
             completeDirectionString + '?steps=true&geometries=geojson&access_token=' + environment.mapbox.accessToken.toString();
-          console.log(url);
+          // console.log(url);
           if (this.map.loaded()) {
             this.drawRouteHelpMethod(url, this.drawRouteFunctionMap, this.map, this.drawStartMarker,
               this.drawThisFinishMarker, this.routingUserService, bbox).then(() => { resolve(); });
@@ -475,7 +463,7 @@ export class MapBoxComponent implements OnInit {
   }
 
   drawRouteFunctionMap(coords, map) {
-    if (map.getLayer('route') != undefined) {
+    if (map.getLayer('route') !== undefined) {
       map.removeLayer('route');
       map.removeSource('routeSource');
     }
@@ -507,11 +495,11 @@ export class MapBoxComponent implements OnInit {
 
   drawThisFinishMarker(map, routing, finishPointHave?) {
     routing.getfinishPoint().then(finishPoint => {
-      if (map.getLayer('finishMarker') != undefined) {
+      if (map.getLayer('finishMarker') !== undefined) {
         let finishPointSource;
         let finishPointdata;
         finishPointSource = map.getSource('finishMarker') as mapboxgl.GeoJSONSource;
-        if (finishPointHave) {
+        if (finishPointHave !== undefined ) {
           finishPointdata = new PointMarker(Array(new GeoPointMarker(finishPointHave)));
         } else {
           finishPointdata = new PointMarker(Array(new GeoPointMarker(finishPoint[0])));
@@ -526,7 +514,7 @@ export class MapBoxComponent implements OnInit {
           let finishPointSource: mapboxgl.GeoJSONSource;
           let finishPointdata;
           finishPointSource = map.getSource('finishMarker') as mapboxgl.GeoJSONSource;
-          if (finishPointHave) {
+          if (finishPointHave !== undefined) {
             finishPointdata = new PointMarker(Array(new GeoPointMarker(finishPointHave)));
             const bbox = [x[0], finishPointHave];
             map.fitBounds(bbox, { padding: { top: 200, bottom: 130, left: 40, right: 40 } });
@@ -568,7 +556,7 @@ export class MapBoxComponent implements OnInit {
   }
 
   drawStartMarker(startPoint, map) { // Depreceated //unusable
-    if (map.getLayer('startMarker') != undefined) {
+    if (map.getLayer('startMarker') !== undefined) {
       // map.removeLayer("startMarker");
       //  map.removeSource("startMarker");
       console.log('StartMarker esxists');
@@ -598,15 +586,15 @@ export class MapBoxComponent implements OnInit {
   removeRoute(): Promise<any> {
     return new Promise(resolve => {
       this.assemblyPointMarkers = this.mapDataFetchService.aps;
-      if (this.map.getLayer('startMarker') != undefined) {
+      if (this.map.getLayer('startMarker') !== undefined) {
         this.map.removeLayer('startMarker');
         this.map.removeSource('startMarker');
       }
-      if (this.map.getLayer('finishMarker') != undefined) {
+      if (this.map.getLayer('finishMarker') !== undefined) {
         this.map.removeLayer('finishMarker');
         this.map.removeSource('finishMarker');
       }
-      if (this.map.getLayer('route') != undefined) {
+      if (this.map.getLayer('route') !== undefined) {
         this.map.removeLayer('route');
         this.map.removeSource('routeSource');
       }
