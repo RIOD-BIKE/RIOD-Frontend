@@ -38,8 +38,7 @@ export class MapDataFetchService {
 
   getUserClusterStatus(): BehaviorSubject<boolean> {
     this.userFirestore.subscribe(data => {
-      const key = 'activeCluster';
-      const isInCluster = (data[key] === null) ? false : true;
+      const isInCluster = (data['activeCluster'] === null) ? false : true;
       if (this.clusterStatus.getValue() !== isInCluster) {
         this.clusterStatus.next(isInCluster);
       }
@@ -61,8 +60,7 @@ export class MapDataFetchService {
   retrieveClusters(): BehaviorSubject<Array<GeoCluster>> {
     //console.log(this.userFirestore);
     this.userFirestore.subscribe(data => {
-      const key = 'clusters';
-      for (const path of data[key]) {
+      for (const path of data['clusters']) {
         const ref = this.db.doc(path);
         ref.get().toPromise().then(cData => {
           const c = cData.data();
@@ -83,12 +81,12 @@ export class MapDataFetchService {
   retrieveAssemblyPoints(): BehaviorSubject<Array<GeoAssemblyPoint>> {
     this.userFirestore.subscribe(data => {
       this.aps = [];
-      const key = 'assemblyPoints';
-      for (const path of data[key]) {
+      for (const path of data['assemblyPoints']) {
         const ref = this.db.doc(path);
         ref.get().toPromise().then(apData => {
           const ap = apData.data();
-          this.aps.push(new GeoAssemblyPoint([ap.coordinates.longitude, ap.coordinates.latitude],'','marker_DAP',[ap.name],[ap.available]));
+          this.aps.push(new GeoAssemblyPoint([ap.coordinates.longitude, ap.coordinates.latitude], 
+                        '', 'marker_DAP', [ap.name], [ap.available]));
           this.apsValueChange.next(this.aps);
         });
       }

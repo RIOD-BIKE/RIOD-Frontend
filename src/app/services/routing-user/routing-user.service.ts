@@ -12,29 +12,29 @@ import { RoutingGeoAssemblyPoint } from 'src/app/Classess/map/map';
 export class RoutingUserService {
 
 
-  private finishPoint:any=null;
-  private startPoint:any=null;
-  private duration:any=null;
-  private distance:any=null;
-  private points:RoutingGeoAssemblyPoint[]=[];
-  private centerPoint:BehaviorSubject<RoutingGeoAssemblyPoint>=new BehaviorSubject<RoutingGeoAssemblyPoint>(null);
-  private displayType:BehaviorSubject<String>=new BehaviorSubject<String>("MainView");
+  private finishPoint: any = null;
+  private startPoint: any = null;
+  private duration: any = null;
+  private distance: any = null;
+  private points: RoutingGeoAssemblyPoint [] = [];
+  private centerPoint: BehaviorSubject<RoutingGeoAssemblyPoint> = new BehaviorSubject<RoutingGeoAssemblyPoint>(null);
+  private displayType: BehaviorSubject<string> = new BehaviorSubject<string>('MainView');
   constructor(private userService: UserService) { }
 
-  getDisplayType():Promise<any>{
+  getDisplayType(): Promise<any> {
     return new Promise(resolve => {
         resolve(this.displayType);
     });
   }
-  
-  setDisplayType(dataPoint):Promise<any>{
+
+  setDisplayType(dataPoint): Promise<any> {
     return new Promise(resolve => {
         this.displayType.next(dataPoint);
         resolve(this.displayType);
     });
   }
 
-  getDisplayTypeObs(): Observable<String> {
+  getDisplayTypeObs(): Observable<string> {
     return this.displayType.asObservable();
   }
 
@@ -46,99 +46,99 @@ export class RoutingUserService {
     this.setPoints([]);
   }
 
-  getfinishPoint():Promise<any>{
+  getfinishPoint(): Promise<any> {
     return new Promise(resolve => {
-      if (this.finishPoint!=null){
+      if (this.finishPoint != null) {
         resolve(this.finishPoint);
       }
       resolve(false);
     });
   }
-  getDuration():Promise<any>{
+  getDuration(): Promise<any> {
     return new Promise(resolve => {
       console.log(this.duration);
-      if (this.duration!=null){
+      if (this.duration != null) {
         resolve(this.duration);
       }
       resolve(false);
     });
   }
-  getDistance():Promise<any>{
+  getDistance(): Promise<any> {
     return new Promise(resolve => {
-      if (this.distance!=null){
+      if (this.distance != null) {
         resolve(this.distance);
       }
       resolve(false);
     });
   }
-  getPoints():Promise<any>{
+  getPoints(): Promise<any> {
     return new Promise(resolve => {
-      if (this.points!=null){
+      if (this.points != null) {
         resolve(this.points);
       }
       resolve(false);
     });
   }
 
-  getstartPoint():Promise<any>{
+  getstartPoint(): Promise<any>{
     return new Promise(resolve => {
-      if(this.startPoint!=undefined){
+      if(this.startPoint !== undefined) {
         resolve(this.startPoint);
       } else{
-        this.setStartPoint().then(()=>{
+        this.setStartPoint().then(() => {
           resolve(this.startPoint);
-        })
+        });
       }
     });
   }
 
-  //SearchBar and Modifier in Routing-Detail-View use
-  setFinishPoint(dataPoint):Promise<any>{
+  // SearchBar and Modifier in Routing-Detail-View use
+  setFinishPoint(dataPoint): Promise<any> {
     return new Promise(resolve => {
-      this.finishPoint= dataPoint;
-      
-      console.log("FinishPoint nexted: "+dataPoint);
+      this.finishPoint = dataPoint;
+
+      console.log('FinishPoint nexted: '+dataPoint);
       resolve(true);
     });
   }
 
-  setDuration(dataPoint?:number):Promise<any>{
-    console.log("check1");
+  setDuration(dataPoint?: number): Promise<any> {
+    console.log('check1');
     return new Promise(resolve => {
       try{
-      if (dataPoint!=null){
-        var temp=(Math.round(dataPoint * 100) / 100).toFixed(0);  //toFixed(2) = 2 decimal Places
+      if (dataPoint != null) {
+        const temp = (Math.round(dataPoint * 100) / 100).toFixed(0);  //toFixed(2) = 2 decimal Places
         this.duration=temp;
-        console.log("Duration set to: "+this.duration);
+        console.log('Duration set to: '+this.duration);
         resolve(true);
       }
-    } catch(e){
+    } catch(e) {
       console.log(e);
       resolve(false);
     }
-      
+
     });
   }
-  setDistance(dataPoint?:number):Promise<any>{
+  setDistance(dataPoint?: number): Promise<any> {
     return new Promise(resolve => {
-      try{
-      if (dataPoint!=null){
-        var temp=(Math.round(dataPoint * 100) / 100).toFixed(2);
-        this.distance=temp;
-        console.log("Distance set to: "+this.distance);
+      try {
+      if (dataPoint != null){
+        const temp = (Math.round(dataPoint * 100) / 100).toFixed(2);
+        this.distance = temp;
+        console.log('Distance set to: '+this.distance);
         resolve(true);
       }
-    } catch(e){
+    } catch(e) {
       console.log(e);
       resolve(false);
     }
-      
+
     });
   }
-  setPoints(dataPoint?):Promise<any>{
+  setPoints(dataPoint?): Promise<any>{
     return new Promise(resolve => {
       try{
-        if (dataPoint!=null){
+        if (dataPoint != null){
             if(this.points.includes(dataPoint)){
               resolve(false);
             } else{
@@ -146,7 +146,7 @@ export class RoutingUserService {
               resolve(true);
             }
         }
-      } catch(e){
+      } catch(e) {
       console.log(e);
       resolve(false);
       }
@@ -167,7 +167,7 @@ export class RoutingUserService {
             }
           }
           resolve();
-          
+
         }
       }catch(e){
       console.log(e);
@@ -176,23 +176,23 @@ export class RoutingUserService {
     });
   }
 
-  deleteAllPoints():Promise<any>{
+  deleteAllPoints(): Promise<any>{
     return new Promise(resolve => {
-      this.points=[];
+      this.points = [];
       resolve();
     });
   }
 
-  setStartPoint(dataPoint?):Promise<any>{
+  setStartPoint(dataPoint?): Promise<any> {
     return new Promise(resolve => {
-      if(dataPoint != undefined){
-        this.startPoint= dataPoint;
-        console.log("Startpoint nexted: "+this.startPoint);
+      if(dataPoint !== undefined){
+        this.startPoint = dataPoint;
+        console.log('Startpoint nexted: '+ this.startPoint);
         resolve();
       } else{
-        let temp=this.userService.behaviorMyOwnPosition.getValue().coords;
-        this.startPoint=[[temp.longitude,temp.latitude]];
-        console.log("Startpoint Own GPS nexted: "+this.startPoint);
+        const temp = this.userService.behaviorMyOwnPosition.getValue().coords;
+        this.startPoint = [[temp.longitude,temp.latitude]];
+        console.log(`Startpoint Own GPS nexted: ${this.startPoint}`);
         resolve();
       }
     });
@@ -201,7 +201,7 @@ export class RoutingUserService {
 
 
 
-  addAssemblyPoint(dataPoint:RoutingGeoAssemblyPoint):Promise<any>{
+  addAssemblyPoint(dataPoint: RoutingGeoAssemblyPoint): Promise<any> {
     return new Promise(resolve => {
     console.log("NewAssemblyPointAdded"+dataPoint);
     this.centerPoint.next(dataPoint);
