@@ -17,7 +17,7 @@ export class SettingsMainPage implements OnInit {
   constructor(private router: Router, private userDateFetch: UsersDataFetchService, private authService: AuthService, private navController: NavController) { }
 
   async ngOnInit() {
-    this.name = await this.userDateFetch.firestore_getName(this.authService.getCurrentUID());
+    this.name = await this.userDateFetch.firestore_getName(await this.authService.getCurrentUID());
   }
 
   cancel() {
@@ -25,7 +25,7 @@ export class SettingsMainPage implements OnInit {
   }
 
   async save() {
-    await this.userDateFetch.firestore_setName(this.authService.getCurrentUID(), this.name);
+    await this.userDateFetch.firestore_setName(await this.authService.getCurrentUID(), this.name);
     this.cancel();
   }
 }

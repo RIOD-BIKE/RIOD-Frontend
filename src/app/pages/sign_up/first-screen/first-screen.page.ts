@@ -13,15 +13,9 @@ export class FirstScreenPage implements OnInit {
 
   constructor(private modalController: ModalController, private authService: AuthService, private router: Router) { }
 
-  ngOnInit() {
-    // TODO: fix this ugly workaround
-    this.authService.getUserUID().subscribe(uid => {
-      if (uid) {
-        this.router.navigate(['map-start']);
-      } else {
-        this.presentModal();
-      }
-    });
+  async ngOnInit() {
+    const isLoggedIn = await this.authService.isLoggedIn()
+    isLoggedIn ? this.router.navigate(['map-start']) : this.presentModal();
   }
 
   async presentModal() {

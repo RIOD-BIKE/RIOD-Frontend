@@ -17,11 +17,11 @@ export class SignUpTab4Page implements OnInit {
   }
 
   async ngOnInit() {
-    this.name = await this.userDataFetch.firestore_getName(this.authService.getCurrentUID());
+    this.name = await this.userDataFetch.firestore_getName(await this.authService.getCurrentUID());
   }
 
   async saveName() {
-    await this.userDataFetch.firestore_setName(this.authService.getCurrentUID(), this.name);
+    await this.userDataFetch.firestore_setName(await this.authService.getCurrentUID(), this.name);
     this.router.navigate(['/map-start']);
   }
 

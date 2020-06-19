@@ -31,9 +31,11 @@ export class MapDataFetchService {
     this.aps = new Array<GeoAssemblyPoint>();
     this.cluster = new Array<GeoCluster>();
     this.clusterStatus = new BehaviorSubject<boolean>(false);
-    this.auth.getUserUID().toPromise().then(uid => {
-      this.userFirestore = this.db.collection('users').doc(uid).valueChanges();
-    });
+    this.initFirestoreObservable();
+  }
+
+  async initFirestoreObservable() {
+    this.userFirestore = this.db.collection('users').doc(await this.auth.getCurrentUID()).valueChanges();
   }
 
   getUserClusterStatus(): BehaviorSubject<boolean> {
@@ -118,7 +120,7 @@ export class MapDataFetchService {
 
   // send UserPosition to Firebase RealTime DB
   async sendUserPosition() {
-    const uid = await this.auth.getUserUID().toPromise();
+    const uid = await this.auth.getCurrentUID();
     // note: is blocking until user moved!
     const position = await this.userService.getUserPosition();
     this.rtDB.object('users/' + uid).set({

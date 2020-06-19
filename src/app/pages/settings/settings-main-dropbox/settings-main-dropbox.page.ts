@@ -21,7 +21,7 @@ export class SettingsMainDropboxPage implements OnInit {
   }
 
   async ngOnInit() {
-    this.name = await this.userDataFetch.firestore_getName(this.authService.getCurrentUID());
+    this.name = await this.userDataFetch.firestore_getName(await this.authService.getCurrentUID());
   }
 
   async deleteAccount() {
@@ -32,7 +32,7 @@ export class SettingsMainDropboxPage implements OnInit {
         {
           text: 'Account löschen',
           handler: async () => {
-            const uid = this.authService.getCurrentUID();
+            const uid = await this.authService.getCurrentUID();
             await this.userDataFetch.rtdb_wipeUser(uid);
             await this.userDataFetch.firestore_wipeUser(uid);
             await this.authService.deleteUser();

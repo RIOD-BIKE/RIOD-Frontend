@@ -24,16 +24,13 @@ export enum ThirdParties {
   providedIn: 'root'
 })
 export class AuthService {
-  private authState = new BehaviorSubject(null);
-  private user: Observable<any>;
+  private authState = new BehaviorSubject<{ role: string, uid: string }>(null);
   private verificationId: string;
-  private currentUser: {};
 
   constructor(private userDataFetch: UsersDataFetchService, public navCtrl: NavController, public alertCtrl: AlertController,
     private db: AngularFirestore, private storage: Storage, private router: Router, private angularFireAuth: AngularFireAuth,
     private firebaseAuthentication: FirebaseAuthentication, private platform: Platform) {
     this.loadUser();
-    this.user = this.authState.asObservable().pipe(filter(response => response));
   }
 
   loadUser() {
@@ -41,9 +38,8 @@ export class AuthService {
       console.log('Loaded User: ' + data);
       if (data) {
         this.authState.next(data);
-        this.currentUser = data;
       } else {
-        this.authState.next({ role: null });
+        this.authState.next({ role: null, uid: null });
       }
     });
   }
@@ -113,31 +109,28 @@ export class AuthService {
         }
         this.authState.next(user);
         this.storage.set(TOKEN_KEY, user);
-        this.currentUser = user;
         resolve();
       });
     });
   }
 
-  getUser() { return this.user; }
-  getUserUID() {
-    return this.user.pipe(take(1), map(user => {
-      const uid = user['uid'];
-      return uid;
-    }));
-  }
-
   getCurrentUser() {
-    return this.currentUser;
+    const currentValue = this.authState.getValue();
+    // TODO: find out why authState yields null for the first time
+    return currentValue || this.authState.pipe(take(2)).toPromise();
   }
-  getCurrentUID(): string {
-    return this.currentUser['uid'];
+  async getCurrentUID() {
+    const currentUser = await this.getCurrentUser();
+    return currentUser.uid;
+  }
+  async isLoggedIn() {
+    const currentUser = await this.getCurrentUser();
+    return currentUser.role !== null && currentUser.uid !== null;
   }
 
   async signout() {
     await this.storage.set(TOKEN_KEY, null);
     this.authState.next(null);
-    this.currentUser = {};
   }
 
   async deleteUser() {
