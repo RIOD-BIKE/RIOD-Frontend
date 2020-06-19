@@ -1,81 +1,110 @@
-
 <ion-content fullscreen scroll-y="false">
-    <div style="height: 30px">
-        <ion-row>
-            <ion-col class="ion-text-left">
-                <div *ngIf="hidePrev; else notHidePrev">
-                    <ion-button (click)="back()" fill="clear">
-                        <ion-icon slot="icon-only" style="color:white" name="arrow-back"></ion-icon>
-                    </ion-button>
-              </div>          
-              <ng-template #notHidePrev>  </ng-template>    
-            </ion-col>
-        </ion-row>
-    </div>
-    
-    
-      <ion-slides (ionSlideDidChange)="slideChanged()" (ionSlideReachEnd)="reachedEnd()" (ionSlideReachStart)="reachedStart()"  pager="true"  #mySlider>
-    
-        <ion-slide>
-        <div style="margin-top: 10vh;"></div>
-        <div style="margin-top: 30vh;">
-          <p class="pstyle1">Hey Du!</p>
-          <p class="pstyle2">Bevor wir starten, würde ich dir<br>gerne einmal erklären was RIOD ist<br>und 
-              warum wir den Verkehr der<br>Zukunft verändern werden!
-          </p>
+  <div style="height: 30px">
+    <ion-row>
+      <ion-col class="ion-text-left">
+        <div *ngIf="hidePrev; else notHidePrev">
+          <ion-button style="margin-top: 7px; margin-left: 5vw;" (click)="back()" fill="clear">
+            <ion-icon slot="icon-only" style="color:white; " name="arrow-back"></ion-icon>
+          </ion-button>
         </div>
-        </ion-slide>
-    
-        <ion-slide>
-            <div style="margin-top: 30vh;">
-              <p class="pstyle1">Was ist RIOD</p>
-              <p class="pstyle2">RIOD ist eine APP<br>um Fahrradgruppen dynamisch im<br>Alltag zu bilden,
-                Jedes Mal wenn du<br>dich auf dein Fahrrad schwindest<br>kannst du spontan
-                mit mehreren Radfahrern fahren.
-              </p>
-            </div>
-          </ion-slide>
-    
-          <ion-slide>
-              <div style="margin-top: 30vh;">
-                 <p class="pstyle1">Why should i care</p>
-                  <p class="pstyle2">Mit RIOD kannst du jederzeit in<br>Fahrradgruppen fahren. Das<br>bedeutet
-                  :Mehr Sicherheit, Mehr<br>Rechte und Mehr Platz. Ab 16<br>Radfahrern fährst du in
-                  einem<br>Verband und darfst die Straßen wie<br>ein Auto nutzen.
-                  </p>
-              </div>
-    
-            </ion-slide>
-    
-            <ion-slide>
-              <div style="margin-top: 30vh;">
-                <p class="pstyle1">Wie funktioniert es?</p>
-                <p class="pstyle2">Gib ein  wo du hin möchtest. RIOD<br>leitet dich automatisch über s.g.<br>
-                    Assembly Points wo du dich  mit<br>anderen Radfahrern triffst. Die App<br>schickt
-                    euch danach gleichzeitig<br> weiter in eine Richtung.
-                </p>
-               </div>
-    
-              </ion-slide>
-    
-      </ion-slides>
-    
-    </ion-content>
-    
-    <ion-footer class="footer1">
+        <ng-template #notHidePrev> </ng-template>
+      </ion-col>
+      <ion-col class="ion-text-right">
+        <div *ngIf="showQuestion; else hideQuestion">
+          <button class="question"></button>
+        </div>
+        <ng-template #hideQuestion></ng-template>
+      </ion-col>
+    </ion-row>
+  </div>
+
+
+  <ion-slides (ionSlideDidChange)="slideChanged()" (ionSlideReachEnd)="reachedEnd()"
+    (ionSlideReachStart)="reachedStart()" pager="true" #mySlider>
+
+    <ion-slide>
+      <div style="margin-top: 10vh;"></div>
+      <div style="margin-top: 40vh;">
+        <p class="pstyle1">Hey Du!</p>
+        <p class="pstyle2">Bevor wir starten, würde ich dir gerne einmal erklären was RIOD ist und
+          warum wir den Verkehr der Zukunft verändern werden!
+        </p>
+      </div>
+     
+    </ion-slide>
+
+    <ion-slide>
+      <div style="margin-top: 40vh;">
+        <p class="pstyle1">Was ist RIOD?</p>
+        <p class="pstyle2">RIOD ist eine APP um Fahrradgruppen dynamisch im Alltag zu bilden,
+          Jedes Mal wenn du dich auf dein Fahrrad schwindest kannst du spontan
+          mit mehreren Radfahrern fahren.
+        </p>
+      </div>
+    </ion-slide>
+    <ion-slide>
+      <div style="margin-top: 40vh;">
+        <p class="pstyle1">Wie funktioniert es?</p>
+        <p class="pstyle2">Gib ein wo du hin möchtest. RIOD leitet dich automatisch über s.g.
+          Assembly Points wo du dich mit anderen Radfahrern triffst. Die App schickt
+          euch danach gleichzeitig weiter in eine Richtung.
+        </p>
+      </div>
+    </ion-slide>
+    <ion-slide>
+      <div style="margin-top: 40vh;">
+        <p class="pstyle1">Why should i care?</p>
+        <p class="pstyle2">Mit RIOD kannst du jederzeit in Fahrradgruppen fahren. Das bedeutet
+          : Mehr Sicherheit, Mehr Rechte und Mehr Platz. Ab 16 Radfahrern fährst du in
+          einem Verband und darfst die Straßen wie ein Auto nutzen.
+        </p>
+      </div>
+    </ion-slide>
+    <ion-slide>
+      <div style="margin-top: 10vh;">
+        <p class="pstyle1">Anmelden</p>
+        <p class="pstyle3">Melde anonym dich bei RIOD an und werde Teil der Bewegung!</p>
+      </div>
+      <div style="margin-top: 20vw;">
         <ion-row>
-            <ion-col class="ion-text-right">
-                <div  *ngIf="hideNext; else notHideNext">
-                        <ion-button *ngIf="hideNext"  (click)="swipeNext()"  class="b-btn primary"  style="margin-bottom: 15vh;margin-right: 5vw">
-                            <ion-icon style="color:black" slot="icon-only" name="arrow-forward"></ion-icon>
-                        </ion-button>
-                  </div>             
-                  <ng-template #notHideNext>
-                      <ion-button (click)="goToSignUp()"  class="b-btn primary"  style="margin-bottom: 15vh;margin-right: 5vw">
-                          <ion-text style="color:black">Anmelden</ion-text> 
-                         </ion-button>
-                  </ng-template>
-            </ion-col>
+          <input ion-input class="name" placeholder="NAME*" />
         </ion-row>
-    
-    </ion-footer>
+        <ion-row>
+          <input ion-input class="name mt30" placeholder="E-MAIL/HANDYNUMMER*" />
+        </ion-row>
+        <ion-row class="mt30">
+          <p class="pstyle4" style="margin-block-start: 1em;  ">*FREIWILLIG</p>
+          <p class="pstyle4">
+            Falls du in einem Verband fährst, ein Unfall passiert und Zeugen gebraucht werden, können wir dich erreichen
+            wenn du uns hier deinen Namen und eine Mail/Nummer hinterlässt. MEHR INFOS
+          </p>
+        </ion-row>
+      </div>
+    </ion-slide>
+  </ion-slides>
+</ion-content>
+
+<ion-footer class="footer1">
+  <ion-row>
+    <ion-col class="ion-text-left" style="margin-left: 10vw;">
+      <div class="slide-bar-color"></div>
+      <div class="slide-bar-color"></div>
+      <div class="slide-bar-color"></div>
+      <div class="slide-bar-color"></div>
+      <div class="slide-bar-color"></div>
+
+    </ion-col>
+    <ion-col class="ion-text-right">
+      <div *ngIf="hideNext; else notHideNext">
+        <ion-button *ngIf="hideNext" (click)="swipeNext()" class="b-btn primary" style="margin-bottom: 60px;">
+          <ion-icon style="color:black" slot="icon-only" name="arrow-forward"></ion-icon>
+        </ion-button>
+      </div>
+      <ng-template #notHideNext>
+        <ion-button class="b-btn primary" style="margin-bottom: 60px;">
+          <ion-text style="color:black">Anmelden</ion-text>
+        </ion-button>
+      </ng-template>
+    </ion-col>
+  </ion-row>
+</ion-footer>

@@ -14,6 +14,7 @@ export class ExplainSlidesComponent implements OnInit {
   hidePrev: boolean = false;
   hideNext: boolean = true;
   trenner:boolean = true;
+  showQuestion: boolean = false;
   constructor(public modalController: ModalController, private router: Router) { }
 
   ngOnInit() {}
@@ -32,20 +33,18 @@ export class ExplainSlidesComponent implements OnInit {
     this.slides.slidePrev();
   }
 
-  goToSignUp() {
-    this.dismiss();
-    this.router.navigate(['/sign-up-tab2']);
-  }
 
   slideChanged() {
     this.slides.isEnd().then((istrue) => {
       if (istrue) {
         this.hideNext = false;
         this.trenner = false;
+        this.showQuestion = true;
       } else {
         this.hideNext = true;
         this.hidePrev = true;
         this.trenner= true;
+        this.showQuestion = false;
       }
     });
 
