@@ -1,6 +1,7 @@
+import { UsersDataFetchService } from 'src/app/services/users-data-fetch/users-data-fetch.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { IonSlides } from '@ionic/angular';
 
@@ -17,8 +18,10 @@ export class ExplainSlidesComponent implements OnInit {
   trenner: boolean = true;
   showQuestion: boolean = false;
   currentIndex: Number = 0;
+  name: string;
+  contact: string;
 
-  constructor(public modalController: ModalController, private router: Router, private authService: AuthService) { }
+  constructor(public modalController: ModalController, private router: Router, private authService: AuthService, private userDataFetch: UsersDataFetchService, private alertController: AlertController) { }
 
   ngOnInit() {
   }
@@ -47,14 +50,12 @@ export class ExplainSlidesComponent implements OnInit {
     this.slides.getActiveIndex().then(
       (index: Number) => {
         this.currentIndex = index;
-        console.log(this.currentIndex);
         if (this.currentIndex == 0) {
           slide2.style.backgroundColor = 'black';
           slide3.style.backgroundColor = 'black';
           slide4.style.backgroundColor = 'black';
           slide5.style.backgroundColor = 'black';
         } else if (this.currentIndex == 1) {
-          console.log(slide2);
           slide2.style.backgroundColor = 'yellow';
           slide3.style.backgroundColor = 'black';
           slide4.style.backgroundColor = 'black';
@@ -112,13 +113,19 @@ export class ExplainSlidesComponent implements OnInit {
 
   async signUp() {
     try {
-      // TODO: Handle optional Name/Phone/Mail
       await this.authService.handleAnonymousSignIn();
+      if (this.name) await this.userDataFetch.firestore_setName(await this.authService.getCurrentUID(), this.name);
+      if (this.contact) await this.userDataFetch.firestore_setContact(await this.authService.getCurrentUID(), this.contact);
       this.modalController.dismiss();
       this.router.navigate(['map-start']);
     } catch (e) {
-      // TODO: Show error to user
       console.log("Error SignIn: ", e);
+      const alert = await this.alertController.create({
+        header: 'Fehler',
+        message: 'Leider ist ein Fehler beim Anmelden aufgetreten.',
+        buttons: ['OK']
+      });
+      await alert.present();
     }
 
   }
