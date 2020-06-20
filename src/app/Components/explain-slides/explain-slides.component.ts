@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
@@ -17,7 +18,7 @@ export class ExplainSlidesComponent implements OnInit {
   showQuestion: boolean = false;
   currentIndex:Number = 0;
   
-  constructor(public modalController: ModalController, private router: Router) { }
+  constructor(public modalController: ModalController, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
     
@@ -111,4 +112,16 @@ export class ExplainSlidesComponent implements OnInit {
       this.hideNext = false;
   }
 
+  async signUp() {
+    try {
+      // TODO: Handle optional Name/Phone/Mail
+      await this.authService.handleAnonymousSignIn();
+      this.modalController.dismiss();
+      this.router.navigate(['map-start']);
+    } catch (e) {
+      // TODO: Show error to user
+      console.log("Error SignIn: ", e);
+    }
+
+  }
 }
