@@ -17,15 +17,13 @@ export class RideIndicatorFreeComponent implements OnInit {
   constructor(private modalController: ModalController, private mapDataFetch: MapDataFetchService) { }
 
   async ngOnInit() {
-    this.mapDataFetch.getUserClusterStatus().subscribe(isInCluster => {
-      if (!isInCluster) {
+    this.mapDataFetch.activeCluster.subscribe(activeCluster => {
+      if (!activeCluster) {
         this.statusColor = '#ffe500';
         console.log('User is alone :(');
         return;
       }
-      // TODO: subscribe to activeCluster to retrieve updates on its size
-      // const count = this.mapDataFetch.getActiveClusterCount();
-      const count = 16;
+      const count = activeCluster.count;
       if (count >= 5 && count <= 15) {
         this.statusColor = '#00eeff';
         console.log('User in a group.');

@@ -113,6 +113,7 @@ export class ExplainSlidesComponent implements OnInit {
 
   async signUp() {
     try {
+      // TODO: Spinner to show activity?
       await this.authService.handleAnonymousSignIn();
       if (this.name) await this.userDataFetch.firestore_setName(await this.authService.getCurrentUID(), this.name);
       if (this.contact) await this.userDataFetch.firestore_setContact(await this.authService.getCurrentUID(), this.contact);

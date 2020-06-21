@@ -35,10 +35,11 @@ export class AuthService {
 
   loadUser() {
     this.storage.get(TOKEN_KEY).then(data => {
-      console.log('Loaded User: ' + data);
       if (data) {
+        console.log('Loaded User: ' + data.uid, data.role);
         this.authState.next(data);
       } else {
+        console.log('No user loaded');
         this.authState.next({ role: null, uid: null });
       }
     });

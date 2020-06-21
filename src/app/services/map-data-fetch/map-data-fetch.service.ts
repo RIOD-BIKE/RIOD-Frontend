@@ -2,9 +2,10 @@ import { UserService } from './../user/user.service';
 import { AngularFireDatabase } from '@angular/fire/database';
 import {  RouteCl, GeoCluster, GeoAssemblyPoint } from '../../Classess/map/map';
 import { Injectable } from '@angular/core';
-import { Subscriber, Observable, BehaviorSubject, Subject } from 'rxjs';
-import { AngularFirestore, AngularFirestoreCollection, DocumentReference  } from '@angular/fire/firestore';
+import { Subscriber, Observable, BehaviorSubject, Subject, Subscription } from 'rxjs';
+import { AngularFirestore, AngularFirestoreCollection, DocumentReference, DocumentSnapshot, DocumentData  } from '@angular/fire/firestore';
 import { AuthService } from '../auth/auth.service';
+import { ThrowStmt } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -22,33 +23,37 @@ export class MapDataFetchService {
 
 // AssemblyPoint Array and BehaviorSubject
   aps: Array<GeoAssemblyPoint>; apsValueChange: BehaviorSubject<Array<GeoAssemblyPoint>>;
-  private clusterStatus: BehaviorSubject<boolean>;
 
-
+  readonly activeCluster: BehaviorSubject<any>;
+  private activeClusterSubscription: Subscription;
+  private activeClusterRef: DocumentReference;
 
   constructor(private db: AngularFirestore, private auth: AuthService, 
               private rtDB: AngularFireDatabase, private userService: UserService) {
     this.aps = new Array<GeoAssemblyPoint>();
     this.cluster = new Array<GeoCluster>();
-    this.clusterStatus = new BehaviorSubject<boolean>(false);
-    this.initFirestoreObservable();
+    this.activeCluster = new BehaviorSubject<any>(null);
+    this.initFirestoreObservables();
   }
 
-  async initFirestoreObservable() {
+  async initFirestoreObservables() {
     this.userFirestore = this.db.collection('users').doc(await this.auth.getCurrentUID()).valueChanges();
-  }
 
-  getUserClusterStatus(): BehaviorSubject<boolean> {
-    this.userFirestore.subscribe(data => {
-      const isInCluster = (data['activeCluster'] === null) ? false : true;
-      if (this.clusterStatus.getValue() !== isInCluster) {
-        this.clusterStatus.next(isInCluster);
+    // Init activeCluster Observable
+    this.userFirestore.subscribe(async data => {
+      if(this.activeClusterRef?.path === data.activeCluster?.path) return;
+      if(data.activeCluster === null) {
+        this.activeClusterRef = null;
+        this.activeClusterSubscription.unsubscribe();
+        this.activeCluster.next(null);
+        return;
       }
+      this.activeClusterRef = data.activeCluster;
+      this.activeClusterSubscription = this.db.doc(data.activeCluster).valueChanges().subscribe(clusterData => {
+        this.activeCluster.next(clusterData);
+      });
     });
-    return this.clusterStatus;
   }
-
-
 
 //IMPORTANT -- IMPORTANT
   //------------          ------------//
