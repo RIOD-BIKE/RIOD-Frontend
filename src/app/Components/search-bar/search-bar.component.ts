@@ -14,7 +14,7 @@ export class SearchBarComponent implements OnInit {
   @Input() searchBarInputV = '';
   public addressesString: string[][] = [];
   constructor(private routingUserService: RoutingUserService, private modalCtrl: ModalController,
-              private mapIntegration: MapIntegrationService, private mapBox: MapBoxComponent, private change:NgZone) { }
+              private mapIntegration: MapIntegrationService, private mapBox: MapBoxComponent) { }
 
   ngOnInit() {
 
@@ -29,7 +29,7 @@ export class SearchBarComponent implements OnInit {
     }
   }
 
-  onSelect(address: any) {
+  onSelect(address: string[][]) {
     this.routingUserService.setFinishPoint(address).then(() => {
       this.routingUserService.deleteAllPoints().then(() => {
         this.mapBox.removeRoute().then(() => {
@@ -45,18 +45,15 @@ export class SearchBarComponent implements OnInit {
         });
       });
     });
-    this.clear();
+    this.searchBarInputV = address[1].toString();
   }
 
 
 
   clear() {
     this.searchBarInputV = '';
-    this.change.run(() => {
-      this.searchBarInputV = '';
-    });
-
   }
+
   // @HostListener('document:click', ['$event'])
   // close() {
   //   console.log('dismiss');

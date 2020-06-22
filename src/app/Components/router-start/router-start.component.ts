@@ -15,11 +15,12 @@ import { SearchBarComponent } from '../search-bar/search-bar.component';
   styleUrls: ['./router-start.component.scss'],
 })
 export class RouterStartComponent implements OnInit {
-  private duration:number;
-  private distance:number;
-  private infoArray=["null1","null2"];
+  private duration: number;
+  private distance: number;
+  private infoArray = ['null1', 'null2'];
 
-  constructor(private mainMenu:MainMenuComponent,private mapBox: MapBoxComponent, private routingUserService: RoutingUserService, private userService:UserService, private modalController :ModalController,private search:SearchBarComponent) { }
+  constructor(private mainMenu: MainMenuComponent, private mapBox: MapBoxComponent, private routingUserService: RoutingUserService,
+              private userService: UserService, private modalController: ModalController, private search: SearchBarComponent) { }
 
   ngOnInit() {
     this.routingUserService.getDistance();
@@ -33,6 +34,7 @@ export class RouterStartComponent implements OnInit {
     this.mapBox.disableAssemblyClick().then(() => {
     this.mapBox.updateAssemblyPoints();
     });
+    this.search.clear();
   }
 
   startRoute(){
@@ -46,7 +48,7 @@ export class RouterStartComponent implements OnInit {
       this.mapBox.drawRoute(pointString).then(() => {
         this.routingUserService.getDuration().then(x => {
           this.routingUserService.getDistance().then(y => {
-            this.infoArray=[x + ' Minuten' , '(' + y + ' km)'];
+            this.infoArray = [x + ' Minuten' , '(' + y + ' km)'];
           });
         });
       });

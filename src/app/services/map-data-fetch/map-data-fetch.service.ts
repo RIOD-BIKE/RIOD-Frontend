@@ -28,7 +28,7 @@ export class MapDataFetchService {
   private activeClusterSubscription: Subscription;
   private activeClusterRef: DocumentReference;
 
-  constructor(private db: AngularFirestore, private auth: AuthService, 
+  constructor(private db: AngularFirestore, private auth: AuthService,
               private rtDB: AngularFireDatabase, private userService: UserService) {
     this.aps = new Array<GeoAssemblyPoint>();
     this.cluster = new Array<GeoCluster>();
@@ -41,8 +41,8 @@ export class MapDataFetchService {
 
     // Init activeCluster Observable
     this.userFirestore.subscribe(async data => {
-      if(this.activeClusterRef?.path === data.activeCluster?.path) return;
-      if(data.activeCluster === null) {
+      if (this.activeClusterRef?.path === data.activeCluster?.path) {return; }
+      if (data.activeCluster === null) {
         this.activeClusterRef = null;
         this.activeClusterSubscription.unsubscribe();
         this.activeCluster.next(null);
