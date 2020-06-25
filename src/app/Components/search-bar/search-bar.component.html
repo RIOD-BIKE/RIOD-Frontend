@@ -1,35 +1,76 @@
-<div class="over">
-    <div class="wrap">
-        <input class="search" placeholder="Hier suchen.." />
-        <button class="btn"><img src="'../../../assets/settings/profile-pic.jpg" alt="Avatar"></button>
+<div class="over" id="over">
+  <div class="rand">
+    <div class="arrow" id="arrow">
+      <button ion-button class="back-btn" id="back" style="background-color: transparent; margin-top: 10px; padding: 0;"
+        (click)="back()">
+        <ion-icon id="btn-icon" slot="icon-only" style="color: white; width: 30px; height: 30px;" name="arrow-back">
+        </ion-icon>
+      </button>
     </div>
-    <div class="container">
-        <div class="scroll" scrollX="true">
-            <span style="margin-left: 0px;">
-                <ion-button class="s-btn primary">
-                    <ion-icon name="home-outline"></ion-icon>
-                </ion-button>
-            </span>
-            <span style="margin-left: 10px;">
-                <ion-button class="s-btn primary">
-                    <ion-icon name="briefcase-outline"></ion-icon>
-                </ion-button>
-            </span>
-            <span style="margin-left: 10px;">
-                <ion-button class="s-btn primary">
-                    <ion-icon name="heart-outline"></ion-icon>
-                </ion-button>
-            </span>
-            <span style="margin-left: 10px;">
-                <ion-button class="s-btn primary">
-                    <ion-icon name="barbell-outline"></ion-icon>
-                </ion-button>
-            </span>
-            <span style="margin-left: 10px;">
-                <ion-button class="s-btn primary">
-                    <ion-icon name="restaurant-outline"></ion-icon>
-                </ion-button>
-            </span>
-        </div>
+    <div class="wrap" id="wrap">
+      <input class="search" (click)="onTouchSearch()" placeholder="Hier suchen.." />
+      <button class="ava">
+        <img src="'../../../assets/settings/profile-pic.jpg" alt="Avatar" />
+      </button>
     </div>
+  </div>
+
+  <!-- no content-->
+  <div class="container" id="no-content">
+    <div class="scroll" scrollX="true">
+      <h5 style="text-align: center; color: #747474; opacity: 1;">
+        Keine gespeicherten Zielen
+      </h5>
+    </div>
+  </div>
+
+  <div class="container-1" >
+    <div id="edit-no-content">
+      <button class="edit" style="margin-top: 15px;"></button>
+      <div style="float: left; width: 180px; background-color: transparent;">
+        <h5 style="text-align: left;padding-top:5px; padding-left: 15px; color: #747474; opacity: 1;">
+          Du kannst deine Ziele im nächsten Schritt speichern.
+        </h5>
+      </div>
+    </div>
+  </div>
+  <!-- icon with content-->
+  <div class="container" id="with-content">
+    <div class="scroll" scrollX="true">
+      <span id="edit-span" style="margin-left: 0px; margin-right: 10px;">
+        <ion-button class="s-btn primary edit" style="--background: #383838;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+            class="feather feather-edit-2">
+            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+          </svg>
+        </ion-button>
+      </span>
+      <span style="margin-left: 0px;">
+        <ion-button class="s-btn primary">
+          <ion-icon name="home-outline"></ion-icon>
+        </ion-button>
+      </span>
+      <span style="margin-left: 10px;">
+        <ion-button class="s-btn primary">
+          <ion-icon name="briefcase-outline"></ion-icon>
+        </ion-button>
+      </span>
+      <span style="margin-left: 10px;">
+        <ion-button class="s-btn primary">
+          <ion-icon name="heart-outline"></ion-icon>
+        </ion-button>
+      </span>
+      <span style="margin-left: 10px;">
+        <ion-button class="s-btn primary">
+          <ion-icon name="barbell-outline"></ion-icon>
+        </ion-button>
+      </span>
+      <span style="margin-left: 10px;">
+        <ion-button class="s-btn primary">
+          <ion-icon name="restaurant-outline"></ion-icon>
+        </ion-button>
+      </span>
+    </div>
+  </div>
 </div>
