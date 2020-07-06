@@ -18,7 +18,12 @@ export class SearchBarComponent implements OnInit {
               private mapIntegration: MapIntegrationService, private mapBox: MapBoxComponent, private change:NgZone) { }
 
   ngOnInit() {
-
+    this.routingUserService.routeFinished.subscribe( value => {
+      console.log(value);
+      if (value == true) {
+        this.clear();
+      }
+    });
   }
 
   search(event) {
@@ -31,18 +36,16 @@ export class SearchBarComponent implements OnInit {
   }
 
   onSelect(address: string) {
-    console.log(address)
+    // console.log(address)
     this.routingUserService.setFinishPoint(address).then(() => {
       this.routingUserService.deleteAllPoints().then(() => {
         this.mapBox.removeRoute().then(() => {
           this.mapBox.disableAssemblyClick().then(() => {
             this.mapBox.updateAssemblyPoints();
             this.routingUserService.getfinishPoint().then(x => {
-              
               this.mapBox.drawFinishMarker().then(x=>{
 
-                if(x==true){
-         
+                if(x == true) {
                   this.routingUserService.getPoints().then(points=>{
                     let pointString = '';
                     for(let i =0; i<points.length;i++){
@@ -53,26 +56,24 @@ export class SearchBarComponent implements OnInit {
                       this.addressesString = [];
                       console.log("RouterInfo")
                       this.routingUserService.setDisplayType('Route_Info');
-                    })
-                  })
-                }
-                else{
+                    });
+                  });
+                } else {
                   this.addressesString = [];
                   this.routingUserService.setDisplayType('Main');
                 }
               });
-              
-              
             });
           });
         });
       });
     });
+    this.searchBarInputV = address[1];
   }
 
 
   isSearchEmpty(searchBarInputV:string){
-    if(searchBarInputV!="" &&searchBarInputV.length>=3 && this.addressesString.length>=1){
+    if(searchBarInputV !="" && searchBarInputV.length >= 3 && this.addressesString.length >= 1) {
       return true;
     }
     return false;

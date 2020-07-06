@@ -19,6 +19,9 @@ export class RoutingUserService {
   private points: RoutingGeoAssemblyPoint [] = [];
   private centerPoint: BehaviorSubject<RoutingGeoAssemblyPoint> = new BehaviorSubject<RoutingGeoAssemblyPoint>(null);
   private displayType: BehaviorSubject<string> = new BehaviorSubject<string>('MainView');
+
+  public routeFinished: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   constructor(private userService: UserService) { }
 
   getDisplayType(): Promise<any> {
@@ -64,10 +67,10 @@ export class RoutingUserService {
   }
 
 
-  getDurationasSub(): Observable<string>{
+  getDurationasSub(): Observable<string> {
     return this.duration;
   }
-  getDistanceasSub(): Observable<string>{
+  getDistanceasSub(): Observable<string> {
     return this.distance;
   }
 
@@ -111,7 +114,7 @@ export class RoutingUserService {
       if (dataPoint != null) {
         const temp = (Math.round(dataPoint * 100) / 100).toFixed(0);  //toFixed(2) = 2 decimal Places
         this.duration.next(temp);
-        console.log('Duration set to: '+this.duration.getValue());
+        console.log('Duration set to: ' + this.duration.getValue());
         resolve(true);
       }
     } catch(e) {
@@ -127,7 +130,7 @@ export class RoutingUserService {
       if (dataPoint != null){
         const temp = (Math.round(dataPoint * 100) / 100).toFixed(2);
         this.distance.next(temp);
-        console.log('Distance set to: '+this.distance.getValue());
+        console.log('Distance set to: ' + this.distance.getValue());
         resolve(true);
       }
     } catch(e) {
@@ -156,7 +159,7 @@ export class RoutingUserService {
     });
   }
 
-  deletePoints(pointNumber:number):Promise<boolean>{
+  deletePoints(pointNumber: number): Promise<boolean> {
     return new Promise(resolve => {
       try{
         if(pointNumber!=null){

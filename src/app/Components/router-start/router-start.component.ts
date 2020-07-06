@@ -17,8 +17,8 @@ import { distance } from '@turf/turf';
   styleUrls: ['./router-start.component.scss'],
 })
 export class RouterStartComponent implements OnInit {
-  private duration:number;
-  private distance:number;
+  private duration: number;
+  private distance: number;
 
   constructor(private mapIntegration:MapIntegrationService, private mainMenu:MainMenuComponent,private mapBox: MapBoxComponent, private routingUserService: RoutingUserService, private userService:UserService, private modalController :ModalController,private search:SearchBarComponent) { }
 
@@ -33,6 +33,7 @@ export class RouterStartComponent implements OnInit {
     this.mapBox.disableAssemblyClick().then(() => {
     this.mapBox.updateAssemblyPoints();
     });
+    this.routingUserService.routeFinished.next(true);
   }
 
   startRoute(){
