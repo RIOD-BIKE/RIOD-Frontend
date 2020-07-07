@@ -2,20 +2,20 @@ ion-header {
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 20px;
-    background-color: #4F4F4F;
+    background-color: #242323;
 }
 
 ion-content {
     --padding-start: 30px;
     --padding-end: 30px;
-    --background: #4F4F4F !important;
+    --background: #242323 !important;
 
 }
 
 ion-footer {
     padding-left: 30px;
     padding-right: 30px;
-    background-color: #4F4F4F;
+    background-color: #242323;
     color: white;
   
 }
@@ -24,7 +24,7 @@ ion-footer {
     height: 13vh !important;
     padding-left: 30px;
     padding-right: 30px;
-    background-color: #4F4F4F;
+    background-color: #242323;
 
 }
 
@@ -33,7 +33,7 @@ ion-footer {
     height: 45px;
     background: url('../../../../assets/settings/back.svg');
     color: white;
-    background-size: 25px;
+    background-size: 28px;
     background-repeat: no-repeat;
     background-position: center;
     filter: invert(100%);
@@ -64,7 +64,7 @@ ion-footer {
 
 .block {
     height: 25%;
-    background-color: #575656;
+    background-color: #4F4F4F;
     border-radius: 10px;
     text-align: center;
    
@@ -83,14 +83,14 @@ ion-footer {
 
 .feedback{
     float: right;
-    width: 65px;
-    height: 33px;
+    width: 74px;
+    height: 36px;
     border-radius: 20px;
     background-size: 15px;
     background: url('../../../../assets/settings/edit.svg');
     background-repeat: no-repeat;
     background-position: center;
-    // background-color: #4F4F4F;
+    background-color: #4F4F4F;
 }
 
 h1 {

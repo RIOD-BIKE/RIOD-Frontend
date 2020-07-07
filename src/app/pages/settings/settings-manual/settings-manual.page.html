@@ -1,18 +1,21 @@
 <ion-header>
+<ion-grid>
 <ion-row>
   <ion-col size="3">
-      <div class="back"><!-- onclick='handleClick(this);' -->
+      <div class="back" (click)="back()"><!-- onclick='handleClick(this);' -->
       </div>
   </ion-col>
   <ion-col size="7">
-      <h1>Anleitung</h1>
+      <h1 style="padding-top: 5px;">Anleitung</h1>
   </ion-col>
 </ion-row>
+</ion-grid>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen>
+<ion-grid>
 <div class="mt20"></div>
-<div class="block"> 
+<div class="block" (click)="goToMapMain()"> 
 <ion-row>
     <ion-col size="12"><br/>
             <ion-icon class="display"></ion-icon>
@@ -33,7 +36,7 @@
 
 
 <div class="mt20"></div>
-<div class="block"> 
+<div class="block" (click)="goToMapStart()"> 
 <ion-row>
     <ion-col size="12"><br/>
             <ion-icon class="bicycle"></ion-icon>
@@ -42,10 +45,10 @@
     </ion-row>   
 </div>
 
-
+</ion-grid>
 </ion-content>
 
-<ion-footer>
+<ion-footer no-shadow>
         <ion-grid>
                 <ion-row>
                         <ion-col size="2">

@@ -1,23 +1,24 @@
-<ion-header  class="header" no-shadow>
+<ion-header class="header">
     <ion-grid>
         <ion-row>
-            <ion-col size="2" style="padding-left: 15px;">
+            <ion-col size="2" style="padding-left: 5px;">
                 <div id="ava">
                     <button class="avatar"></button>
                 </div>
             </ion-col>
             <ion-col size="6">
-                <div style="padding-left: 10px;">
-                    <ion-row style="height: 25px; ">
+                <div style="padding-left: 10px;padding-top: 10px;">
+                    
+                    <ion-row style="height: 15px; ">
                         <h3 style="margin: 0px; line-height: 1.5;">Mavin O.</h3><br/>
                     </ion-row>
-                   <ion-row style="height: 25px;">
+                   <ion-row style="height: 15px;">
                         <p style="margin: 0px; line-height: 1.5;color:white">matters@web.de</p>
                     </ion-row>
                 </div>
                 </ion-col>
                 <ion-col size="2">
-                    <button class="edit"></button>
+                    <button class="edit" (click)="goToSettingsMain()"></button>
                 </ion-col>
             <ion-col size="2">
                 <button class="cancel"></button>
@@ -25,9 +26,10 @@
         </ion-row>
     </ion-grid>
 </ion-header>
+
 <ion-content fullscreen>
     <ion-grid>
-        <div class="mt20"></div>
+        <div class="mt10"></div>
         <ion-row>
             <ion-col size="2">
                 <ion-icon class="gps"></ion-icon>
@@ -35,10 +37,12 @@
             <ion-col size="6">
                 <h3 style="margin-top: 10px;  margin-left: 5px;">GPS anschalten</h3>
             </ion-col>
-            <ion-col size="4">
-                <div class="item">
-                    <input type="checkbox" />
-                </div>
+            <ion-col size="4">                    
+                <div class="button r" id="button-1"><!-- onclick='handleClick(this);' -->
+                    <input type="checkbox" class="checkbox">
+                    <div class="knobs"> </div>                      
+                    <div class="layer"> </div>
+                </div>                         
             </ion-col>
         </ion-row>
         <div class="mt20"></div>
@@ -47,8 +51,8 @@
                 <ion-icon class="volume"></ion-icon>
             </ion-col>
             <ion-col size="9" >
-                <ion-range style="margin-left: 10px; color:white;" [(ngModel)]="rangeVolume" pin="true" min="0" max="10" color="light"></ion-range>
-            </ion-col>
+                    <ion-range style="margin-left: 10px;" [(ngModel)]="rangeVolume" pin="true" min="0" max="10" color="light"></ion-range>
+                </ion-col>
         </ion-row>
         <div class="mt20"></div>
         <ion-row>
@@ -59,9 +63,11 @@
                 <h3 style="margin-top: 10px;  margin-left: 5px;">Vibration zulassen</h3>
             </ion-col>
             <ion-col size="4">
-                <div class="item">
-                    <input type="checkbox" /> <!-- onclick='handleClick(this);' -->
-                </div>
+                    <div class="button r" id="button-1"><!-- onclick='handleClick(this);' -->
+                            <input type="checkbox" class="checkbox">
+                            <div class="knobs"> </div>                      
+                            <div class="layer"> </div>
+                        </div> 
             </ion-col>
         </ion-row>
         <div class="mt20"></div>
@@ -73,9 +79,11 @@
                 <h3 style="margin-top: 10px;  margin-left: 5px;">Display anhalten</h3>
             </ion-col>
             <ion-col size="4">
-                <div class="item">
-                    <input type="checkbox" /> <!-- onclick='handleClick(this);' -->
-                </div>
+                    <div class="button r" id="button-1"><!-- onclick='handleClick(this);' -->
+                        <input type="checkbox" class="checkbox">
+                        <div class="knobs"> </div>                      
+                        <div class="layer"> </div>
+                    </div> 
             </ion-col>
         </ion-row>
         <div class="mt20"></div>
@@ -87,10 +95,12 @@
                     <h3 style="margin-top: 10px; margin-left: 5px;">Anleitung</h3>
                 </ion-col>
                 <ion-col size="4">
-                        <ion-col size="4">
+                        <div class="button r" id="button-1"><!-- onclick='handleClick(this);' -->
                             <button ion-button (click)="goToManualPage()" class="next" ></button>
-                        </ion-col>
+
+                        </div> 
                 </ion-col>
+
             </ion-row>
             <div class="mt20"></div>
         <ion-row>
@@ -101,10 +111,11 @@
                 <h3 style="margin-top: 10px;  margin-left: 5px;">Hilfe und Feedback</h3>
             </ion-col>
             <ion-col size="4">
-                <ion-col size="4">
-                    <button ion-button  class="feedback" ></button>
-                </ion-col>
-        </ion-col>
+                    <div class="button r" id="button-1"><!-- onclick='handleClick(this);' -->
+                        <button ion-button  class="feedback" ></button>
+
+                    </div> 
+            </ion-col>
         </ion-row>
         <div class="mt20"></div>
         <ion-row>
@@ -114,7 +125,6 @@
             
         </ion-row>
     </ion-grid>
-
 </ion-content>
 <ion-footer class="footer" no-shadow>
     <ion-grid>

@@ -18,4 +18,12 @@ export class SettingsManualPage implements OnInit {
 
   }
 
+  goToMapMain() {
+    this.router.navigate(['/map-main']);
+  }
+
+  goToMapStart() {
+    this.router.navigate(['/map-start']);
+  }
+
 }

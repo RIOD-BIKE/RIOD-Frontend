@@ -3,34 +3,56 @@
     padding-right: 30px;
     padding-top: 20px;
     background-color: #242323;
-    border-style: hidden;
-
+ 
 }
+
 ion-footer {
     padding-left: 30px;
     padding-right: 30px;
+    padding-top: 20px;
     background-color: #242323;
-    border-style: hidden;
 
-  
+}
+
+.body{
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: #242323;
+    //overflow: hidden;  
+    overflow: hidden;
+    border: 0px !important;
+    border-bottom-color: transparent !important;
+    background-image: none !important;
+    border-bottom: none !important;
 }
 ion-content {
     font-family: effra;
     --padding-start: 30px; 
     --padding-end: 30px;
     --background: #242323;
-    border-style: hidden;
-
+   
 }
+
+ion-range {
+    color:white;
+}
+
+.scroll-content {
+    border-top: 0 !important;
+    border-bottom: 0 !important;
+  }
+
 ion-range{
     padding: 0px;
 }
+
+
 .cancel {
     float: right;
     width: 50px;
     height: 50px;
     background: url('../../../../assets/settings/x-cancel.svg');
-    background-size: 20px;
+    background-size: 15px;
     background-repeat: no-repeat;
     background-position: center;
 }
@@ -40,7 +62,7 @@ ion-range{
     width: 50px;
     height: 50px;
     background: url('../../../../assets/settings/edit.svg');
-    background-size: 22px;
+    background-size: 17px;
     background-repeat: no-repeat;
     background-position: center;
 }
@@ -68,7 +90,7 @@ ion-range{
     width: 45px;
     height: 30px;
     background: url('../../../../assets/settings/gps.svg');
-    background-size: 28px;
+    background-size: 22px;
     background-repeat: no-repeat;
     background-position: center;
     filter: invert(100%);
@@ -76,27 +98,27 @@ ion-range{
 
 .volume{
     width: 45px;
-    height: 30px;
+    height: 37px;
     background: url('../../../../assets/settings/volume.svg');
-    background-size: 28px;
+    background-size: 22px;
     background-repeat: no-repeat;
     background-position: center;
 }
 
 .vibra{
     width: 45px;
-    height: 45px;
-    background: url('../../../../assets/settings/vibrate_edited.png');
-    background-size: 32px;
+    height: 30px;
+    background: url('../../../../assets/settings/vibration1.svg');
+    background-size: 26px;
     background-repeat: no-repeat;
     background-position: center;
-    //filter: invert(100%);
+    filter: invert(100%);
 }
 .display{
     width: 45px;
-    height: 45px;
+    height: 33px;
     background: url('../../../../assets/settings/display.svg');
-    background-size: 21px;
+    background-size: 15px;
     background-repeat: no-repeat;
     background-position: center;
 }
@@ -107,7 +129,7 @@ ion-range{
     height: 30px;
     background: url('../../../../assets/settings/anleitung.svg');
     color: white;
-    background-size: 32px;
+    background-size: 26px;
     background-repeat: no-repeat;
     background-position: center;
     filter: invert(100%);
@@ -116,9 +138,9 @@ ion-range{
 
 .hilfe{
     width: 45px;
-    height: 45px;
+    height: 35px;
     background: url('../../../../assets/settings/hilfe.svg');
-    background-size: 26px;
+    background-size: 20px;
     background-repeat: no-repeat;
     background-position: center;
 }
@@ -137,8 +159,8 @@ ion-range{
 
 .next{
     float: right;
-    width: 65px;
-    height: 33px;
+    width: 74px;
+    height: 36px;
     border-radius: 20px;
 
     background: url('../../../../assets/settings/next.svg');
@@ -151,8 +173,8 @@ ion-range{
 
 .feedback{
     float: right;
-    width: 65px;
-    height: 33px;
+    width: 74px;
+    height: 36px;
     border-radius: 20px;
 
     background: url('../../../../assets/settings/edit.svg');
@@ -187,79 +209,126 @@ p{
 
 
 /* Toggle */
-  *:before,
-  *:after {
-      box-sizing: border-box;
-      padding: 0;
-      margin: 0;
-  }
-  .item {
-      align-self: stretch;
-      text-align: right;
-      padding-top: 5px;
-      &:not(:last-of-type) {
-          border-bottom: 1px solid #ccc;
-      }
-  }
+ 
+.button-cover:before
+{  
+    counter-increment: button-counter;
+    content: counter(button-counter);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    color: #d7e3e3;
+    font-size: 12px;
+    line-height: 1;
+    padding: 5px;
+}
 
-  $input-bg-static: #4F4F4F;
-  $input-bg-pseudo-static: #454545; 
+.button-cover, .knobs, .layer
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
 
-  $input-width: 60px; // adjust only this number for dimensions
+.button
+{
+    position: relative;
+    top: 50%;
+    width: 74px;
+    height: 36px;
+    margin: -20px auto 0 auto;
+    overflow: hidden;
+}
 
-  $input-radius: calc(#{$input-width} / 2);
-  $input-height: calc(#{$input-width} / 2);
+.button.r, .button.r .layer
+{
+    border-radius: 100px;
+}
 
-  .knob-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-  }
+.button.b2
+{
+    border-radius: 2px;
+}
 
+.checkbox
+{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 3;
+}
 
+.knobs
+{
+    z-index: 2;
+}
 
-  input[type="checkbox"] {
-      position: relative;
-      appearance: none;
-      width: $input-width;
-      height: $input-height;
+.layer
+{
+    width: 100%;
+    background-color: #4F4F4F;
+    transition: 0.3s ease all;
+    z-index: 1;
+}
 
-      border-radius: $input-radius;
-      background-color: $input-bg-static;
-      outline: none; // 
-      transition: background 450ms ease;
-      box-shadow: 0 0 0 2px darken($input-bg-static, 7.5%);
+/* Button 1 */
+#button-1 .knobs:before
+{
+    content: 'Ja';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 30px;
+    height: 10px;
+    color: #fff;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1;
+    padding: 9px 4px;
+    background-color: #242323;
+    border-radius: 70%;
+    transition: 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15) all;
+}
 
-      &:before,
-      &:after {
-          position: absolute;
-          display: block;
-          content: "";
-          content-position: center;
-          border-radius: 100%;
-          transition:
-              background 450ms ease,
-              transform 450ms ease;
-      }
+#button-1 .checkbox:checked + .knobs:before
+{
+    content: 'Nein';
+    left: 30px;
+    background-color: #242323;
+}
 
+#button-1 .checkbox:checked ~ .layer
+{
 
-      &:before {
-          width: calc(#{$input-width} / 2);
-          height: $input-height;
-          background-color: $input-bg-pseudo-static;
-      }
+    background-color: #4F4F4F;
+}
 
-      &:after {
-          width: calc(#{$input-width} / 2);
-          height: $input-height;
-      }
+#button-1 .knobs, #button-1 .knobs:before, #button-1 .layer
+{
+    transition: 0.3s ease all;
+}
 
+h3{
+    font-size: 4vw;
+    float: left;
+}
+h5{
+    font-weight: 300;
+}
 
-      &:checked {
-          &:before {
-             
-              background-color: white;
-              transform: translateX(100%);
-          }
-      }
+p{
+    font-size: 3.5vw;
+    float: left;
+}
+
+.range-pin {
+    color: white;
+    font-family: sans-serif;
   }

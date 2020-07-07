@@ -21,4 +21,8 @@ export class SettingsMainDropboxPage implements OnInit {
     this.router.navigate(['/settings-manual']);
   }
 
+  goToSettingsMain() {
+    this.router.navigate(['/settings-main']);
+  }
+
 }
