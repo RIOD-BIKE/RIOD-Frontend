@@ -36,6 +36,7 @@ export class RouterInfoInBottomComponent implements OnInit {
   }
 
   closeView(){
+    this.routingUserService.isRouteFinished(true);
     this.mainMenu.closeView();
     this.infoArray = [];
     this.routingUserService.resetAll();
@@ -57,8 +58,7 @@ export class RouterInfoInBottomComponent implements OnInit {
               for(let i =0; i<points.length;i++){
                   pointString += (points[i].position.longitude + ',' + points[i].position.latitude + ';');
               }
-              this.mapIntegration.saveRouteOffline(start,fin,points,duration,dist).then(returnMessage=>{
-                
+              this.mapIntegration.saveRouteOffline(start,fin,points,duration,dist).then(returnMessage => {
                 console.log(returnMessage);
               })
               this.mapBox.drawRoute(pointString).then(()=>{

@@ -26,14 +26,14 @@ export class RouterStartComponent implements OnInit {
     this.routingUserService.getDistance();
   }
 
-  closeView(){
+  closeView() {
+    this.routingUserService.isRouteFinished(true);
     this.routingUserService.setDisplayType('Start');
     this.routingUserService.resetAll();
     this.mapBox.removeRoute();
     this.mapBox.disableAssemblyClick().then(() => {
     this.mapBox.updateAssemblyPoints();
     });
-    this.routingUserService.routeFinished.next(true);
   }
 
   startRoute(){

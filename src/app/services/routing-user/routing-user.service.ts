@@ -24,6 +24,10 @@ export class RoutingUserService {
 
   constructor(private userService: UserService) { }
 
+  isRouteFinished(bool: boolean){
+    this.routeFinished.next(bool);
+  }
+
   getDisplayType(): Promise<any> {
     return new Promise(resolve => {
         resolve(this.displayType);

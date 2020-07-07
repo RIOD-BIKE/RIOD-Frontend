@@ -20,8 +20,9 @@ export class SearchBarComponent implements OnInit {
   ngOnInit() {
     this.routingUserService.routeFinished.subscribe( value => {
       console.log(value);
-      if (value == true) {
+      if (value === true) {
         this.clear();
+        this.routingUserService.isRouteFinished(false);
       }
     });
   }
@@ -54,7 +55,7 @@ export class SearchBarComponent implements OnInit {
 
                     this.mapBox.drawRoute(pointString).then(()=>{
                       this.addressesString = [];
-                      console.log("RouterInfo")
+                      // console.log("RouterInfo")
                       this.routingUserService.setDisplayType('Route_Info');
                     });
                   });

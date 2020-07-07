@@ -20,10 +20,10 @@ import { SearchBarComponent } from 'src/app/Components/search-bar/search-bar.com
 
 export class MapStartPage implements OnInit {
 
-  public showRidingToggle:boolean = true;
-  public showMain:boolean = false;
-  public showRouterInfo:boolean=false;
-  private showRide:boolean= false;
+  public showRidingToggle = true;
+  public showMain = false;
+  public showRouterInfo = false;
+  private showRide = false;
  constructor(private routingUserService: RoutingUserService, private mapBox: MapBoxComponent,
              private statusBar: StatusBar, private mainMenu: MainMenuComponent, private modalController: ModalController,
              private mapDataFetch: MapDataFetchService,private routerInfo:RouterInfoInBottomComponent,routerStart:RouterStartComponent,private searchBar: SearchBarComponent) {
@@ -34,25 +34,25 @@ export class MapStartPage implements OnInit {
   this.statusBar.backgroundColorByHexString('#383838');
   this.mapBox.setupMap();
   //this.presentModal();
-  this.routingUserService.getDisplayTypeObs().subscribe(x=>{
-    if(x==='Start'){
+  this.routingUserService.getDisplayTypeObs().subscribe( x => {
+    if(x === 'Start') {
       this.setShowStart();
     }
-    if(x==='Route_Info'){
-      this.showMain=false;
-      this.showRidingToggle=false;
+    if (x === 'Route_Info'){
+      this.showMain = false;
+      this.showRidingToggle = false;
       this.setShowRouterInfoBottom();
     }
-    if(x==='Main'){
+    if (x === 'Main') {
       this.setShowMain();
     }
-  })
+  });
  }
 
   ngOnInit() {
 
   }
-  
+
   locateDevice() {
     this.mapBox.moveMapToCurrent();
   }
@@ -65,8 +65,8 @@ export class MapStartPage implements OnInit {
 
   setShowRouterInfoBottom():Promise<any>{
     return new Promise(resolve => {
-      this.showRidingToggle=false;
-    this.showRouterInfo= true;
+      this.showRidingToggle = false;
+    this.showRouterInfo = true;
     resolve();
     });
   }
@@ -85,8 +85,8 @@ export class MapStartPage implements OnInit {
   setShowStart(): Promise<any>{
     return new Promise(resolve => {
     this.showMain = false;
-    this.showRidingToggle = false;
-    this.showRouterInfo=false;
+    this.showRidingToggle = true;
+    this.showRouterInfo = false;
     resolve();
     });
   }
