@@ -1,3 +1,4 @@
+import { NavController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -8,13 +9,13 @@ import { Router } from '@angular/router';
 })
 export class SettingsManualPage implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private navCtrl: NavController) { }
 
   ngOnInit() {
   }
 
   back() {
-    this.router.navigate(['/settings-main-dropbox']);
+    this.navCtrl.back();
 
   }
 

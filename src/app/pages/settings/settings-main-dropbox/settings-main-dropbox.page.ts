@@ -58,7 +58,8 @@ export class SettingsMainDropboxPage implements OnInit {
   }
 
   goToManualPage() {
-    this.router.navigate(['/settings-manual']);
+    // this.router.navigate(['/settings-manual']);
+    this.navController.navigateForward('settings-manual');
   }
 
   test(){
@@ -71,6 +72,7 @@ export class SettingsMainDropboxPage implements OnInit {
   }
 
   cancel() {
-    this.router.navigate(['/map-start']);
+    // this.router.navigate(['/map-start']);
+    this.navController.back();
   }
 }
