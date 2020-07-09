@@ -1,3 +1,4 @@
+import { UserService } from './../user/user.service';
 import { RoutingGeoAssemblyPoint,MapboxOutput,Feature } from '../../Classess/map/map';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
@@ -13,9 +14,16 @@ import { RoutingUserService } from '../routing-user/routing-user.service';
 })
 
 export class MapIntegrationService {
-  constructor(private storage:Storage,private routingUserService:RoutingUserService, private http: HttpClient) {
+  private bbMinLongi: number;
+  private bbMinLati: number;
+  private bbMaxLongi: number;
+  private bbMaxLati: number;
+
+  constructor(private storage: Storage, private routingUserService: RoutingUserService,
+              private http: HttpClient, private userService: UserService) {
   }
-  saveRouteOffline(startPosition:number[],endPosition:RoutingGeoAssemblyPoint,assemblyPoints:RoutingGeoAssemblyPoint[],duration:number,distance:number):Promise<any>{
+  saveRouteOffline(startPosition: number[], endPosition: RoutingGeoAssemblyPoint, assemblyPoints: RoutingGeoAssemblyPoint[],
+                   duration: number, distance: number): Promise<any> {
     return new Promise(resolve => {
       let i=0;
       this.checkifRouteExists().then(routeExists=>{
@@ -124,14 +132,13 @@ export class MapIntegrationService {
     })
   }
 
-  checkAddressProximity(adress1,adress2):Promise<boolean>{
+  checkAddressProximity(adress1, adress2): Promise<boolean> {
     return new Promise(resolve => {
-      console.log
-      var pt = turf.point(adress2);
-      let polygon=[];
-      let dLatN=400;
-      let dLongN=-400;
-      for(let time=0;time<4;time++){
+      const pt = turf.point(adress2);
+      const polygon = [];
+      let dLatN = 400;
+      let dLongN = -400;
+      for(let time = 0; time < 4 ; time++) {
         let R=6378137;
         let dLat =dLatN/R;
         let dLon =dLongN/(R*Math.cos(Math.PI*adress1[0]/180));
@@ -152,8 +159,54 @@ export class MapIntegrationService {
     });
   }
 
+  // can be used for other locations when parameters are defined
+  async calculateBBBox() {
+    const myPosition = await this.userService.getUserPosition();
+
+    const latD = this.deg2rad(myPosition.position.latitude);
+    const lonD = this.deg2rad(myPosition.position.longitude);
+    // halfSide is half-length of boundingbox in meteres
+    const halfSide = 1000 * 20;
+
+    // Radius of Earth at given latitude
+    const radius = this.WGS84EarthRadius(latD);
+    // Radius of the parallel at given latitude
+    const pradius = radius * Math.cos(latD);
+
+    this.bbMinLongi = this.rad2deg(lonD - halfSide / radius);
+    this.bbMinLati = this.rad2deg(latD - halfSide / radius);
+    this.bbMaxLongi = this.rad2deg(lonD + halfSide / pradius);
+    this.bbMaxLati = this.rad2deg(latD + halfSide / pradius);
+  }
+
+  // Earth radius at a given latitude, according to the WGS-84 ellipsoid [m]
+  WGS84EarthRadius(lati: number): number {
+    const WGS84A = 6378137.0;
+    const WGS84B = 6356752.3;
+
+    const An = WGS84A * WGS84B * Math.cos(lati);
+    const Bn = WGS84B * WGS84B * Math.sin(lati);
+    const Ad = WGS84A * Math.cos(lati);
+    const Bd = WGS84B * Math.sin(lati);
+    return Math.sqrt((An * An + Bn * Bn) / (Ad * Ad + Bd * Bd));
+  }
+
+  // degrees to radians
+  deg2rad(degrees: number): number {
+    return Math.PI * degrees / 180.0;
+  }
+
+  // radians to degrees
+  rad2deg(radians: number): number {
+    return 180.0 * radians / Math.PI;
+  }
+
   searchAddress(query: string){
     const url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
+
+    this.calculateBBBox();
+    // TODO: include BBbox coordinates into url
+
     return this.http.get(url + query + '.json?autocomplete?types=address&country=de&access_token=' + environment.mapbox.accessToken)
       .pipe(map((res: MapboxOutput) => {
         return res.features;
