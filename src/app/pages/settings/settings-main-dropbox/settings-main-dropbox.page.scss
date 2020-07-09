@@ -2,6 +2,11 @@
     align-self: center;
 }
 
+.profile-text{
+    height:50%;
+    margin-left: -6vw;
+}
+
 
 
 
@@ -10,7 +15,7 @@
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 20px;
-    padding-bottom: 20px;
+   // padding-bottom: 20px;
     background-color: #242323;
  
 }
@@ -61,7 +66,7 @@ ion-range{
 
 
 .cancel {
-    position: absolute;
+    //position: absolute;
     float: right;
     width: 50px;
     height: 50px;
@@ -69,11 +74,11 @@ ion-range{
     background-size: 20px;
     background-repeat: no-repeat;
     background-position: center;
-    // background-position-x: right;
+     background-position-x: right;
 }
 
 .edit{
-    position: absolute;
+   // position: absolute;
     float: right;
     width: 50px;
     height: 50px;
@@ -81,6 +86,7 @@ ion-range{
     background-size: 25px;
     background-repeat: no-repeat;
     background-position: center;
+    background-position-x: right;
 }
 // #ava {
 //     float: left;

@@ -3,41 +3,36 @@
     <!-- <div class="mt10"></div> -->
     <ion-row style="flex-grow: 1;"></ion-row>
     <ion-row style="flex-grow: 1;">
-      <ion-col size="2">
+      <ion-col size="4">
         <!-- <div> -->
         <!-- <button class="avatar"></button> -->
         <!-- FIXME: @Frontend-Team Make this pretty -->
         <img class="avatar" id="avatar" src="{{ specialAvatarURL }}" alt="Avatar" />
         <!-- </div> -->
       </ion-col>
-      <ion-col size="6">
-        <div style="padding-left: 10px; padding-top: 10px;">
+      <ion-col size="5">
+        <!-- <div style="padding-left: 10px; padding-top: 10px;"> -->
           <!-- FIXME: @Frontend-Team Make this pretty -->
           <div [hidden]="name || contact">ID#{{ uid | slice: 0:8 }}</div>
-          <ion-row style="height: 15px;">
-            <h3 style="margin: 0px; line-height: 1.5; margin-left: 10px;">
+          <ion-row class="profile-text">
+            <h3 style="margin: 0px; line-height: 1.5; align-self: flex-end;">
               {{ name }}
             </h3>
             <br />
-          </ion-row>
-          <ion-row style="height: 15px;">
+          </ion-row>  
+          <ion-row  class="profile-text">
             <p
-              style="
-                margin-top: 8px;
-                line-height: 1.5;
-                margin-left: 10px;
-                color: white;
-              "
+            style="margin: 0px; line-height: 1.5; "
             >
-              {{ contact }}
-            </p>
+              {{ contact | slice : 0:16 }}
+          </p>
           </ion-row>
-        </div>
+        <!-- </div> -->
       </ion-col>
-      <ion-col size="2">
+      <ion-col class="col-adjust" size="1">
         <button class="edit" (click)="openUserSettings()"></button>
       </ion-col>
-      <ion-col size="2">
+      <ion-col class="col-adjust" size="2">
         <button class="cancel" (click)="cancel()"></button>
       </ion-col>
     </ion-row>
