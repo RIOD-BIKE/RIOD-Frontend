@@ -1,0 +1,104 @@
+ion-header {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 20px;
+    background-color: #242323;
+    overflow: hidden;
+}
+
+ion-content {
+    --padding-start: 30px;
+    --padding-end: 30px;
+    --background: #242323 !important;
+
+}
+
+ion-footer {
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: #242323;
+    color: white;
+    overflow: hidden;
+  
+}
+
+.footer {
+    height: 13vh !important;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: #242323;
+
+}
+
+.back{
+    width: 35px;
+    height: 45px;
+    background: url('../../../../assets/settings/back.svg');
+    color: white;
+    background-size: 28px;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: invert(100%);
+}
+
+
+
+.display {
+    width: 70px;
+    height: 53px;
+    background: url('../../../../assets/settings/display.svg');
+    background-size: 40px;
+    background-repeat: no-repeat;
+    background-position: center;
+    line-height: 1px;
+}
+
+.bicycle {
+    width: 70px;
+    height: 53px;
+    background: url('../../../../assets/settings/bicycle.svg');
+    background-size: 60px;
+    background-repeat: no-repeat;
+    background-position: center;
+    line-height: 1px;
+    filter: invert(100%);
+}
+
+.block {
+    height: 25%;
+    background-color: #4F4F4F;
+    border-radius: 10px;
+    text-align: center;
+   
+}
+
+.hilfe{
+    width: 48px;
+    height: 48px;
+    background: url('../../../../assets/settings/hilfe.svg');
+    background-size: 35px;
+    background-repeat: no-repeat;
+    background-position: center;
+
+}
+
+
+.feedback{
+    float: right;
+    width: 80px;
+    height: 40px;
+    border-radius: 30px;
+    background-size: 15px;
+    background: url('../../../../assets/settings/edit.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #4F4F4F;
+    margin-top: 5px;
+}
+
+h1 {
+    color:white;
+    font-size:18px;
+    text-align: center;
+    line-height: 1px;
+}

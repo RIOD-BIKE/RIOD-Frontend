@@ -1,128 +1,174 @@
-<ion-header>
-    <ion-grid>
-        <ion-row>
-            <ion-col>
-                <button (click)="cancel()" class="cancel"></button>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-    <ion-grid>
-        <ion-row>
-            <ion-col size="9" style="padding-left: 5px;">
-                <div id="ava">
-                    <button class="avatar"></button>
-                </div>
-                <div style="padding-left: 75px;">
-                    <ion-row style="height: 25px; ">
-                        <h3 style="margin: 0px; line-height: 1.5;">{{ name }}</h3>
-                    </ion-row>
-                    <ion-row style="height: 25px;">
-                        <p style="margin: 0px; line-height: 1.5;">+49 176 764 99803</p>
-                    </ion-row>
-                </div>
-            </ion-col>
-            <ion-col size="3">
-                <button (click)="openUserSettings()" class="edit"></button>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <div class="linie mt10"></div>
-        </ion-row>
-    </ion-grid>
+<ion-header class="header">
+  <ion-grid style="display: flex; height: 100%; flex-flow: column;">
+    <!-- <div class="mt10"></div> -->
+    <ion-row style="flex-grow: 1;"></ion-row>
+    <ion-row style="flex-grow: 1;">
+      <ion-col size="2">
+        <!-- <div> -->
+        <button class="avatar"></button>
+        <!-- </div> -->
+      </ion-col>
+      <ion-col size="6">
+        <div style="padding-left: 10px; padding-top: 10px;">
+          <ion-row style="height: 15px;">
+            <h3 style="margin: 0px; line-height: 1.5; margin-left: 10px;">
+              {{ name }}
+            </h3>
+            <br />
+          </ion-row>
+          <ion-row style="height: 15px;">
+            <p
+              style="
+                margin-top: 8px;
+                line-height: 1.5;
+                margin-left: 10px;
+                color: white;
+              "
+            >
+              matters@web.de
+            </p>
+          </ion-row>
+        </div>
+      </ion-col>
+      <ion-col size="2">
+        <button class="edit" (click)="goToSettingsMain()"></button>
+      </ion-col>
+      <ion-col size="2">
+        <button class="cancel"></button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-header>
+
 <ion-content>
-    <ion-grid>
-        <ion-row>
-            <ion-col size="2">
-                <ion-icon class="anonym"></ion-icon>
-            </ion-col>
-            <ion-col size="7">
-                <h3 style="margin-top: 10px; margin-left: 5px;">Anonymes fahren</h3>
-            </ion-col>
-            <ion-col size="3">
-                <div class="item">
-                    <input type="checkbox" />
-                </div>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col size="2">
-                <ion-icon class="gps"></ion-icon>
-            </ion-col>
-            <ion-col size="7">
-                <h3 style="margin-top: 10px;  margin-left: 5px;">GPS anschalten</h3>
-            </ion-col>
-            <ion-col size="3">
-                <div class="item">
-                    <input type="checkbox" />
-                </div>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col size="2">
-                <ion-icon class="volume"></ion-icon>
-            </ion-col>
-            <ion-col size="10" >
-                <ion-range style="margin-left: 10px;" [(ngModel)]="rangeVolume" pin="true" min="0" max="10" color="#4F4F4F;"></ion-range>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col size="2">
-                <ion-icon class="vibra"></ion-icon>
-            </ion-col>
-            <ion-col size="7">
-                <h3 style="margin-top: 10px;  margin-left: 5px;">Vibration zulassen</h3>
-            </ion-col>
-            <ion-col size="3">
-                <div class="item">
-                    <input type="checkbox" /> <!-- onclick='handleClick(this);' -->
-                </div>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col size="2">
-                <ion-icon class="display"></ion-icon>
-            </ion-col>
-            <ion-col size="7">
-                <h3 style="margin-top: 10px;  margin-left: 5px;">Display anhalten</h3>
-            </ion-col>
-            <ion-col size="3">
-                <div class="item">
-                    <input type="checkbox" /> <!-- onclick='handleClick(this);' -->
-                </div>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col size="2">
-                <ion-icon class="hilfe"></ion-icon>
-            </ion-col>
-            <ion-col size="7">
-                <h3 style="margin-top: 10px;  margin-left: 5px;">Hilfe und Feedback</h3>
-            </ion-col>
-            <ion-col size="3">
-                <button ion-button class="next"></button>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col size="6">
-                <button ion-button (click)="deleteAccount()" class="accountDelete">Account löschen</button>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+  <ion-grid style="display: flex; height: 100%; flex-flow: column;">
+    <div class="mt10"></div>
+    <ion-row style="flex-grow: 1;">
+      <ion-col size="2">
+        <ion-icon class="gps"></ion-icon>
+      </ion-col>
+      <ion-col size="6">
+        <h3>GPS anschalten</h3>
+      </ion-col>
+      <ion-col size="4">
+        <!-- <div class="button r" id="button-1">onclick='handleClick(this);'
+                    <input type="checkbox" class="checkbox">
+                    <div class="knobs"> </div>                      
+                    <div class="layer"> </div>
+                </div>                          -->
+        <ion-toggle [(ngModel)]="gps"></ion-toggle>
+      </ion-col>
+    </ion-row>
+    <!-- <div class="mt20"></div> -->
+    <ion-row style="flex-grow: 1;">
+      <ion-col size="2">
+        <ion-icon class="volume"></ion-icon>
+      </ion-col>
+      <ion-col size="9">
+        <ion-range
+          style="margin-left: 10px; color: rgb(253, 223, 223);"
+          [(ngModel)]="rangeVolume"
+          pin="true"
+          min="0"
+          max="10"
+          color="light"
+          snaps="true"
+          ticks="false"
+        ></ion-range>
+      </ion-col>
+    </ion-row>
+    <!-- <div class="mt20"></div> -->
+    <ion-row style="flex-grow: 1;">
+      <ion-col size="2">
+        <ion-icon class="vibra"></ion-icon>
+      </ion-col>
+      <ion-col size="6">
+        <h3>Vibration zulassen</h3>
+      </ion-col>
+      <ion-col size="4">
+        <!-- <div class="button r" id="button-1">onclick='handleClick(this);'
+                            <input type="checkbox" class="checkbox">
+                            <div class="knobs"> </div>                      
+                            <div class="layer"> </div>
+                        </div>  -->
+        <ion-toggle [(ngModel)]="vibration"></ion-toggle>
+      </ion-col>
+    </ion-row>
+    <!-- <div class="mt20"></div> -->
+    <ion-row style="flex-grow: 1;">
+      <ion-col size="2">
+        <ion-icon class="display"></ion-icon>
+      </ion-col>
+      <ion-col size="6">
+        <h3>Display anlassen</h3>
+      </ion-col>
+      <ion-col size="4">
+        <!-- <div class="button r" id="button-1">onclick='handleClick(this);' -->
+        <!-- <input type="checkbox" class="checkbox"> -->
+        <!-- <div class="knobs"> </div>                      
+                        <div class="layer"> </div> -->
+        <!-- </div>  -->
+        <ion-toggle [(ngModel)]="display"></ion-toggle>
+      </ion-col>
+    </ion-row>
+    <!-- <div class="mt20"></div> -->
+    <ion-row style="flex-grow: 1;">
+      <ion-col size="2">
+        <ion-icon class="anleitung"></ion-icon>
+      </ion-col>
+      <ion-col size="6">
+        <h3>Anleitung</h3>
+      </ion-col>
+      <ion-col size="4">
+        <!-- <div class="button r" id="button-1">onclick='handleClick(this);' -->
+        <button ion-button (click)="goToManualPage()" class="next"></button>
+        <!-- </div>  -->
+      </ion-col>
+    </ion-row>
+    <!-- <div class="mt20"></div> -->
+    <ion-row style="flex-grow: 1;">
+      <ion-col size="2">
+        <ion-icon class="hilfe"></ion-icon>
+      </ion-col>
+      <ion-col size="6">
+        <h3>Hilfe und Feedback</h3>
+      </ion-col>
+      <ion-col size="4">
+        <!-- <div class="button r" id="button-1">onclick='handleClick(this);' -->
+        <button ion-button class="feedback"></button>
+
+        <!-- </div>  -->
+      </ion-col>
+    </ion-row>
+    <!-- <div class="mt20"></div> -->
+    <ion-row style="flex-grow: 1;">
+      <ion-col size="6">
+        <button ion-button class="accountDelete" (click)="deleteAccount()">
+          Account löschen
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
-<ion-footer>
-    <ion-grid>
-        <ion-row>
-            <div class="linie mt5"></div>
-        </ion-row>
-        <ion-row>
-            <ion-col size="6">
-                <h5 style="float: right;"><a link="https://..">Datenschutzerklärung</a></h5>
-            </ion-col>
-            <h3 style="padding-top: 4px; font-weight: 300;">|</h3>
-            <ion-col size="5.5">
-                <h5 style="float: left;"><a link="https://..">Nutzungsbedingung</a></h5>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+<ion-footer class="footer">
+  <ion-grid>
+    <ion-row>
+      <div class="linie mt10"></div>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <h5 style="float: right; margin-right: 10px;">
+          <a link="https://..">Datenschutzerklärung</a>
+        </h5>
+      </ion-col>
+      <h3 style="padding-top: 4px; font-weight: 300;">|</h3>
+      <ion-col size="5.5">
+        <h5 style="float: left; margin-left: 10px;">
+          <a link="https://..">Nutzungsbedingung</a>
+        </h5>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-footer>

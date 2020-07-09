@@ -10,14 +10,17 @@ import { Platform, AlertController, NavController } from '@ionic/angular';
 })
 export class SettingsMainDropboxPage implements OnInit {
 
-  rangeVolume: string;
-  name: string;
+  public rangeVolume: string;
+  public name: string;
+  public display = true;
+  public gps = true;
+  public vibration = true;
 
   constructor(public platform: Platform, private userDataFetch: UsersDataFetchService, private authService: AuthService,
     private router: Router, private alertController: AlertController, private navController: NavController) {
     this.platform.ready().then(() => {
       this.rangeVolume = "5";
-    })
+    });
   }
 
   async ngOnInit() {
@@ -48,6 +51,19 @@ export class SettingsMainDropboxPage implements OnInit {
       ]
     });
     await alert.present();
+  }
+
+  goToManualPage() {
+    this.router.navigate(['/settings-manual']);
+  }
+
+  goToSettingsMain() {
+    this.router.navigate(['/settings-main']);
+  }
+
+  test(){
+    console.log(this.display);
+    
   }
 
   openUserSettings() {

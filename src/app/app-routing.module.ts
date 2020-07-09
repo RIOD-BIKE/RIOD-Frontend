@@ -83,6 +83,10 @@ const routes: Routes = [
   {
     path: 'first-screen',
     loadChildren: () => import('./pages/sign_up/first-screen/first-screen.module').then( m => m.FirstScreenPageModule)
+  },
+  {
+    path: 'settings-manual',
+    loadChildren: () => import('./pages/settings/settings-manual/settings-manual.module').then( m => m.SettingsManualPageModule)
   }
 
 

@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="3">
+        <div class="back" (click)="back()">
+          <!-- onclick='handleClick(this);' -->
+        </div>
+      </ion-col>
+      <ion-col size="7">
+        <h1 style="padding-top: 5px;">Anleitung</h1>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-grid style="display: flex; height: 100%; flex-flow: column;">
+    <div class="mt20"></div>
+    <div class="block" (click)="goToMapMain()" style="flex-grow: 1;">
+      <ion-row>
+        <ion-col size="12">
+          <br />
+          <ion-icon class="display" style="align-self: center;"></ion-icon>
+          <h3 style="text-align: center; align-self: center;">Route anlegen</h3>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <div class="mt20"></div>
+    <!-- TODO: Favoriten speichern  -->
+    <div class="block" style="flex-grow: 1;">
+      <ion-row>
+        <ion-col size="12"
+          ><br />
+          <ion-icon class="display" style="align-self: center;"></ion-icon>
+          <h3 style="text-align: center; align-self: center;">Favoriten speichern</h3>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <div class="mt20"></div>
+    <div class="block" (click)="goToMapStart()" style="flex-grow: 1;">
+      <ion-row>
+        <ion-col size="12"
+          ><br />
+          <ion-icon class="bicycle" style="align-self: center;"></ion-icon>
+          <h3 style="text-align: center; align-self: center;">Route fahren</h3>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-grid>
+</ion-content>
+
+<ion-footer no-shadow>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="2">
+        <ion-icon class="hilfe"></ion-icon>
+      </ion-col>
+      <ion-col size="6">
+        <h3 style="margin-top: 15px; margin-left: 5px;">Mehr Hilfe?</h3>
+      </ion-col>
+      <ion-col size="4">
+        <ion-col size="4">
+          <button ion-button class="feedback"></button>
+        </ion-col>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

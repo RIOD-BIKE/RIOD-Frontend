@@ -1,125 +1,177 @@
-ion-header {
+.header {
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 20px;
-
+    padding-bottom: 20px;
+    background-color: #242323;
+ 
 }
+
+ion-header {
+    overflow: hidden;
+}
+
 ion-footer {
     padding-left: 30px;
     padding-right: 30px;
+    // padding-top: 20px;
+    background-color: #242323;
+    overflow: hidden;
+
 }
+
+.body{
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: #242323;
+    
+    // overflow: hidden;
+    // border: 0px !important;
+    // border-bottom-color: transparent !important;
+    // background-image: none !important;
+    // border-bottom: none !important;
+}
+
 ion-content {
     font-family: effra;
     --padding-start: 30px; 
     --padding-end: 30px;
+    --background: #242323;
+    // --background: white;
+   
 }
+
+.scroll-content {
+    border-top: 0 !important;
+    border-bottom: 0 !important;
+  }
+
 ion-range{
     padding: 0px;
+    color:white;
 }
+
+
 .cancel {
+    position: absolute;
     float: right;
     width: 50px;
     height: 50px;
     background: url('../../../../assets/settings/x-cancel.svg');
+    background-size: 20px;
     background-repeat: no-repeat;
     background-position: center;
+    // background-position-x: right;
 }
 
 .edit{
+    position: absolute;
     float: right;
     width: 50px;
     height: 50px;
     background: url('../../../../assets/settings/edit.svg');
+    background-size: 25px;
     background-repeat: no-repeat;
     background-position: center;
 }
-#ava {
-    float: left;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #454545;
+// #ava {
+//     float: left;
+//     width: 0px;
+//     height: 0px;
+//     border-radius: 50%;
+//     background-color: #454545;
 
-}
+// }
 .avatar{
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     background: url('../../../../assets/settings/profile-pic.jpg');
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 40px;
+    background-size: 70px;
     margin-top: 5px;
-    margin-left: 5px;
-}
-
-.anonym{
-    width: 40px;
-    height: 40px;
-    background: url('../../../../assets/settings/anonym.svg');
-    background-size: 24px;
-    background-repeat: no-repeat;
-    background-position: center;
+    // margin-left: 7px;
 }
 
 .gps{
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     background: url('../../../../assets/settings/gps.svg');
-    background-size: 26px;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-.volume{
-    width: 40px;
-    height: 40px;
-    background: url('../../../../assets/settings/volume.svg');
-    background-size: 26px;
+    background-size: 37px;
     background-repeat: no-repeat;
     background-position: center;
 }
 
+.volume{
+    width: 48px;
+    height: 48px;
+    background: url('../../../../assets/settings/volume.svg');
+    background-size: 32px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-position-y: 25%;
+}
+
 .vibra{
-    width: 40px;
-    height: 40px;
-    background: url('../../../../assets/settings/vibra.svg');
-    background-size: 26px;
+    width: 48px;
+    height: 48px;
+    background: url('../../../../assets/settings/vibration.svg');
+    background-size: 37px;
     background-repeat: no-repeat;
     background-position: center;
 }
 .display{
-    width: 40px;
-    height: 40px;
+    margin-top: 2px;
+    width: 48px;
+    height: 48px;
     background: url('../../../../assets/settings/display.svg');
-    background-size: 26px;
+    background-size: 35px;
     background-repeat: no-repeat;
     background-position: center;
 }
+
+
+.anleitung{
+    width: 48px;
+    height: 48px;
+    background: url('../../../../assets/settings/anleitung.svg');
+    color: white;
+    background-size: 35px;
+    background-repeat: no-repeat;
+    background-position: center;
+ 
+}
+
 .hilfe{
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     background: url('../../../../assets/settings/hilfe.svg');
-    background-size: 26px;
+    background-size: 35px;
     background-repeat: no-repeat;
     background-position: center;
 }
+
 .accountDelete{
     float: left;
     width: 95%;
     height: 40px;
-    border-radius: 20px;
+    border-radius: 30px;
     font-family: effra;
-    font-size: 90%;
+    font-size: 70%;
     font-weight: 500;
     background-color: #4F4F4F;
     color: white;
+    margin-left: 6px;
+    margin-top: 5px;
 }
 
 .next{
     float: right;
-    width: 60px;
-    height: 30px;
-    border-radius: 20px;
+    width: 80px;
+    height: 40px;
+    border-radius: 30px;
+    margin-top: 5px;
 
     background: url('../../../../assets/settings/next.svg');
     background-repeat: no-repeat;
@@ -127,6 +179,23 @@ ion-range{
     background-color: #4F4F4F;
     
     
+}
+
+.feedback{
+    float: right;
+    width: 80px;
+    height: 40px;
+    border-radius: 30px;
+    margin-top: 5px;
+
+    background: url('../../../../assets/settings/external-link.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #4F4F4F;
+}
+
+.setting-icon {
+    padding-bottom: 5px;
 }
 
 a {
@@ -143,6 +212,8 @@ a {
 h3{
     font-size: 4vw;
     float: left;
+    margin-top: 15px;
+    margin-left: 5px;
 }
 h5{
     font-weight: 300;
@@ -153,81 +224,220 @@ p{
     float: left;
 }
 
+// .range-pin {
+//     color: white;
+//     font-family: sans-serif;
+//   }
+
+// h3{
+//     font-size: 19px;
+//     float: left;
+// }
+// h5{
+//     font-weight: 300;
+// }
+
+// p{
+//     font-size: 3.5vw;
+//     float: left;
+// }
 
 /* Toggle */
-  *:before,
-  *:after {
-      box-sizing: border-box;
-      padding: 0;
-      margin: 0;
-  }
-  .item {
-      align-self: stretch;
-      text-align: right;
-      padding-top: 5px;
-      &:not(:last-of-type) {
-          border-bottom: 1px solid #ccc;
-      }
-  }
 
-  $input-bg-static: #4F4F4F;
-  $input-bg-pseudo-static: #454545; 
+ion-toggle {
+    // --background:  #4F4F4F url('../../../../assets/settings/Ja.png') no-repeat right;
+    // --background-checked:  #4F4F4F url('../../../../assets/settings/Nein.png') no-repeat left;
+    // --handle-background: #242323 url('../../../../assets/settings/Nein.png') no-repeat center;
+    // --handle-background-checked: #242323 url('../../../../assets/settings/Ja.png') no-repeat center;
 
-  $input-width: 60px; // adjust only this number for dimensions
+    --background:  #4F4F4F;
+    --background-checked:  #4F4F4F;
+    --handle-background: #242323;
+    --handle-background-checked: #242323;
 
-  $input-radius: calc(#{$input-width} / 2);
-  $input-height: calc(#{$input-width} / 2);
+    float: right;
+    width: 80px;
+    height: 40px;
+    --border-radius: 30px;
+    margin-left: 5px;
+    margin-top: 5px;
+    
+    --handle-spacing: 4px;
+    --handle-width: 40px;
+    --handle-height: 35.5px;
+    --handle-border-radius: 40px;
+    --handle-box-shadow: 0px;
 
-  .knob-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-  }
+    overflow: hidden;
 
+}
 
+ion-toggle.toggle-checked::before {
+    position: absolute;
 
-  input[type="checkbox"] {
-      position: relative;
-      appearance: none;
-      width: $input-width;
-      height: $input-height;
+    top: 14px;
+    left: 10px;
+  
+    content: "Nein";
+  
+    color: #242323;
+    font-size: 3vw;
+    font-weight: 800;
+  
+    z-index: 1;
+}
 
-      border-radius: $input-radius;
-      background-color: $input-bg-static;
-      outline: none; // 
-      transition: background 450ms ease;
-      box-shadow: 0 0 0 2px darken($input-bg-static, 7.5%);
+ion-toggle.toggle-checked::after {
+    position: absolute;
 
-      &:before,
-      &:after {
-          position: absolute;
-          display: block;
-          content: "";
-          content-position: center;
-          border-radius: 100%;
-          transition:
-              background 450ms ease,
-              transform 450ms ease;
-      }
+    top: 14px;
+    right: 18px;
+  
+    content: "Ja";
+  
+    color: white;
+    font-size: 3vw;
+    font-weight: 800;
+  
+    z-index: 1;
+}
 
+ion-toggle::before {
+    position: absolute;
 
-      &:before {
-          width: calc(#{$input-width} / 2);
-          height: $input-height;
-          background-color: $input-bg-pseudo-static;
-      }
+    top: 14px;
+    left: 10px;
+  
+    content: "Nein";
+  
+    color: white;
+    font-size: 3vw;
+    font-weight: 800;
+  
+    z-index: 1;
+}
 
-      &:after {
-          width: calc(#{$input-width} / 2);
-          height: $input-height;
-      }
+ion-toggle::after {
+    position: absolute;
 
+    top: 14px;
+    right: 18px;
+  
+    content: "Ja";
+  
+    color: #242323;
+    font-size: 3vw;
+    font-weight: 800;
+  
+    z-index: 1;
+}
 
-      &:checked {
-          &:before {
-             
-              background-color: white;
-              transform: translateX(100%);
-          }
-      }
-  }
+// .button-cover:before
+// {  
+//     counter-increment: button-counter;
+//     content: counter(button-counter);
+//     position: absolute;
+//     right: 0;
+//     bottom: 0;
+//     color: #d7e3e3;
+//     font-size: 12px;
+//     line-height: 1;
+//     padding: 5px;
+// }
+
+// .button-cover, .knobs, .layer
+// {
+//     position: absolute;
+//     top: 0;
+//     right: 0;
+//     bottom: 0;
+//     left: 0;
+// }
+
+// .button
+// {
+//     position: relative;
+//     top: 50%;
+//     width: 74px;
+//     height: 36px;
+//     margin: -20px auto 0 auto;
+//     overflow: hidden;
+// }
+
+// .button.r, .button.r .layer
+// {
+//     border-radius: 100px;
+// }
+
+// .button.b2
+// {
+//     border-radius: 2px;
+// }
+
+// .checkbox
+// {
+//     position: relative;
+//     width: 100%;
+//     height: 100%;
+//     padding: 0;
+//     margin: 0;
+//     opacity: 0;
+//     cursor: pointer;
+//     z-index: 3;
+// }
+
+// .knobs
+// {
+//     z-index: 2;
+// }
+
+// .layer
+// {
+//     width: 100%;
+//     // width: 100px;
+//     // height: 45px;
+//     // border-radius: 30px;
+//     // margin-right: 10px;
+
+//     background-color: #4F4F4F;
+//     transition: 0.3s ease all;
+//     z-index: 1;
+// }
+
+/* Button 1 */
+// #button-1 .knobs:before
+// {
+//     content: 'Ja';
+//     position: absolute;
+//     top: 4px;
+//     left: 4px;
+//     width: 30px;
+//     height: 10px;
+//     color: #fff;
+//     font-size: 10px;
+//     font-weight: bold;
+//     text-align: center;
+//     line-height: 1;
+//     padding: 9px 4px;
+//     background-color: #242323;
+//     border-radius: 70%;
+//     transition: 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15) all;
+// }
+
+// #button-1 .checkbox:checked + .knobs:before
+// {
+//     content: 'Nein';
+//     left: 30px;
+//     background-color: #242323;
+// }
+
+// #button-1 .checkbox:checked ~ .layer
+// {
+
+//     background-color: #4F4F4F;
+// }
+
+// #button-1 .knobs, #button-1 .knobs:before, #button-1 .layer
+// {
+//     transition: 0.3s ease all;
+// }

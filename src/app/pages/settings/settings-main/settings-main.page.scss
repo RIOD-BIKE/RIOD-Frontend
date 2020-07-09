@@ -2,13 +2,18 @@ ion-header {
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 20px;
+    background-color: #242323;
+    overflow: hidden;
+}
 
+ion-footer {
+    overflow: hidden;
 }
 
 ion-content {
     --padding-start: 30px;
     --padding-end: 30px;
-
+    --background: #242323 !important;
 
 }
 
@@ -16,19 +21,18 @@ ion-content {
     height: 13vh !important;
     padding-left: 30px;
     padding-right: 30px;
-
-
-}
-
-.question {
-    float: left;
-    width: 50px;
-    height: 50px;
-    background: url('../../../../assets/settings/question.svg');
-    background-repeat: no-repeat;
-    background-position: center;
+    background-color: #242323;
 
 }
+
+// .question {
+//     float: left;
+//     width: 50px;
+//     height: 50px;
+//     background: url('../../../../assets/settings/question.svg');
+//     background-repeat: no-repeat;
+//     background-position: center;
+// }
 
 .cancel {
     float: right;
@@ -39,11 +43,12 @@ ion-content {
     background-position: center;
 }
 
-h6 {
+h1 {
     font-family: effra;
-    line-height: 15px;
     opacity: 0.75;
-    padding-left: 60px;
+    text-align: center;
+    font-size:5vh;
+    color: white;
 }
 
 input {
@@ -51,6 +56,13 @@ input {
     height: 50px;
 
 }
+
+p, a {
+    color:white;
+    font-size: 11px;
+}
+
+
 
 .name {
     border-radius: 5px;
@@ -68,51 +80,51 @@ input {
 
 }
 
-.profil-border {
+// .profil-border {
 
-    height: 160px;
-    background: url('../../../../assets/settings/profil-border.svg');
-    background-repeat: no-repeat;
-    background-position: center;
+//     height: 160px;
+//     background: url('../../../../assets/settings/profil-border.svg');
+//     background-repeat: no-repeat;
+//     background-position: center;
 
-}
+// }
 
-.avatar {
-    width: 140px;
-    height: 140px;
-    background: url('../../../../assets/settings/profile-pic.jpg');
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 50%;
-    margin-top: 10px;
-    background-size: 140px;
-}
+// .avatar {
+//     width: 140px;
+//     height: 140px;
+//     background: url('../../../../assets/settings/profile-pic.jpg');
+//     background-repeat: no-repeat;
+//     background-position: center;
+//     border-radius: 50%;
+//     margin-top: 10px;
+//     background-size: 140px;
+// }
 
-.take-picture {
-    float: right;
-    width: 70px;
-    height: 40px;
-    margin-right: 10px;
-    background: url('../../../../assets/settings/take-picture-btn.svg');
-    background-repeat: no-repeat;
-    background-position: center;
-}
+// .take-picture {
+//     float: right;
+//     width: 70px;
+//     height: 40px;
+//     margin-right: 10px;
+//     background: url('../../../../assets/settings/take-picture-btn.svg');
+//     background-repeat: no-repeat;
+//     background-position: center;
+// }
 
-.delete {
-    float: left;
-    width: 70px;
-    height: 40px;
-    margin-left: 10px;
-    background: url('../../../../assets/settings/delete-btn.svg');
-    background-repeat: no-repeat;
-    background-position: center;
-}
+// .delete {
+//     float: left;
+//     width: 70px;
+//     height: 40px;
+//     margin-left: 10px;
+//     background: url('../../../../assets/settings/delete-btn.svg');
+//     background-repeat: no-repeat;
+//     background-position: center;
+// }
 
 .abbrechen {
     float: left;
     width: 95%;
     height: 40px;
-    border-radius: 20px;
+    border-radius: 30px;
     font-family: effra;
     font-size: 90%;
     font-weight: 500;
@@ -124,10 +136,10 @@ input {
     float: right;
     width: 95%;
     height: 40px;
-    border-radius: 20px;
+    border-radius: 30px;
     font-family: effra;
     font-size: 90%;
     font-weight: 500;
-    background-color: #4F4F4F;
-    color: white;
+    background-color: white;
+    color: #4F4F4F;
 }
