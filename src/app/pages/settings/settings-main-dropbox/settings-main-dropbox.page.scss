@@ -83,6 +83,7 @@ ion-range{
 
 // }
 .avatar{
+    min-width: 60px;
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -252,8 +253,9 @@ ion-toggle {
 
     --background:  #4F4F4F;
     --background-checked:  #4F4F4F;
+    --background-checked:  #4F4F4F;
     --handle-background: #242323;
-    --handle-background-checked: #242323;
+    --handle-background-checked: #00ff62;
 
     float: right;
     width: 80px;
@@ -289,11 +291,11 @@ ion-toggle.toggle-checked::before {
 
 ion-toggle.toggle-checked::after {
     position: absolute;
-
+    text-align: center;
     top: 14px;
     right: 18px;
   
-    content: "Ja";
+   content: "Ja";
   
     color: white;
     font-size: 3vw;
