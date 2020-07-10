@@ -1,14 +1,23 @@
-<ion-header>
-    <ion-grid>
-        <ion-row>
-            <ion-col size="10">
-            </ion-col>
-            <ion-col size="2">
-                <button (click)="cancel()" class="cancel"></button>
-            </ion-col>
-        </ion-row>
+<ion-header class="header">
+    <ion-grid style="display: flex; height: 100%; flex-flow: column;">
+      <!-- <div class="mt10"></div> -->
+      <!-- <ion-row style="flex-grow: 1;"></ion-row> -->
+      <ion-row style="flex-grow: 1;">
+        <ion-col size="4">
+       
+        </ion-col>
+        <ion-col size="5">
+         
+        </ion-col>
+        <ion-col class="col-adjust" size="1">
+       
+        </ion-col>
+        <ion-col class="col-adjust" size="2">
+          <button class="cancel" (click)="cancel()"></button>
+        </ion-col>
+      </ion-row>
     </ion-grid>
-</ion-header>
+  </ion-header>
 <ion-content fullscreen>
     <ion-grid>
         <ion-row>
