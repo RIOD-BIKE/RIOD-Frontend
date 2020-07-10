@@ -230,7 +230,6 @@ ion-toggle {
     --background-checked:  #4F4F4F;
     --background-checked:  #4F4F4F;
     --handle-background: #242323;
-    // --handle-background-checked: #00ff62;
     --handle-background-checked: #242323;
 
     padding:0px;
@@ -247,7 +246,7 @@ ion-toggle {
     --handle-border-radius: 40px;
     --handle-box-shadow: 0px;
 
-    overflow: hidden;
+    overflow: visible;
 
 }
 
