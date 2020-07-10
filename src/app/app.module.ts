@@ -3,7 +3,7 @@ import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ng
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -27,6 +27,7 @@ import { ExplainSlidesComponent } from './Components/explain-slides/explain-slid
 import { SearchBarMainMapComponent } from './Components/search-bar-main-map/search-bar-main-map.component';
 import { RideIndicatorFinalComponent } from './Components/ride-indicator-final/ride-indicator-final.component';
 import { RideIndicatorFreeComponent } from './Components/ride-indicator-free/ride-indicator-free.component';
+import { CommonModule } from '@angular/common';  
 
 @NgModule({
   declarations: [
@@ -53,6 +54,8 @@ import { RideIndicatorFreeComponent } from './Components/ride-indicator-free/rid
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    NoopAnimationsModule,
+    CommonModule
   ],
 
   providers: [

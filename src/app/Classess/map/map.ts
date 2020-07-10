@@ -1,6 +1,4 @@
 
-import { Time } from '@angular/common';
-
 export class Map {
     type: string;
     coordinates: number[];
@@ -18,11 +16,9 @@ export class PositionI {
     }
 }
 
-export interface AssemblyPoint {
-    position: Position;
-    name: string;
-    maxMember: number;
-    potMemberCount: number;
+export interface Biker {
+    duration:number;
+    userId:string;
 }
 
 export interface Cluster {
@@ -32,22 +28,15 @@ export interface Cluster {
     memberCount: number;
 }
 
-export class User {
-    private position: Position;
-    private name: string;
-    constructor(name: string, longitude: number, latitude: number) {
-        this.position = {longitude, latitude};
-        this.name = name;
-    }
-}
+
 
 export class AssemblyPoint {
-    private assemblyPoint: AssemblyPoint;
-    constructor(name: string, longitude: number , latitude: number, maxMember: number, potMemberCount: number) {
-        this.assemblyPoint.position = {longitude, latitude};
-        this.assemblyPoint.maxMember = maxMember;
-        this.assemblyPoint.name = name;
-        this.assemblyPoint.potMemberCount = potMemberCount;
+    name:string;
+    potBikeTogether:Biker[]=[];
+
+    constructor(name:string,potBiker:Biker[]) {
+        this.name=name;
+        this.potBikeTogether=potBiker;
     }
 }
 
@@ -89,7 +78,6 @@ export class GeoCluster implements IGeoJsonCluster {
       coordinates,
     };
     this.properties = {count:properties[0]};
-    console.log(properties[0])
   }
 }
 
@@ -187,6 +175,20 @@ export class RoutingGeoAssemblyPoint {
     this.iconName=iconName;
   }
 }
+
+export class PolygonAssemblyPoint {
+  activated:boolean=false;
+  name:string;
+  distance:number;
+  duration:number;
+  polygon:any;
+  constructor(name:string,distance:number,duration:number,polygon:any){
+    this.name=name;
+    this.distance=distance;
+    this.duration=duration;
+    this.polygon=polygon;
+  }
+}
 export interface MapboxOutput{
   attribution: string;
   features: Feature[];
@@ -195,5 +197,44 @@ export interface MapboxOutput{
 export interface Feature {
   place_name: string;
   geometry: any;
+  properties:any;
 }
+
+export class AssemblyPointReference{
+  reference:string;
+  name:string;
+  constructor(name:string,reference:string){
+    this.reference=reference;
+    this.name=name;
+  }
+}
+
+export class iconShortcut{
+  iconName:string;
+  orderNumber:number;
+  address:string;
+  coords:number[];
+  constructor(iName:string,oNumber:number,address:string,coords:number[]){
+    this.iconName=iName;
+    this.orderNumber=oNumber;
+    this.address=address;
+    this.coords=coords;
+  }
+}
+
+export class recentShortcut{
+  iconName:string;
+  city:string;
+  street:string;
+  address:string;
+  coords:number[];
+  constructor(iName:string,street:string,city:string,address:string,coords:number[]){
+    this.iconName=iName;
+    this.city=city;
+    this.street=street;
+    this.address=address;
+    this.coords=coords;
+  }
+}
+
 

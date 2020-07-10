@@ -1,49 +1,40 @@
 <div class="over" id="over">
   <div class="rand">
     <div class="arrow" id="arrow">
-      <button ion-button class="back-btn" id="back" style="background-color: transparent; margin-top: 10px; padding: 0;"
-        (click)="back()">
-        <ion-icon id="btn-icon" slot="icon-only" style="color: white; width: 30px; height: 30px;" name="arrow-back">
-        </ion-icon>
-      </button>
+        <button ion-button class="back-btn" id="back"
+            style="background-color: transparent; margin-top: 10px; padding: 0;" (click)="back()">
+            <ion-icon id="btn-icon" slot="icon-only" style="color: white; width: 30px; height: 30px;"
+                name="arrow-back">
+            </ion-icon>
+        </button>
     </div>
     <div class="wrap" id="wrap">
-      <!-- <ion-input class="search" debounce=500   [(ngModel)]="selectedAddresses" (ionChange)="search($event)"  placeholder="Hier suchen.." ></ion-input> -->
-      <!-- FIXME: onTouchSearch() breaks search -->
-      <!-- <ion-input class="search" debounce=500 [(ngModel)]="searchBarInputV" type="text" (ngModelChange)="search($event)"
-        placeholder="Hier suchen..." (click)="onTouchSearch()"> -->
-        <ion-input class="search" debounce=500 [(ngModel)]="searchBarInputV" type="text" (ngModelChange)="search($event)"
-        placeholder="Hier suchen...">
-      </ion-input>
-      <div *ngIf="isSearchEmpty(searchBarInputV);"
-        style="position:absolute; width:100%; z-index:999;margin-top:7.5em ;left:0%">
-        <ion-list lines="none">
-          <ion-item button *ngFor="let address of addressesString" (click)="onSelect(address)">
-            <ion-icon name="pin"></ion-icon>
-            {{address[1]}}
-          </ion-item>
-        </ion-list>
-      </div>
-      <div *ngIf="searchBarInputV != ''; " style="margin-left: 275px; margin-top: 7px; position: absolute;">
-        <ion-icon name="close-outline" (click)="clear()" style="font-size: 36px;"></ion-icon>
-      </div>
-      <button class="ava" (click)="openSettings()">
-        <img id="avatar" src="{{ specialAvatarURL }}" alt="Avatar" />
-      </button>
+        <ion-input #inputField class="search" style="color: white;" [(ngModel)]="searchBarInputV" type="text" 
+        (ngModelChange)="search($event)" debounce="400" (click)="onTouchSearch()" placeholder="Hier suchen...">
+        </ion-input>
+        <button class="ava" id="cross" (click)="clear()" hidden>
+          <ion-icon name="close-outline" style="font-size: 30px; color: white; --ionicon-stroke-width: 18px;"></ion-icon>
+        </button>
+        <button class="ava" id="ava" (click)="openSettings()">
+          <img id="avatar" src="{{ specialAvatarURL }}" alt="Avatar" />
+        </button>
+        <button class="ava" id="saveBtn" hidden>
+        </button>
     </div>
-  </div>
+</div>
 
   <!-- no content-->
-  <div class="container" id="no-content">
+  <div class="container" id="no-content" hidden>
     <div class="scroll" scrollX="true">
       <h5 style="text-align: center; color: #747474; opacity: 1;">
-        Keine gespeicherten Zielen
+        Keine gespeicherten Ziele
       </h5>
     </div>
   </div>
 
-  <div class="container-1">
-    <div id="edit-no-content">
+
+  <div class="container-1" >
+    <div id="edit-no-content" hidden >
       <button class="edit" style="margin-top: 15px;"></button>
       <div style="float: left; width: 180px; background-color: transparent;">
         <h5 style="text-align: left;padding-top:5px; padding-left: 15px; color: #747474; opacity: 1;">
@@ -54,10 +45,11 @@
   </div>
 
 
+
   <!-- icon with content-->
-  <div class="container" id="with-content">
+  <div class="container" id="with-content" >
     <div class="scroll" scrollX="true">
-      <span id="edit-span" style="margin-left: 0px; margin-right: 10px;">
+      <span id="edit-span" style="margin-left: 0px; margin-right: 10px;"*ngIf="shortcuts[0]==0">
         <ion-button class="s-btn primary edit" style="--background: #383838;">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
@@ -66,30 +58,69 @@
           </svg>
         </ion-button>
       </span>
-      <span style="margin-left: 0px;">
-        <ion-button class="s-btn primary">
-          <ion-icon name="home-outline"></ion-icon>
+
+      <span *ngFor="let shortcut of shortcuts" style="margin-left: 0px;" >
+        <ion-button class="s-btn primary edit" style="--background: #383838;margin-left: 10px;" *ngIf="shortcut.orderNumber==1 && searchBarOpen">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+            class="feather feather-edit-2">
+            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+          </svg>
+        </ion-button>
+        <ion-button class="s-btn primary" style="margin-left: 10px;" *ngIf="shortcut.orderNumber!=1" (click)="onSelect(shortcut.coords,shortcut.address)">
+          <ion-icon name={{shortcut.iconName}}></ion-icon>
+        </ion-button>
+        <ion-button class="s-btn primary" style="margin-left: 10px;" *ngIf="shortcut.orderNumber==1" (click)="onSelect(shortcut.coords,shortcut.address)">
+          <ion-icon name={{shortcut.iconName}}></ion-icon>
         </ion-button>
       </span>
-      <span style="margin-left: 10px;">
-        <ion-button class="s-btn primary">
-          <ion-icon name="briefcase-outline"></ion-icon>
-        </ion-button>
-      </span>
-      <span style="margin-left: 10px;">
-        <ion-button class="s-btn primary">
-          <ion-icon name="heart-outline"></ion-icon>
-        </ion-button>
-      </span>
-      <span style="margin-left: 10px;">
-        <ion-button class="s-btn primary">
-          <ion-icon name="barbell-outline"></ion-icon>
-        </ion-button>
-      </span>
-      <span style="margin-left: 10px;">
-        <ion-button class="s-btn primary">
-          <ion-icon name="restaurant-outline"></ion-icon>
-        </ion-button>
-      </span>
+
+    </div>
+    <div class="container" id="no-recent-content" hidden>
+      <div class="scroll" scrollX="true">
+        <h5 style="text-align: center; color: #747474; opacity: 1;">
+          Noch keine Routen gefahren
+        </h5>
+      </div>
+    </div>
+
+    <div class="container" id="no-address" hidden>
+      <div class="scroll" scrollX="true">
+        <h5 style="text-align: center; color: #747474; opacity: 1;">
+          Keine Adresse in deiner Nähe gefunden
+        </h5>
+      </div>
+    </div>
+
+  </div>
+  <div class="container" id="search-results"  hidden>
+    <div id="list-addresses" >
+      <div style="width:100%;float: left; background-color: transparent;" id="container" >
+        <div class="listElement"  *ngFor="let address of addressesString; index as i" [style.--animation-order]="i" (click)="onSelect(address.coords,address.address)">
+          <h5 style="margin-left: 15px;margin-right: 15px;border-top:thin solid white; text-align: left;margin-top:5px;padding-top:10px; margin-bottom:0px;padding-bottom:1px; color: white; font-weight: 500; font-size: 16px;">
+            {{address.street}}
+          </h5>
+          <h5 style=" text-align: left;padding-top:0px;margin-top:5px;margin-bottom: 0px; padding-left: 15px; color: white; font-weight: 300;font-size: 15px;">
+            {{address.city}}
+          </h5>
+        </div>
+      </div>
     </div>
   </div>
+  <div class="container" id="recents-results"  hidden>
+    <div id="list-addresses" >
+      <div style="width:100%;float: left; background-color: transparent;" >
+        <h5 style="text-align: left;padding-top:10px;padding-bottom: 10px; padding-left: 15px; color: white; font-weight: 400;font-size: 11px;">ZULETZT GESUCHT</h5>
+        <div class="listElement" *ngFor="let route of recentRoutes; index as i" [style.--animation-order]="i" (click)="onSelect(route.coords,route.address)">
+          <h5 style="margin-left: 15px;margin-right: 15px;border-top:thin solid white; text-align: left;margin-top:5px;padding-top:10px; margin-bottom:0px;padding-bottom:1px; color: white; font-weight: 500; font-size: 16px;">
+            {{route.street}}
+          </h5>
+
+          <h5 style=" text-align: left;padding-top:0px;margin-top:5px;margin-bottom: 0px; padding-left: 15px; color: white; font-weight: 300;font-size: 15px;">
+            {{route.city}}
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

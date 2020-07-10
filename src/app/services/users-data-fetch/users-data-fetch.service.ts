@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
+import { BehaviorSubject } from 'rxjs';
 
 
 
@@ -10,10 +11,26 @@ import * as firebase from 'firebase';
 })
 export class UsersDataFetchService {
   private usersRef;
+  private dataAPRef: BehaviorSubject<Array<string>>
   constructor(private rtdb: AngularFireDatabase, private afs: AngularFirestore) {
   this.usersRef = rtdb.list('/users');
   }
 
+
+  async rtdb_sendNextAps(nextAps:string,followingAps:string,userHash:string,duration:number,userTimestamp:number){
+    await this.rtdb.object('assemblyPoints/'+nextAps+"/"+followingAps+"/"+userHash).set({
+      duration:duration,
+      timestamp:userTimestamp
+    });
+  }
+  async rtdb_deleteOldAps(oldAps:string,oldfollowingAps:string,userHash:string){
+    await this.rtdb.object('assemblyPoints/'+oldAps+"/"+oldfollowingAps+"/"+userHash).remove();
+  }
+  async rtdb_getDetailsAP(AP:string,followingAp:string){
+    //out
+
+  }
+  
   async rtdb_createUser(uid: string) {
     await this.rtdb.object('users/' + uid).set({
       bearing: 0,

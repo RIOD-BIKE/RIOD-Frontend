@@ -112,3 +112,20 @@ span {
   background-repeat: no-repeat;
   background-position: center;
 }
+
+.listElement {
+  animation: popIn 0.2s calc(var(--animation-order) * 15ms) both ease-in;
+  margin-bottom: 5px;
+}
+
+@keyframes popIn {
+  0% {
+
+    transform: translateY(+10px) translateX(+0px);
+  }
+
+  100% {
+
+    transform: none;
+  }
+}

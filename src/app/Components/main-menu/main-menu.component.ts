@@ -26,11 +26,7 @@ export class MainMenuComponent implements OnInit {
   private routingStartAddress;
 
   constructor(private mapIntegration: MapIntegrationService, private mapBox: MapBoxComponent,
-              private userService: UserService, private routingUserService: RoutingUserService) {
-    // this.init();
-    // this.points[0]= new RoutingGeoAssemblyPoint(0,0,"+++",null);
-
-  }
+              private userService: UserService, private routingUserService: RoutingUserService) {}
 
   setUpStart() {
     this.routingUserService.getfinishPoint().then(x => {
@@ -66,53 +62,40 @@ export class MainMenuComponent implements OnInit {
     });
   }
 
-  chooseAP() {
-
-    // console.log('Choose AssemblyPoint');
-  }
-
   searchStart(event: any) {
     if (this.routingStartAddress !== this.selectedStartAddresses) {
-    const searchTerm = event.target.value.toLowerCase();
-    if (searchTerm && searchTerm.length > 0) {
-      this.mapIntegration.searchAddress(searchTerm).subscribe((features: Feature[]) => {
-        console.log(features);
-        this.addresses = features.map(feat => feat.place_name);
-        this.addressesStartString = features.map(feat => [feat.geometry.coordinates, feat.place_name]);
-        console.log(this.addressesStartString);
-      });
-    } else {
-      this.addresses = [];
-    }
+      const searchTerm = event.target.value.toLowerCase();
+      if (searchTerm && searchTerm.length > 0) {
+        this.mapIntegration.searchAddress(searchTerm).subscribe((features: Feature[]) => {
+          console.log(features);
+          this.addresses = features.map(feat => feat.place_name);
+          this.addressesStartString = features.map(feat => [feat.geometry.coordinates, feat.place_name]);
+          console.log(this.addressesStartString);
+        });
+      } else {
+        this.addresses = [];
+      }
     }
   }
-  onStartSelect(address: any) {
 
+  onStartSelect(address: any) {
      this.routingUserService.setStartPoint().then(() => {
       this.selectedStartAddresses = address[1];
       this.routingStartAddress = address[1];
 
       this.routingUserService.setStartPoint(address);
-      // this.routingUserService.getstartPoint().then(x => {
-      //   console.log(x);
-      // });
-      // console.log('Selected StartPoint' + this.routingUserService.getstartPoint());
       this.addresses = [];
       this.addressesStartString = [];
     });
   }
-
-
 
   search(event: any) {
     if (this.routingAddress !== this.selectedAddresses) {
     const searchTerm = event.target.value.toLowerCase();
     if (searchTerm && searchTerm.length > 0) {
       this.mapIntegration.searchAddress(searchTerm).subscribe((features: Feature[]) => {
-        // console.log(features);
         this.addresses = features.map(feat => feat.place_name);
         this.addressesString = features.map(feat => [feat.geometry.coordinates, feat.place_name]);
-        // console.log(this.addressesString);
       });
     } else {
       this.addresses = [];
@@ -124,27 +107,19 @@ export class MainMenuComponent implements OnInit {
     this.routingUserService.setFinishPoint(address).then( () => {
       this.selectedAddresses = address[1];
       this.routingAddress = address[1];
-
-      // console.log('Selected FinishPoint' + this.routingUserService.getfinishPoint());
       this.addresses = [];
       this.addressesString = [];
     });
   }
+
   closeView() {
     this.addressesStartString = [];
     this.addressesString = [];
     this.points = [];
     this.routingStartAddress = null;
     this.routingAddress = null;
-    // console.log('closed');
-
   }
 
-
   ngOnInit() { }
-
-
-
-
 
 }

@@ -36,7 +36,6 @@ export class RouterInfoInBottomComponent implements OnInit {
   }
 
   closeView() {
-    this.routingUserService.isRouteFinished(true);
     this.mainMenu.closeView();
     this.infoArray = [];
     this.routingUserService.resetAll();
@@ -46,6 +45,7 @@ export class RouterInfoInBottomComponent implements OnInit {
     });
     this.routingUserService.setDisplayType('Start');
     this.mapBox.moveMapToCurrent();
+    this.routingUserService.routeFinished.next(true);
   }
 
   startRoute() {
@@ -55,9 +55,6 @@ export class RouterInfoInBottomComponent implements OnInit {
           this.routingUserService.getfinishPoint().then(fin => {
             this.routingUserService.getstartPoint().then(start => {
               let pointString = '';
-              // for(let i =0; i<points.length;i++){
-              //     pointString += (points[i].position.longitude + ',' + points[i].position.latitude + ';');
-              // }
               for (const each of points) {
                 pointString += (each.position.longitude + ',' + each.position.latitude + ';');
               }
@@ -66,7 +63,8 @@ export class RouterInfoInBottomComponent implements OnInit {
               });
               this.mapBox.drawRoute(pointString).then(() => {
                 // MUST CHECK IF ROUTE THAT IS ALREADY DRAWN IS IDENTICAL TO NEW DRAWING ROUTE
-                console.log('new Route drawn');
+                this.routingUserService.setDisplayType("routeStarted");
+                //console.log('new Route drawn');
               });
             });
           });

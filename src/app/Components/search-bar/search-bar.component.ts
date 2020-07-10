@@ -1,155 +1,266 @@
-import { UsersDataFetchService } from 'src/app/services/users-data-fetch/users-data-fetch.service';
-import { Router } from '@angular/router';
-import { ModalController, NavController } from '@ionic/angular';
-import { Component, OnInit,Input, NgZone, HostListener } from '@angular/core';
-import { MapBoxComponent } from '../map-box/map-box.component';
-import { MapIntegrationService  } from 'src/app/services/map-integration/map-integration.service';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { RoutingUserService } from 'src/app/services/routing-user/routing-user.service';
-import { Feature } from '../../Classess/map/map'
-import { feature } from '@turf/turf';
-import * as firebase from 'firebase';
+import { MapBoxComponent } from '../map-box/map-box.component';
+import { MapIntegrationService } from 'src/app/services/map-integration/map-integration.service';
+import { Feature, iconShortcut, recentShortcut } from '../../Classess/map/map';
+import { UserService } from 'src/app/services/user/user.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'search-bar',
   templateUrl: './search-bar.component.html',
-  styleUrls: ['./search-bar.component.scss'],
+  styleUrls: ['./search-bar.component.scss']
 })
+
 export class SearchBarComponent implements OnInit {
-  @Input() searchBarInputV = '';
-  public addressesString: string[][] = [];
+  public addressesString: recentShortcut[] = [];
+  @Input() shortcuts:iconShortcut[]=[];
+  @Input() recentRoutes:recentShortcut[]=[];
   public specialAvatarURL = "../../../assets/settings/profile-pic.jpg";
+  @Input() searchBarInputV:string = ''; 
+  @ViewChild('inputField') inputField;
+  searchBarOpen:boolean=false;
+  
+  constructor(private navCtrl:NavController,private userService:UserService,private routingUserService:RoutingUserService,private mapBox:MapBoxComponent, private mapIntegration:MapIntegrationService) {}
 
-  locArray = [
-    { "name": "home", "street": "Wiesenbachstraße 20b", "city":"Osnabrück" },
-    { "name": "work", "street": "Sutthauserstraße 52", "city":"Osnabrück"},
-    { "name": "heart", "street": "Heinrichstraße 37", "city":"Osnabrück" }
-  ];
-  constructor(private routingUserService: RoutingUserService, private modalCtrl: ModalController,
-              private mapIntegration: MapIntegrationService, private mapBox: MapBoxComponent,
-              private change:NgZone, private navCtrl: NavController, private userDataFetch: UsersDataFetchService) { }
-
-  async ngOnInit() {
+  ngOnInit() {
     this.routingUserService.routeFinished.subscribe( value => {
-      console.log(value);
-      if (value === true) {
+      if (value == true) {
         this.clear();
-        this.routingUserService.isRouteFinished(false);
+        this.routingUserService.setRouteFinished();
       }
     });
+    //Temp before saving and edit components are available
+    this.shortcuts.push(new iconShortcut("home-outline",1,"Klingensberg 9, 49074 Osnabrück, Germany",[8.04098,52.279913]));
+    this.shortcuts.push(new iconShortcut("briefcase-outline",2,"Barbarastraße 20, 49076 Osnabrück, Germany",[8.022824,52.284357]));
+    this.shortcuts.push(new iconShortcut("heart-outline",3,"Jakobstraße, 49074 Osnabrück, Germany",[8.0425307,52.2787108]));
+    this.search();
+    this.userService.getAllShortcuts().then(allRoutes=>{
+      if(allRoutes.length>0){
+        //this.shortcuts=allRoutes; //override temporary
+      }
+      if (this.shortcuts.length == 0) {
+        document.getElementById("with-content").hidden = true;
+        document.getElementById("edit-no-content").hidden = false;
+      } else {
+        document.getElementById("with-content").hidden = false;
+        document.getElementById("edit-no-content").hidden = true;
+      }
+    })
+    this.mapIntegration.getAllSavedRoutes().then(allSavedRoutes=>{
+      let temp=[];      
+      for(const route of allSavedRoutes){
+        let checkArray = this.shortcuts.filter(e=>e['address']===route.endPosition[1]);
+        let splitString = route.endPosition[1].split(",");
+        let splitPLz = splitString[1].toString().split(" ");
+        let city=splitPLz[2];
+        let street=splitString[0];
+        if(checkArray.length>=1){
+          temp.push(new recentShortcut((checkArray[0].iconName),street,city,route.endPosition[1],route.endPosition[0]));
+        }else{
+          temp.push(new recentShortcut("null",street,city,route.endPosition[1],route.endPosition[0]));
+        }
+      }
+      temp.reverse();
+      this.recentRoutes=temp.slice(0,8);
+    });
+    document.getElementById("recents-results").hidden=true;
+  }
 
-    if (this.locArray.length == 0) {
-      var a = document.getElementById("no-content");
-      var b = document.getElementById("with-content");
-      var c = document.getElementById("edit-no-content");
-      var edit3 = document.getElementById("edit-span");
-      a.hidden = false;
-      b.hidden = true;
-      c.hidden = true;
-      edit3.hidden = true;
+  back() {
+    this.searchBarOpen=false;
+    document.getElementById("recents-results").hidden=true;
+    document.getElementById("search-results").hidden=true;
+    document.getElementById("back").style.display = "none";
+    document.getElementById("cross").hidden=true;
+    document.getElementById("no-recent-content").hidden=true;
+    document.getElementById("with-content").hidden=false;
+    document.getElementById("wrap").style.width = "100%";
+    document.getElementById("saveBtn").hidden = true;
+    document.getElementById("ava").hidden = false;
+    let over = document.getElementById("over");
+      over.style.height = "auto";
+      over.style.borderBottomLeftRadius = "10px";
+      over.style.borderBottomRightRadius = "10px";
+    if (this.shortcuts.length == 0) {
+      document.getElementById("no-content").hidden = false;
+      document.getElementById("edit-no-content").hidden = false;
     } else {
-      var a = document.getElementById("no-content");
-      var b = document.getElementById("with-content");
-      var c = document.getElementById("edit-no-content");
-      var edit3 = document.getElementById("edit-span");
-      a.hidden = true;
-      b.hidden = false;
-      c.hidden = true;
-      edit3.hidden = true;
-    }
-
-    const URL = await this.userDataFetch.storage_getSpecialAvatarURL();
-    console.log(URL);
-    if(URL) { this.specialAvatarURL = URL; }
-  }
-
-  search(event) {
-    const searchTerm = this.searchBarInputV.toLowerCase();
-    if(searchTerm && searchTerm.length > 0) {
-      this.mapIntegration.searchAddress(searchTerm).subscribe((features: Feature[]) => {
-        this.addressesString = features.map(feat => [feat.geometry.coordinates, feat.place_name]);
-      });
+      document.getElementById("no-content").hidden = true;
+      document.getElementById("edit-no-content").hidden=true;
     }
   }
 
-  onSelect(address: string) {
-    // console.log(address)
-    this.routingUserService.setFinishPoint(address).then(() => {
+  onTouchSearch() {
+    this.searchBarOpen=true;
+    if(this.searchBarInputV.length>0){
+      if(this.addressesString.length==0){
+        document.getElementById("search-results").hidden=true;
+      }else{
+        document.getElementById("search-results").hidden=false;
+      }
+      document.getElementById("no-recent-content").hidden=true;
+      document.getElementById("cross").hidden=false;
+    } else{
+      if(this.recentRoutes.length>0 ){
+        document.getElementById("recents-results").hidden=false;
+        document.getElementById("no-recent-content").hidden=true;
+      } else{
+        if(this.addressesString.length==0){
+          document.getElementById("recents-results").hidden=true;
+        }
+        document.getElementById("no-recent-content").hidden=false;
+      }
+    }
+    if(this.addressesString.length==0){
+      document.getElementById("search-results").hidden=true;
+    }
+    let wrap = document.getElementById("wrap");
+      wrap.style.width = "85%";
+      wrap.style.marginLeft = "10px";
+      wrap.style.float = "right";
+      wrap.style.transitionDuration = "0.2s";
+    let arrow = document.getElementById("arrow");
+      arrow.style.position ="fixed";
+      arrow.style.float ="left";
+      arrow.style.display = "block";
+      arrow.style.visibility = "visible";
+
+    document.getElementById("ava").hidden = true;
+    document.getElementById("back").style.display = "block";
+
+    let over = document.getElementById("over");
+      over.style.height = "100vh";
+      over.style.borderBottomLeftRadius = "0px";
+      over.style.borderBottomRightRadius = "0px";
+      over.style.transition = "2s !important";
+    if (this.shortcuts.length == 0) {
+      document.getElementById("no-content").hidden = true;
+      document.getElementById("edit-no-content").hidden = false;
+      document.getElementById("with-content").hidden = true;
+    } else {
+      document.getElementById("edit-no-content").hidden = true;
+      document.getElementById("with-content").hidden = false;
+    }
+  }
+
+  search() {
+      //SearchString is again empty
+      if(this.searchBarInputV==""){
+        this.addressesString=[];
+        this.searchBarInputV="";
+        if(this.recentRoutes.length>0 ){
+          document.getElementById("recents-results").hidden=false;
+        } else{
+        document.getElementById("recents-results").hidden=true;
+      }
+        document.getElementById("no-address").hidden=true;
+      }
+      const searchTerm=this.searchBarInputV.toLocaleLowerCase();
+      //SearchString is not Empty -> Display Cross //could be improved -> html <ion-input debounde="400"[<- Problem, only 400ms function play] \>
+      if(searchTerm.length>0){
+        document.getElementById("cross").hidden=false;
+      } else{
+        document.getElementById("cross").hidden=true;
+      }
+      //Searchterm valid for GeoSearch-MapBox
+      if(searchTerm.length > 2) {
+        if(this.searchBarInputV!="" ){
+          document.getElementById("no-recent-content").hidden=true;
+          document.getElementById("recents-results").hidden=true;
+          document.getElementById("search-results").hidden=false;
+        }
+        this.mapIntegration.searchAddress(searchTerm).subscribe((features: Feature[]) => {
+          let tempArray=[];
+          let temp =features.map(feat => [feat.geometry.coordinates, feat.place_name, feat.properties.address]);
+          temp.forEach(con=>{
+            //filter recent Routes with Search Results -> First Step for adding Similar Results from recent Routes to Search Results for similar Address
+            let checkArray = this.recentRoutes.filter(e=>{
+              //check if searched Result is min. 70% similar to recentRoutes [IonicStorage]
+              if(this.similar(e['address'].split(", ")[0].toString(),con[1].split(", ")[0].toString())>70){
+                return true;
+              }else{
+                return false;
+              }
+            });
+
+
+            let splitString = con[1].split(",");
+            let splitPLz = splitString[1].toString().split(" ");
+            let city=splitPLz[2];
+            let street=splitString[0];
+            if(/^\d+$/.test(street)==false){
+              if(checkArray.length>=1){   //IF-Case for their are similar Routes to the searchResults -> Then musst add to HTML
+                if(con[2]!=undefined){  //outdated -> place_name[0]/[1] <-- If Result of GeoSearch is place or only street Adress
+                  tempArray.push(new recentShortcut("null",street,con[2],con[1],con[0]));
+                }else{
+                  tempArray.push(new recentShortcut("null",street,city,con[1],con[0]));
+                }
+              } else{
+                if(con[2]!=undefined){
+                  tempArray.push(new recentShortcut("null",street,con[2],con[1],con[0]));
+                }else{
+                  tempArray.push(new recentShortcut("null",street,city,con[1],con[0]));
+                }
+              }
+            }
+          })
+          if(tempArray.length>0){
+            document.getElementById("no-address").hidden=true;
+          } else{
+            document.getElementById("no-address").hidden=false;
+          }
+          if(JSON.stringify(this.addressesString)!=JSON.stringify(tempArray.slice(0,11))){  //similar/-same Result-Arrays are not updating FrontEnd [animation]
+            this.addressesString=tempArray.slice(0,11);
+          }
+        })
+      }
+  }
+
+  //check Address-String similarity
+  similar(a,b){
+    var equivalency = 0;
+    var minLength = (a.length > b.length) ? b.length : a.length;    
+    var maxLength = (a.length < b.length) ? b.length : a.length;    
+    for(var i = 0; i < minLength; i++) {
+        if(a[i] == b[i]) {
+            equivalency++;
+        }
+    }
+    var weight = equivalency / maxLength;
+    return((weight * 100));
+  }
+
+
+  onSelect(coords,address) {
+    this.routingUserService.setFinishPoint([coords,address]).then(() => {
       this.routingUserService.deleteAllPoints().then(() => {
         this.mapBox.removeRoute().then(() => {
           this.mapBox.disableAssemblyClick().then(() => {
             this.mapBox.updateAssemblyPoints();
-            this.routingUserService.getfinishPoint().then(x => {
-              this.mapBox.drawFinishMarker().then(x=>{
-
-                if(x == true) {
-                  this.routingUserService.getPoints().then(points=>{
-                    let pointString = '';
-                    for(let i =0; i<points.length;i++){
-                        pointString += (points[i].position.longitude + ',' + points[i].position.latitude + ';');
-                    }
-
-                    this.mapBox.drawRoute(pointString).then(()=>{
-                      this.addressesString = [];
-                      // console.log("RouterInfo")
-                      this.routingUserService.setDisplayType('Route_Info');
-                    });
+            this.mapBox.drawFinishMarker().then(x=>{
+              if(x == true) {
+                this.routingUserService.getPoints().then(points=>{
+                  let pointString = '';
+                  for(let i =0; i<points.length;i++){
+                      pointString += (points[i].position.longitude + ',' + points[i].position.latitude + ';');
+                  }
+                  this.mapBox.drawRoute(pointString).then(()=>{
+                    this.back();
+                    this.routingUserService.setDisplayType('Route_Info');
                   });
-                } else {
-                  this.addressesString = [];
-                  this.routingUserService.setDisplayType('Main');
-                }
-              });
+                });
+              } else {
+                this.back();
+                this.routingUserService.setDisplayType('Main');
+                this.searchBarOpen=false;
+              }
+              this.searchBarInputV=address;
             });
           });
         });
       });
     });
-    this.searchBarInputV = address[1];
-  }
-
-  back() {
-    var back = document.getElementById("back");
-    var noContent = document.getElementById("no-content");
-    var c = document.getElementById("edit-no-content");
-    back.style.display = "none";
-    var over = document.getElementById("over");
-    var edit3 = document.getElementById("edit-span");
-    over.style.height = "auto";
-    over.style.borderBottomLeftRadius = "10px";
-    over.style.borderBottomRightRadius = "10px";
-    edit3.hidden = true;
-    if (this.locArray.length == 0) {
-      noContent.hidden = false;
-      c.hidden = true;
-    } else {
-      noContent.hidden = true;
-    }
-  }
-  onTouchSearch() {
-    var back = document.getElementById("back");
-    back.style.display = "block";
-    var over = document.getElementById("over");
-    over.style.height = "100vh";
-    over.style.borderBottomLeftRadius = "0px";
-    over.style.borderBottomRightRadius = "0px";
-    over.style.transition = "2s !important";
-    if (this.locArray.length == 0) {
-      var noContent = document.getElementById("no-content");
-      var edit1 = document.getElementById("edit-no-content");
-      var edit2 = document.getElementById("with-content");
-      var edit3 = document.getElementById("edit-span");
-      noContent.hidden = true;
-      edit1.hidden = false;
-      edit2.hidden = true;
-      edit3.hidden = true;
-    } else {
-      var edit1 = document.getElementById("edit-no-content");
-      var edit2 = document.getElementById("with-content");
-      var edit3 = document.getElementById("edit-span");
-      edit1.hidden = true;
-      edit2.hidden = false;
-      edit3.hidden = false;
-    }
   }
 
   isSearchEmpty(searchBarInputV:string){
@@ -160,8 +271,28 @@ export class SearchBarComponent implements OnInit {
   }
 
   clear() {
-    this.searchBarInputV = '';
+    this.searchBarInputV="";
+    this.addressesString=[];
+    if(this.searchBarOpen==true){
+      if(this.recentRoutes.length>0 ){
+        document.getElementById("recents-results").hidden=false;
+      } else{
+      document.getElementById("recents-results").hidden=true;
+      document.getElementById("no-recent-content").hidden=false;
+    }
+      document.getElementById("cross").hidden=true;
+      this.inputField.setFocus();
+      document.getElementById("no-address").hidden=true;
+    }else{
+
+      document.getElementById("recents-results").hidden=true;
+    
+    }
+    document.getElementById("search-results").hidden=true;
   }
+
+
+
 
   openSettings() {
     this.navCtrl.navigateForward('settings-main-dropbox');

@@ -3,28 +3,31 @@
         <button ion-button id="btn1"></button>
     </div>
     <div class="wrap">
-        <div class="icon">
+        <div class="icon" *ngIf="assemblyIcon==true">
             <button ion-button id="btn2"></button>
+        </div>
+        <div class="icon" *ngIf="finishIcon==true">
+            <button ion-button id="btn4"></button>
         </div>
         <div class="h15">
             <p>Ankunft in</p>
         </div>
         <div class="h35">
-            <h2>3 Min</h2>
+            <h2>{{timeToPoint}} Min</h2>
         </div>
     </div>
-    <div class="wrap wrap2">
+    <div class="wrap wrap2" *ngIf="bikeDisplay==true">
         <div class="icon">
-            <button ion-button id="btn3"></button>
+            <button ion-button id="btn3" (click)="stopRoute()"></button>
         </div>
         <div class="h15">
             <p>Bald da</p>
         </div>
         <div class="h35">
-            <h2>6</h2>
+            <h2>{{bikersAtAP}}</h2>
         </div>
     </div>
-    <div class="wrap">
+    <div class="wrap wrap3">
         <div class="item">
             <input type="checkbox" /> <!-- onclick='handleClick(this);' -->
         </div>

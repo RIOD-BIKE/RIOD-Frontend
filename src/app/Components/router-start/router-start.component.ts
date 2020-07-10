@@ -27,33 +27,25 @@ export class RouterStartComponent implements OnInit {
   }
 
   closeView() {
-    this.routingUserService.isRouteFinished(true);
     this.routingUserService.setDisplayType('Start');
     this.routingUserService.resetAll();
     this.mapBox.removeRoute();
     this.mapBox.disableAssemblyClick().then(() => {
     this.mapBox.updateAssemblyPoints();
+    this.mapBox.moveMapToCurrent();
+    this.routingUserService.routeFinished.next(true);
     });
   }
 
   startRoute(){
     this.routingUserService.getPoints().then(points => {
+     //missing this.mapIntegration.saveRouteOffline()
       let pointString = '';
       for(let i =0; i<points.length;i++){
           pointString += (points[i].position.longitude + ',' + points[i].position.latitude + ';');
       }
       this.mapBox.drawRoute(pointString).then(() => {
-        this.routingUserService.getDuration().then(duration => {
-          this.routingUserService.getDistance().then(dist => {
-            this.routingUserService.getfinishPoint().then(fin => {
-              this.routingUserService.getPoints().then(points => {
-                this.routingUserService.getstartPoint().then(start=>{
 
-                });
-              });
-            });
-          });
-        });
       });
       this.routingUserService.setDisplayType('Route_Info');
     });
@@ -63,7 +55,7 @@ export class RouterStartComponent implements OnInit {
     this.presentModal();
     this.routingUserService.getfinishPoint().then(x => {
       this.routingUserService.getPoints().then(y => {
-        this.userService.saveRoute(x, y);
+        this.userService.saveShortcut(x, y);
       });
     });
   }

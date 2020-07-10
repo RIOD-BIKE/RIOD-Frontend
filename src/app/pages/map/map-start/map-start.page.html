@@ -25,11 +25,10 @@
     </ion-button>
 
   </ion-row>
-<riding-toggle [hidden]="!showRidingToggle"></riding-toggle>
 
-<ion-footer [hidden]="!showMain" >
-  <router-start></router-start>
-</ion-footer>
-<ion-footer [hidden]="!showRouterInfo" >
-  <router-info-in-bottom></router-info-in-bottom>
+<ion-footer [ngSwitch]="showType">
+  <riding-toggle *ngSwitchCase="''"></riding-toggle>
+  <router-start  *ngSwitchCase="'showMain'"></router-start>
+  <router-info-in-bottom  *ngSwitchCase="'showRouterInfo'" ></router-info-in-bottom>
+  <ride-map-assembly *ngSwitchCase="'routeStarted'" ></ride-map-assembly>
 </ion-footer>

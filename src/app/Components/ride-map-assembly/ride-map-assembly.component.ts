@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { RoutingUserService } from 'src/app/services/routing-user/routing-user.service';
+import { MapIntegrationService } from 'src/app/services/map-integration/map-integration.service';
 
 @Component({
   selector: 'ride-map-assembly',
@@ -7,8 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RideMapAssemblyComponent implements OnInit {
 
-  constructor() { }
+  @Input() assemblyIcon:boolean=false;
+  @Input() finishIcon:boolean=true;
+  @Input() bikeDisplay:boolean=true;
+  @Input() timeToPoint:number=null;
+  @Input() bikersAtAP:number=null;
 
-  ngOnInit() {}
+  constructor(private routingUserService:RoutingUserService,private mapIntegration:MapIntegrationService) { }
+
+  ngOnInit() {
+    
+   this.mapIntegration.checkGPSChangeRoutingPosition().then(x=>{
+     console.log(x)
+
+   })
+  }
+
+  stopRoute(){
+    console.log("stop")
+  }
 
 }

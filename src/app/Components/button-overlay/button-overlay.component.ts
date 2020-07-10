@@ -24,7 +24,7 @@ export class ButtonOverlayComponent implements OnInit {
     saveIconAddress(iconNumber){
     this.routingUserService.getfinishPoint().then(address => {
       console.log(iconNumber)
-      this.userService.saveRoute(address,iconNumber);
+      this.userService.saveShortcut(address,iconNumber);
     });
   }
 

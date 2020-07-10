@@ -14,7 +14,7 @@ import { RideMapAssemblyComponent } from './ride-map-assembly/ride-map-assembly.
 import { RideMapFinalComponent } from './ride-map-final/ride-map-final.component';
 import { WaitingAtAsSmallComponent } from './waiting-at-as-small/waiting-at-as-small.component';
 import { RouterStartComponent } from './router-start/router-start.component';
-
+import { BrowserModule } from '@angular/platform-browser';
 @NgModule({
   declarations: [MapBoxComponent, MainMenuComponent, RouterInfoInBottomComponent, SearchBarComponent,
     RidingToggleComponent,

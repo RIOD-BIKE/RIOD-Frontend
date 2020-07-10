@@ -1,30 +1,46 @@
 import { MapDataFetchService } from './../../../services/map-data-fetch/map-data-fetch.service';
-import { Component, OnInit, Directive, ViewChild } from '@angular/core';
+import { Component, OnInit, Directive, ViewChild, Input } from '@angular/core';
 import { MapBoxComponent } from 'src/app/Components/map-box/map-box.component';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { MainMenuComponent } from 'src/app/Components/main-menu/main-menu.component';
 import { RoutingUserService } from 'src/app/services/routing-user/routing-user.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, PopoverController } from '@ionic/angular';
 import { TutorialOverlay1Component } from '../../../Components/tutorial/tutorial-overlay1/tutorial-overlay1.component';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { RouterInfoInBottomComponent } from 'src/app/Components/router-info-in-bottom/router-info-in-bottom.component';
 import { RouterStartComponent } from 'src/app/Components/router-start/router-start.component';
 import { SearchBarComponent } from 'src/app/Components/search-bar/search-bar.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+
+ 
 
 @Component({
   selector: 'app-map-start',
   templateUrl: './map-start.page.html',
-  styleUrls: ['./map-start.page.scss']
+  styleUrls: ['./map-start.page.scss'],
+  animations: [
+    trigger('slideInOut', [
+      transition(':enter', [
+        style({transform: 'translateY(-100%)'}),
+        animate('200ms ease-in', style({transform: 'translateY(0%)'}))
+      ]),
+      transition(':leave', [
+        animate('200ms ease-in', style({transform: 'translateY(-100%)'}))
+      ])
+    ])
+  ]
 })
 
 
 export class MapStartPage implements OnInit {
 
-  public showRidingToggle = true;
-  public showMain = false;
-  public showRouterInfo = false;
-  private showRide = false;
- constructor(private routingUserService: RoutingUserService, private mapBox: MapBoxComponent,
+  public showRidingToggle:boolean = true;
+  public showMain:boolean = false;
+  public showRouterInfo:boolean=false;
+  private showRide:boolean= false;
+  @Input() private showType:string= "";
+ constructor(private popoverController:PopoverController, private routingUserService: RoutingUserService, private mapBox: MapBoxComponent,
              private statusBar: StatusBar, private mainMenu: MainMenuComponent, private modalController: ModalController,
              private mapDataFetch: MapDataFetchService,private routerInfo:RouterInfoInBottomComponent,routerStart:RouterStartComponent,private searchBar: SearchBarComponent) {
   this.init();
@@ -34,25 +50,30 @@ export class MapStartPage implements OnInit {
   this.statusBar.backgroundColorByHexString('#383838');
   this.mapBox.setupMap();
   //this.presentModal();
-  this.routingUserService.getDisplayTypeObs().subscribe( x => {
-    if(x === 'Start') {
-      this.setShowStart();
+  this.routingUserService.getDisplayTypeObs().subscribe(x=>{
+    console.log(x);
+    if(x=='Start'){
+     this.showType="";
     }
-    if (x === 'Route_Info'){
-      this.showMain = false;
-      this.showRidingToggle = false;
-      this.setShowRouterInfoBottom();
+    if(x=='Route_Info'){
+      this.showType="showRouterInfo";
     }
-    if (x === 'Main') {
-      this.setShowMain();
+    if(x=='Main'){
+      this.showType="showMain";
     }
-  });
+    if(x=='routeStarted'){
+      this.showType="routeStarted";
+    }
+  })
  }
 
   ngOnInit() {
 
   }
 
+
+
+  
   locateDevice() {
     this.mapBox.moveMapToCurrent();
   }
@@ -65,8 +86,8 @@ export class MapStartPage implements OnInit {
 
   setShowRouterInfoBottom():Promise<any>{
     return new Promise(resolve => {
-      this.showRidingToggle = false;
-    this.showRouterInfo = true;
+      this.showRidingToggle=false;
+    this.showRouterInfo= true;
     resolve();
     });
   }
@@ -85,8 +106,8 @@ export class MapStartPage implements OnInit {
   setShowStart(): Promise<any>{
     return new Promise(resolve => {
     this.showMain = false;
-    this.showRidingToggle = true;
-    this.showRouterInfo = false;
+    this.showRidingToggle = false;
+    this.showRouterInfo=false;
     resolve();
     });
   }

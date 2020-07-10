@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UserService } from '../user/user.service';
-import { RoutingGeoAssemblyPoint } from 'src/app/Classess/map/map';
-
+import { RoutingGeoAssemblyPoint,PolygonAssemblyPoint } from 'src/app/Classess/map/map';
+import * as turf from '@turf/turf'
 
 
 
@@ -16,22 +16,84 @@ export class RoutingUserService {
   private startPoint: any= null;
   private duration: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   private distance: BehaviorSubject<string> = new BehaviorSubject<string>(null);
-  private points: RoutingGeoAssemblyPoint [] = [];
+  private points: RoutingGeoAssemblyPoint[] = [];
   private centerPoint: BehaviorSubject<RoutingGeoAssemblyPoint> = new BehaviorSubject<RoutingGeoAssemblyPoint>(null);
   private displayType: BehaviorSubject<string> = new BehaviorSubject<string>('MainView');
-
+  private boundingArray: PolygonAssemblyPoint[]=[];
+  private pointsDetailed: any=null;
   public routeFinished: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private userService: UserService) { }
 
-  isRouteFinished(bool: boolean){
-    this.routeFinished.next(bool);
+  getBoundingArray():Promise<any>{
+      this.boundingArray=[];
+    return new Promise(resolve=>{
+      for(let i=0;i<this.points.length;i++){
+        this.createPolygon([this.points[i].position.longitude,this.points[i].position.latitude]).then(poly=>{
+          const duration = this.pointsDetailed[i].duration/60;
+          const distance = this.pointsDetailed[i].distance*0.001;
+          this.boundingArray.push(new PolygonAssemblyPoint(this.points[i].name,Number((Math.round(distance * 100) / 100).toFixed(1)),Number((Math.round(duration * 100) / 100).toFixed(0)),poly));
+        })
+        if(i+1==this.points.length){
+          this.createPolygon([this.finishPoint[0][0],this.finishPoint[0][1]]).then(poly=>{
+            const duration = this.pointsDetailed[i+1].duration/60;
+            const distance = this.pointsDetailed[i+1].distance*0.001;
+            let finishAddress = this.finishPoint[1].split(",")[0];
+            this.boundingArray.push(new PolygonAssemblyPoint(finishAddress,Number((Math.round(distance * 100) / 100).toFixed(1)),Number((Math.round(duration * 100) / 100).toFixed(0)),poly));
+            resolve(this.boundingArray);
+          })
+        }
+      }
+    });
+  }
+
+  createPolygon(address):Promise<any>{
+    return new Promise(resolve => {
+      let polygon=[];
+      let dLatN=100;
+      let dLongN=-100;
+      for(let time=0;time<4;time++){
+        let R=6378137;
+        let dLat =dLatN/R;
+        let dLon =dLongN/(R*Math.cos(Math.PI*address[0]/180));
+        polygon.push([address[0]+dLat*180/Math.PI, address[1]+dLon*180/Math.PI]);
+        if(time==0){
+          dLongN=100;
+        }
+        if(time==1){
+          dLongN=100;
+          dLatN=-100;
+        }
+        if(time==2){
+          dLongN=-100;
+        }
+      }
+      var poly = turf.polygon([[polygon[0],polygon[1],polygon[2],polygon[3],polygon[0]]]);
+      resolve(poly)
+    });
+  }
+
+  setPointsDetailed(points:any):Promise<any>{
+    return new Promise(resolve=>{
+      this.pointsDetailed=points;
+      resolve();
+    });
+  }
+
+  getPointsDetailed():Promise<any>{
+    return new Promise(resolve=>{
+      resolve(this.pointsDetailed);
+    });
   }
 
   getDisplayType(): Promise<any> {
     return new Promise(resolve => {
         resolve(this.displayType);
     });
+  }
+
+  setRouteFinished(){
+    this.routeFinished.next(false);
   }
 
   setDisplayType(dataPoint:string): Promise<any> {
@@ -49,8 +111,9 @@ export class RoutingUserService {
     this.setDuration(null);
     this.setDistance(null);
     this.setFinishPoint(undefined);
-    this.setStartPoint(undefined);
+    this.setStartPoint([]);
     this.setPoints([]);
+    this.boundingArray=[];
   }
 
   getfinishPoint(): Promise<any> {
@@ -61,6 +124,7 @@ export class RoutingUserService {
       resolve(false);
     });
   }
+
   getDuration(): Promise<any> {
     return new Promise(resolve => {
       if (this.duration != null) {
@@ -70,10 +134,10 @@ export class RoutingUserService {
     });
   }
 
-
   getDurationasSub(): Observable<string> {
     return this.duration;
   }
+
   getDistanceasSub(): Observable<string> {
     return this.distance;
   }
@@ -86,6 +150,7 @@ export class RoutingUserService {
       resolve(false);
     });
   }
+
   getPoints(): Promise<any> {
     return new Promise(resolve => {
       if (this.points != null) {
@@ -103,7 +168,6 @@ export class RoutingUserService {
     });
   }
 
-  // SearchBar and Modifier in Routing-Detail-View use
   setFinishPoint(dataPoint): Promise<boolean> {
     return new Promise(resolve => {
       this.finishPoint = dataPoint;
@@ -112,7 +176,6 @@ export class RoutingUserService {
   }
 
   setDuration(dataPoint?: number): Promise<any> {
-    console.log('check1');
     return new Promise(resolve => {
       try{
       if (dataPoint != null) {
@@ -125,9 +188,9 @@ export class RoutingUserService {
         console.log(e);
         resolve(false);
     }
-
     });
   }
+
   setDistance(dataPoint?: number): Promise<any> {
     return new Promise(resolve => {
       try {
@@ -141,7 +204,6 @@ export class RoutingUserService {
         console.log(e);
         resolve(false);
     }
-
     });
   }
 
@@ -197,15 +259,11 @@ export class RoutingUserService {
         this.startPoint = dataPoint;
         resolve(true);
       } else{
-        const temp = this.userService.behaviorMyOwnPosition.getValue().coords;
-        this.startPoint = [[temp.longitude,temp.latitude]];
-        resolve(true);
+          this.startPoint = [[this.userService.behaviorMyOwnPosition.value.coords.longitude,this.userService.behaviorMyOwnPosition.value.coords.latitude]];
+          resolve(true);
       }
     });
   }
-
-
-
 
   addAssemblyPoint(dataPoint: RoutingGeoAssemblyPoint): Promise<any> {
     return new Promise(resolve => {
