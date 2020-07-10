@@ -67,11 +67,6 @@ export class SettingsMainDropboxPage implements OnInit {
     this.navController.navigateForward('settings-manual');
   }
 
-  test(){
-    console.log(this.display);
-    
-  }
-
   openUserSettings() {
     this.navController.navigateForward('settings-main');
   }

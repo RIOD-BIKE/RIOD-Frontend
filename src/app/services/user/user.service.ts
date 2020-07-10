@@ -84,9 +84,9 @@ export class UserService {
           if(i==length ){
             resolve(tempArray);
           }
-        })
-      })
-    })
+        });
+      });
+    });
   }
 
 

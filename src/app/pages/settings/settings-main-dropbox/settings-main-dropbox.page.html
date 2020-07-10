@@ -58,15 +58,9 @@
         <h3>GPS anschalten</h3>
       </ion-col>
       <ion-col class="col-adjust" size="4">
-        <!-- <div class="button r" id="button-1">onclick='handleClick(this);'
-                    <input type="checkbox" class="checkbox">
-                    <div class="knobs"> </div>                      
-                    <div class="layer"> </div>
-                </div>                          -->
         <ion-toggle [(ngModel)]="gps"></ion-toggle>
       </ion-col>
     </ion-row>
-    <!-- <div class="mt20"></div> -->
     <ion-row style="flex-grow: 1;">
       <ion-col class="col-adjust" size="2">
         <ion-icon class="volume"></ion-icon>
@@ -84,7 +78,6 @@
         ></ion-range>
       </ion-col>
     </ion-row>
-    <!-- <div class="mt20"></div> -->
     <ion-row style="flex-grow: 1;">
       <ion-col class="col-adjust" size="2">
         <ion-icon class="vibra"></ion-icon>
@@ -93,15 +86,9 @@
         <h3>Vibration zulassen</h3>
       </ion-col>
       <ion-col class="col-adjust" size="4">
-        <!-- <div class="button r" id="button-1">onclick='handleClick(this);'
-                            <input type="checkbox" class="checkbox">
-                            <div class="knobs"> </div>                      
-                            <div class="layer"> </div>
-                        </div>  -->
         <ion-toggle [(ngModel)]="vibration"></ion-toggle>
       </ion-col>
     </ion-row>
-    <!-- <div class="mt20"></div> -->
     <ion-row style="flex-grow: 1;">
       <ion-col class="col-adjust" size="2">
         <ion-icon class="display"></ion-icon>
@@ -110,15 +97,9 @@
         <h3>Display anlassen</h3>
       </ion-col>
       <ion-col class="col-adjust" size="4">
-        <!-- <div class="button r" id="button-1">onclick='handleClick(this);' -->
-        <!-- <input type="checkbox" class="checkbox"> -->
-        <!-- <div class="knobs"> </div>                      
-                        <div class="layer"> </div> -->
-        <!-- </div>  -->
         <ion-toggle [(ngModel)]="display"></ion-toggle>
       </ion-col>
     </ion-row>
-    <!-- <div class="mt20"></div> -->
     <ion-row style="flex-grow: 1;">
       <ion-col class="col-adjust" size="2">
         <ion-icon class="anleitung"></ion-icon>
@@ -127,12 +108,9 @@
         <h3>Anleitung</h3>
       </ion-col>
       <ion-col class="col-adjust" size="4">
-        <!-- <div class="button r" id="button-1">onclick='handleClick(this);' -->
         <button ion-button (click)="goToManualPage()" class="next"></button>
-        <!-- </div>  -->
       </ion-col>
     </ion-row>
-    <!-- <div class="mt20"></div> -->
     <ion-row style="flex-grow: 1;">
       <ion-col class="col-adjust" size="2">
         <ion-icon class="hilfe"></ion-icon>
@@ -141,13 +119,9 @@
         <h3>Hilfe und Feedback</h3>
       </ion-col>
       <ion-col class="col-adjust" size="4">
-        <!-- <div class="button r" id="button-1">onclick='handleClick(this);' -->
         <button ion-button class="feedback"></button>
-
-        <!-- </div>  -->
       </ion-col>
     </ion-row>
-    <!-- <div class="mt20"></div> -->
     <ion-row style="flex-grow: 1;">
       <ion-col size="6">
         <button ion-button class="accountDelete" (click)="deleteAccount()">

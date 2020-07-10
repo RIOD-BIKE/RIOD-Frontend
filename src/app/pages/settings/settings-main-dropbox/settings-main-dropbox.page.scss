@@ -15,7 +15,6 @@
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 20px;
-   // padding-bottom: 20px;
     background-color: #242323;
  
 }
@@ -27,7 +26,6 @@ ion-header {
 ion-footer {
     padding-left: 30px;
     padding-right: 30px;
-    // padding-top: 20px;
     background-color: #242323;
     overflow: hidden;
 
@@ -37,12 +35,6 @@ ion-footer {
     padding-left: 30px;
     padding-right: 30px;
     background-color: #242323;
-    
-    // overflow: hidden;
-    // border: 0px !important;
-    // border-bottom-color: transparent !important;
-    // background-image: none !important;
-    // border-bottom: none !important;
 }
 
 ion-content {
@@ -50,7 +42,6 @@ ion-content {
     --padding-start: 30px; 
     --padding-end: 30px;
     --background: #242323;
-    // --background: white;
    
 }
 
@@ -88,14 +79,7 @@ ion-range{
     background-position: center;
     background-position-x: right;
 }
-// #ava {
-//     float: left;
-//     width: 0px;
-//     height: 0px;
-//     border-radius: 50%;
-//     background-color: #454545;
 
-// }
 .avatar{
     min-width: 60px;
     width: 60px;
@@ -239,36 +223,14 @@ p{
     float: left;
 }
 
-// .range-pin {
-//     color: white;
-//     font-family: sans-serif;
-//   }
-
-// h3{
-//     font-size: 19px;
-//     float: left;
-// }
-// h5{
-//     font-weight: 300;
-// }
-
-// p{
-//     font-size: 3.5vw;
-//     float: left;
-// }
-
 /* Toggle */
 
 ion-toggle {
-    // --background:  #4F4F4F url('../../../../assets/settings/Ja.png') no-repeat right;
-    // --background-checked:  #4F4F4F url('../../../../assets/settings/Nein.png') no-repeat left;
-    // --handle-background: #242323 url('../../../../assets/settings/Nein.png') no-repeat center;
-    // --handle-background-checked: #242323 url('../../../../assets/settings/Ja.png') no-repeat center;
-
     --background:  #4F4F4F;
     --background-checked:  #4F4F4F;
     --background-checked:  #4F4F4F;
     --handle-background: #242323;
+    // --handle-background-checked: #00ff62;
     --handle-background-checked: #242323;
 
     padding:0px;
@@ -311,7 +273,7 @@ ion-toggle.toggle-checked::after {
     top: 14px;
     right: 18px;
   
-   content: "Ja";
+    content: "Ja";
   
     color: #00ff62;
     font-size: 3vw;
@@ -323,7 +285,6 @@ ion-toggle.toggle-checked::after {
 
 ion-toggle::before {
     position: absolute;
-
     top: 14px;
     left: 10px;
   
@@ -339,7 +300,6 @@ ion-toggle::before {
 
 ion-toggle::after {
     position: absolute;
-
     top: 14px;
     right: 15px;
   
@@ -352,113 +312,3 @@ ion-toggle::after {
 
     z-index: 1;
 }
-
-// .button-cover:before
-// {  
-//     counter-increment: button-counter;
-//     content: counter(button-counter);
-//     position: absolute;
-//     right: 0;
-//     bottom: 0;
-//     color: #d7e3e3;
-//     font-size: 12px;
-//     line-height: 1;
-//     padding: 5px;
-// }
-
-// .button-cover, .knobs, .layer
-// {
-//     position: absolute;
-//     top: 0;
-//     right: 0;
-//     bottom: 0;
-//     left: 0;
-// }
-
-// .button
-// {
-//     position: relative;
-//     top: 50%;
-//     width: 74px;
-//     height: 36px;
-//     margin: -20px auto 0 auto;
-//     overflow: hidden;
-// }
-
-// .button.r, .button.r .layer
-// {
-//     border-radius: 100px;
-// }
-
-// .button.b2
-// {
-//     border-radius: 2px;
-// }
-
-// .checkbox
-// {
-//     position: relative;
-//     width: 100%;
-//     height: 100%;
-//     padding: 0;
-//     margin: 0;
-//     opacity: 0;
-//     cursor: pointer;
-//     z-index: 3;
-// }
-
-// .knobs
-// {
-//     z-index: 2;
-// }
-
-// .layer
-// {
-//     width: 100%;
-//     // width: 100px;
-//     // height: 45px;
-//     // border-radius: 30px;
-//     // margin-right: 10px;
-
-//     background-color: #4F4F4F;
-//     transition: 0.3s ease all;
-//     z-index: 1;
-// }
-
-/* Button 1 */
-// #button-1 .knobs:before
-// {
-//     content: 'Ja';
-//     position: absolute;
-//     top: 4px;
-//     left: 4px;
-//     width: 30px;
-//     height: 10px;
-//     color: #fff;
-//     font-size: 10px;
-//     font-weight: bold;
-//     text-align: center;
-//     line-height: 1;
-//     padding: 9px 4px;
-//     background-color: #242323;
-//     border-radius: 70%;
-//     transition: 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15) all;
-// }
-
-// #button-1 .checkbox:checked + .knobs:before
-// {
-//     content: 'Nein';
-//     left: 30px;
-//     background-color: #242323;
-// }
-
-// #button-1 .checkbox:checked ~ .layer
-// {
-
-//     background-color: #4F4F4F;
-// }
-
-// #button-1 .knobs, #button-1 .knobs:before, #button-1 .layer
-// {
-//     transition: 0.3s ease all;
-// }
