@@ -1,3 +1,4 @@
+import { NativeAudio } from '@ionic-native/native-audio/ngx';
 import { RideIndicatorAssemblyComponent } from './Components/ride-indicator-assembly/ride-indicator-assembly.component';
 import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
 import { NgModule } from '@angular/core';
@@ -63,6 +64,7 @@ import { CommonModule } from '@angular/common';
     SplashScreen,
     Geolocation,
     NativeGeocoder,
+    NativeAudio,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     FirebaseAuthentication
   ],

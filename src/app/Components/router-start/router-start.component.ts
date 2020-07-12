@@ -1,3 +1,4 @@
+import { StatusAudioService } from './../../services/status-audio/status-audio.service';
 import { ModalController } from '@ionic/angular';
 import { ButtonOverlayComponent } from '../button-overlay/button-overlay.component';
 import { Component, OnInit, Input } from '@angular/core';
@@ -20,7 +21,10 @@ export class RouterStartComponent implements OnInit {
   private duration: number;
   private distance: number;
 
-  constructor(private mapIntegration:MapIntegrationService, private mainMenu:MainMenuComponent,private mapBox: MapBoxComponent, private routingUserService: RoutingUserService, private userService:UserService, private modalController :ModalController,private search:SearchBarComponent) { }
+  constructor(private mapIntegration:MapIntegrationService, private mainMenu:MainMenuComponent,
+    private mapBox: MapBoxComponent, private routingUserService: RoutingUserService,
+    private userService:UserService, private modalController :ModalController,private search:SearchBarComponent,
+    private statusAudio: StatusAudioService) { }
 
   ngOnInit() {
     this.routingUserService.getDistance();
