@@ -32,6 +32,7 @@ export class StatusAudioService {
     }
 
     this.mapDataFetch.activeCluster.subscribe(async (activeCluster) => {
+      // TODO: check settings for volume!
       if(this.isFirstPlayback) {
         this.isFirstPlayback = false;
         return;

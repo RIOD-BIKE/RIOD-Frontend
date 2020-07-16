@@ -1,3 +1,4 @@
+import { VibrationService } from './../../services/vibration-service/vibration.service';
 import { StatusAudioService } from './../../services/status-audio/status-audio.service';
 import { ModalController } from '@ionic/angular';
 import { ButtonOverlayComponent } from '../button-overlay/button-overlay.component';
@@ -24,7 +25,8 @@ export class RouterStartComponent implements OnInit {
   constructor(private mapIntegration:MapIntegrationService, private mainMenu:MainMenuComponent,
     private mapBox: MapBoxComponent, private routingUserService: RoutingUserService,
     private userService:UserService, private modalController :ModalController,private search:SearchBarComponent,
-    private statusAudio: StatusAudioService) { }
+    private statusAudio: StatusAudioService, private vibrationService: VibrationService) { }
+// TODO: move statusAudio & vibrationService somewhere else?
 
   ngOnInit() {
     this.routingUserService.getDistance();
