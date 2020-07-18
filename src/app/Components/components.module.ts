@@ -15,14 +15,15 @@ import { RideMapFinalComponent } from './ride-map-final/ride-map-final.component
 import { WaitingAtAsSmallComponent } from './waiting-at-as-small/waiting-at-as-small.component';
 import { RouterStartComponent } from './router-start/router-start.component';
 import { BrowserModule } from '@angular/platform-browser';
+import { RidingInfoComponent } from './riding-info/riding-info.component';
 @NgModule({
   declarations: [MapBoxComponent, MainMenuComponent, RouterInfoInBottomComponent, SearchBarComponent,
     RidingToggleComponent,
-    RideMapAssemblyComponent, RideMapFinalComponent, WaitingAtAsSmallComponent, RouterStartComponent],
+    RideMapAssemblyComponent, RideMapFinalComponent, WaitingAtAsSmallComponent, RouterStartComponent, RidingInfoComponent],
   imports: [IonicModule, CommonModule, FormsModule],
   exports: [MapBoxComponent, MainMenuComponent, RouterInfoInBottomComponent, SearchBarComponent,
     RidingToggleComponent,
-    RideMapAssemblyComponent, RideMapFinalComponent, WaitingAtAsSmallComponent, RouterStartComponent],
+    RideMapAssemblyComponent, RideMapFinalComponent, WaitingAtAsSmallComponent, RouterStartComponent, RidingInfoComponent],
   providers: [MapBoxComponent, MainMenuComponent, RouterInfoInBottomComponent, SearchBarComponent,
     RidingToggleComponent,
     RideMapAssemblyComponent, RideMapFinalComponent, RouterStartComponent]

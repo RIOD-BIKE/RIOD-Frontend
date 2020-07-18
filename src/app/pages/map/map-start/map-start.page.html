@@ -2,6 +2,21 @@
   <search-bar></search-bar>
 </ion-header>
 <map-box></map-box>
+
+<app-riding-info>
+  <!-- <ion-list lines="none">
+    <ion-list-header>
+      <ion-label>Resources</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let item of [0,0]">
+      <ion-icon slot="start" color="medium" name="book"></ion-icon>
+      <ion-label>Item</ion-label>
+    </ion-item>
+  </ion-list> -->
+</app-riding-info>
+
+
+
   <ion-row id="ONLY FOR TESTING" style="position: absolute; bottom: 50px;">
     <ion-button color="tertiary" shape="round" style="height: 60px; width: 60px;" (click)="locateDevice()">
       <div>
@@ -26,9 +41,9 @@
 
   </ion-row>
 
-<ion-footer [ngSwitch]="showType">
+<!-- <ion-footer [ngSwitch]="showType">
   <riding-toggle *ngSwitchCase="''"></riding-toggle>
   <router-start  *ngSwitchCase="'showMain'"></router-start>
   <router-info-in-bottom  *ngSwitchCase="'showRouterInfo'" ></router-info-in-bottom>
   <ride-map-assembly *ngSwitchCase="'routeStarted'" ></ride-map-assembly>
-</ion-footer>
+</ion-footer> -->

@@ -1,0 +1,71 @@
+{
+  "project_info": {
+    "project_number": "946261770679",
+    "firebase_url": "https://riod-bike.firebaseio.com",
+    "project_id": "riod-bike",
+    "storage_bucket": "riod-bike.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:946261770679:android:169cdf301b696ccc622832",
+        "android_client_info": {
+          "package_name": "bike.riod.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "946261770679-1106p0ft1aalg3bk17r0mpbqnsst6t4j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "bike.riod.app",
+            "certificate_hash": "72a444fab8d284d75aab78b838449de510220b86"
+          }
+        },
+        {
+          "client_id": "946261770679-2kc1aqdf0nitdnpae4k28o88skkviqpe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "bike.riod.app",
+            "certificate_hash": "5a87f2a3df9f3e008548998e03205cb115e1b827"
+          }
+        },
+        {
+          "client_id": "946261770679-qj9mha2pl6poauprahf5dvvjthp4fiei.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "bike.riod.app",
+            "certificate_hash": "6bcc34d86f729df97dae793bfe9548218249ea0a"
+          }
+        },
+        {
+          "client_id": "946261770679-2rtr09k3g80r89sodjlkv2ik2f0jo4v3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoe9Gmdo08quRzc7-D4KR1t8C-B_Iodhk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "946261770679-2rtr09k3g80r89sodjlkv2ik2f0jo4v3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "946261770679-siqd4v4m75ctvmoab7q8h94d38jvc5i7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "bike.riod.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
