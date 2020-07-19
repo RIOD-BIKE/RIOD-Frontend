@@ -11,10 +11,10 @@ templateUrl: './waiting-at-as-small.component.html',
 styleUrls: ['./waiting-at-as-small.component.scss'],
 })
 export class WaitingAtAsSmallComponent implements OnInit, AfterViewInit {
-	progessCircleSize = 180; // change the size and radius of Circle Progess hier, value depend on Time. Max =180 Min=100
-	progessSize = 100; // change the width of progess bar hier, value depend on Time. Max =100
-	progessGo: any = false;
-	progessCircleRadius = (this.progessCircleSize / 2) + 'px';
+progessCircleSize = 180; // change the size and radius of Circle Progess hier, value depend on Time. Max =180 Min=100
+progessSize = 100; // change the width of progess bar hier, value depend on Time. Max =100
+progessGo: any = false;
+progessCircleRadius = (this.progessCircleSize / 2) + 'px';
 	progessColor = 'linear-gradient(to right,red, #383838, red)';
 	progessCircleColor = 'radial-gradient(circle, #383838,#383838, red)';
 	/*Timer*/

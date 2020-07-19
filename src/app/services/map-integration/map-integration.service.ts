@@ -265,7 +265,6 @@ export class MapIntegrationService {
         return this.http.get("https://api.mapbox.com/geocoding/v5/mapbox.places/" + query + '.json?autocomplete?types=address&country=de&bbox='+bbox[0]+","+bbox[1]+","+bbox[2]+","+bbox[3]+"&access_token=" + environment.mapbox.accessToken)
         .pipe(map((res: MapboxOutput) => {
         return res.features;
-      }))
+      }));
       }
-    
 }
