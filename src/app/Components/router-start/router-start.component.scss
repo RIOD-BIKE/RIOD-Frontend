@@ -47,126 +47,126 @@
 //     background-color: #4F4F4F;	
 // }
 
-// .over {
-//     background-color: #383838;
-//     width: 100%;
-//     padding-left: 20px;
-//     padding-right: 20px;
-//     padding-bottom: 60px;
-//     border-top-left-radius: 5px;
-//     border-top-right-radius: 5px;
+.over {
+    background-color: #383838;
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 60px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 
-//     .wrap1 {
-//         width: 100%;
-//         height: 20px;
-//     }
+    .wrap1 {
+        width: 100%;
+        height: 20px;
+    }
 
-//     .wrap {
-//         width: 100%;
-//         height: 20px;
-//         position: relative;
-//         text-align: center;
-//     }
+    .wrap {
+        width: 100%;
+        height: 20px;
+        position: relative;
+        text-align: center;
+    }
 
-//     .wrap2 {
-//         width: 100%;
-//         height: 80px;
-//         text-align: center;
+    .wrap2 {
+        width: 100%;
+        height: 80px;
+        text-align: center;
         
-//     }
+    }
 
-    // .wrap3 {
-    //     display: flex;
-    //     justify-content: center;
-    //     padding-right: 30px;
-    //     padding-top: 10px;
-    // }
+    .wrap3 {
+        display: flex;
+        justify-content: center;
+        padding-right: 30px;
+        padding-top: 10px;
+    }
 
-// }
+}
 
-// .btn1 {
-//     position: relative;
-//     width: 100%;
-//     height: 100%;
-//     background: url('../../../assets/icon/swipe-btn.svg');
-//     background-repeat: no-repeat;
-//     background-position: center;
-// }
-
-// p {
-
-//     font-size: 3.5vw;
-//     margin: 0px;
-//     line-height: 25px;
-// }
-
-// h2 {
-//     font-size: 5.5vw;
-//     margin: 0px;
-//     line-height: 36px;
-// }
-
-// #createRoute {
-//     float: left;
-//     width: 45%;
-//     height: 35px;
-//     border-radius: 30px;
-//     font-family: effra;
-//     font-size: 75%;
-//     font-weight: 700;
-//     margin-left: 15px;
-//     margin-top: 10px;
-// }
-
-// #cancel {
-//     float: right;
-//     width: 20%;
-//     border-radius: 30px;
-//     background-color: #4f4f4f;
-//     margin-right: 15px;
-//     margin-top: 10px;
-// }
-
-// #trash {
-//     z-index: 2;
-//     float: right;
-//     width: 20%;
-//     border-radius: 30px;
-//     background-color: #4f4f4f;
-//     margin-right: 15px;
-//     margin-top: 10px;
-// }
-
-:host {
+.btn1 {
+    position: relative;
     width: 100%;
     height: 100%;
-    position: absolute;
-    top: calc(100vh - 144px);
-    z-index: 9999;
+    background: url('../../../assets/icon/swipe-btn.svg');
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
-.text-row{
-    height: 50%;
+p {
+
+    font-size: 3.5vw;
+    margin: 0px;
+    line-height: 25px;
 }
-.top{
-    align-items: flex-end;
-    opacity: 0.50;
+
+h2 {
+    font-size: 5.5vw;
+    margin: 0px;
+    line-height: 36px;
+}
+
+#createRoute {
+    float: left;
+    width: 45%;
+    height: 35px;
+    border-radius: 30px;
+    font-family: effra;
+    font-size: 75%;
+    font-weight: 700;
+    margin-left: 15px;
+    margin-top: 10px;
+}
+
+#cancel {
+    float: right;
+    width: 20%;
+    border-radius: 30px;
+    background-color: #4f4f4f;
+    margin-right: 15px;
+    margin-top: 10px;
+}
+
+#trash {
+    z-index: 2;
+    float: right;
+    width: 20%;
+    border-radius: 30px;
+    background-color: #4f4f4f;
+    margin-right: 15px;
+    margin-top: 10px;
+}
+
+// :host {
+//     width: 100%;
+//     height: 100%;
+//     position: absolute;
+//     top: calc(100vh - 144px);
+//     z-index: 9999;
+// }
+
+// .text-row{
+//     height: 50%;
+// }
+// .top{
+//     align-items: flex-end;
+//     opacity: 0.50;
     
-}
+// }
 
 
 
-.icon-align {
-  text-align: right;
-  }
+// .icon-align {
+//   text-align: right;
+//   }
   
 
 
 
-.text{
-    margin:0 !important;
-}
+// .text{
+//     margin:0 !important;
+// }
 
-.toptext{
-    font-size: 12px ;
-}
+// .toptext{
+//     font-size: 12px ;
+// }
