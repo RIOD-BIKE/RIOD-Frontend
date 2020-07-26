@@ -13,8 +13,8 @@ export class RidingInfoComponent implements AfterViewInit {
   @Input() handleHeight: number = 90; //initial 100 -> bestimmt höhe im runtergefahrenen zustand
 
   timeToTarget: string = "3MIN";
-  lastLeg:boolean = true;
-  atSammelpunkt: boolean = false;
+  lastLeg:boolean = false;
+  atSammelpunkt: boolean = true;
   toSammelpunktLeg: boolean = true;
 
   constructor(
