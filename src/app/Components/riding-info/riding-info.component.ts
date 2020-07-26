@@ -14,8 +14,8 @@ export class RidingInfoComponent implements AfterViewInit {
 
   timeToTarget: string = "3MIN";
   lastLeg:boolean = true;
-  atSammelpunkt: boolean = true;
-  toSammelpunktLeg: boolean = false;
+  atSammelpunkt: boolean = false;
+  toSammelpunktLeg: boolean = true;
 
   constructor(
     private gestureCtrl: GestureController,
