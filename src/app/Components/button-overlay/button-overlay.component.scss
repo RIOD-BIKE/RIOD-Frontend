@@ -1,59 +1,96 @@
-ion-content {
-    --padding-top: 0vh;
-    --padding-bottom: 0vh;
-    --padding-start: 0vw;
-    --padding-end: 0vw;
-    --background: rgba(0, 0, 0, 0.7) !important;
+.over {
+  background-color: #383838;
+  width: 100%;
+  height: 100%;
+  opacity: 0.95;
+  padding-top: 30%;
+  padding-bottom: 100px;
+  padding-left: 30px;
+  padding-right: 30px;
+  .wrap {
+    width: 100%;
+    text-align: center;
+    .icon1{
+      width: 100%;
+    }
+    .icon2{
+     
+      width: 100%;
+    }
   }
+}
+#homeIcon{
+  background: url('../../../assets/icon/home.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: white;
+}
+#heartIcon{
+  background: url('../../../assets/icon/heart.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: white;
+}
+#shoppingIcon{
   
-  .circle {
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      margin-top: 85vh;
-       margin-left: 50%; 
-       text-align: center;
-    }
+  background: url('../../../assets/icon/shopping-cart.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: white;
+}
+#starIcon{
+  background: url('../../../assets/icon/star.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: white;
+}
+#workIcon{
   
+  background: url('../../../assets/icon/briefcase.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: white;
+}
+#bookIcon{
   
-    .circle .tick {
-      background:white;
-      position: absolute;
-      border-radius: 50%;
-    }
-  
-    .small-button {
-      --background:white;
-    }
-  
-    .circle .tick:nth-child(1) {
-      transform: rotate(0deg) translate(100px);
-    }
-    .circle .tick:nth-child(2) {
-      transform: rotate(-45deg) translate(100px) rotate(-45deg);
-      
-    }
-    .circle .tick:nth-child(3) {
-      transform: rotate(-90deg) translate(100px) rotate(90deg);
-    }
-    .circle .tick:nth-child(4) {
-      transform: rotate(-135deg) translate(100px) rotate(135deg);
-    }
-    .circle .tick:nth-child(5) {
-      transform: rotate(-180deg) translate(100px) rotate(-180deg);
-    }
-  
-  
-    ion-icon {
-      color:black;
-      background-color: white;
-    }
-  
-    .test {
-    --background:chartreuse;
-    height: 40px;
-    margin-top: 20px;
-    margin-left: -25%;
-    position: absolute;
-    }
-  
+  background: url('../../../assets/icon/book.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: white;
+}
+#bookIcon:focus, #workIcon:focus, #starIcon:focus, #shoppingIcon:focus, #homeIcon:focus, #heartIcon:focus{
+  background-color:fuchsia;
+}
+.saveFavorite {
+  margin: 0 auto;
+  display: block;
+  margin-bottom: 30px;
+  margin-top: 20px;
+  width: 60%;
+  height: 50px;
+  border-radius: 25px;
+  font-family: effra;
+  font-size: 90%;
+  font-weight: 500;
+  background-color: white;
+  color: #4f4f4f;
+}
+.favorIcons {
+  margin: 10px;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+}
+
+.cancel {
+  margin: 0 auto;
+  display: block;
+  width: calc((50% - 20px) / 2);
+  height: 40px;
+  left: 50%;
+  border-radius: 20px;
+  background: url("../../../assets/icon/cancel.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #4f4f4f;
+}

@@ -113,6 +113,13 @@ span {
   background-position: center;
 }
 
+#saveBtn{
+  background: url('../../../assets/icon/save.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.3;
+}
+
 .listElement {
   animation: popIn 0.2s calc(var(--animation-order) * 15ms) both ease-in;
   margin-bottom: 5px;

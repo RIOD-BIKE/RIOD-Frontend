@@ -18,6 +18,7 @@ export class UserService {
   constructor(private userDataFetch:UsersDataFetchService,private storage:Storage,private geolocation: Geolocation, private platform: Platform) { }
 
   public behaviorMyOwnPosition = new BehaviorSubject(null);
+  public behaviorFavorite: BehaviorSubject<string[]> = new BehaviorSubject<string[]>(null);
   private firstTimeCalling = true;
   private hashedUID:string=null;
   private assemblyPointReference:any[]=[];

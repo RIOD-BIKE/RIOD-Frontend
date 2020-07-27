@@ -55,7 +55,7 @@ export class RoutingUserService {
       for(let time=0;time<4;time++){
         let R=6378137;
         let dLat =dLatN/R;
-        let dLon =dLongN/(R*Math.cos(Math.PI*address[0]/180));
+        const dLon =dLongN/(R*Math.cos(Math.PI*address[0]/180));
         polygon.push([address[0]+dLat*180/Math.PI, address[1]+dLon*180/Math.PI]);
         if(time==0){
           dLongN=100;

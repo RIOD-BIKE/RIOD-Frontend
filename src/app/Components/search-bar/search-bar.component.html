@@ -15,10 +15,10 @@
         <button class="ava" id="cross" (click)="clear()" hidden>
           <ion-icon name="close-outline" style="font-size: 30px; color: white; --ionicon-stroke-width: 18px;"></ion-icon>
         </button>
-        <button class="ava" id="ava" (click)="openSettings()">
+        <button class="ava" id="avaBtn" (click)="openSettings()">
           <img id="avatar" src="{{ specialAvatarURL }}" alt="Avatar" />
         </button>
-        <button class="ava" id="saveBtn" hidden>
+        <button class="ava" id="saveBtn" hidden (click)=saveRoute()>
         </button>
     </div>
 </div>
@@ -96,7 +96,7 @@
   <div class="container" id="search-results"  hidden>
     <div id="list-addresses" >
       <div style="width:100%;float: left; background-color: transparent;" id="container" >
-        <div class="listElement"  *ngFor="let address of addressesString; index as i" [style.--animation-order]="i" (click)="onSelect(address.coords,address.address)">
+        <div class="listElement"  *ngFor="let address of addressesString; index as i" [style.--animation-order]="i" (click)="onSelect(address.coords,address.address, address.street, address.city)">
           <h5 style="margin-left: 15px;margin-right: 15px;border-top:thin solid white; text-align: left;margin-top:5px;padding-top:10px; margin-bottom:0px;padding-bottom:1px; color: white; font-weight: 500; font-size: 16px;">
             {{address.street}}
           </h5>

@@ -1,19 +1,25 @@
-<ion-content fullscreen scroll-y="false" scroll-x="false">
-  <ion-slides   pager="false" #mySlider>
+<div class="over">
+  <div class="wrap">
+    
+    <h2 style="opacity: 1; margin-bottom: 10px;">{{street}}</h2>
+    <h2 style="font-weight: 100; opacity: 1; margin-top: 10px;">{{city}}</h2>
+    <h4 style="font-weight: 200; opacity: 1;">Wähle ein Icon:</h4>
+    <div class="icon1">
+      <button class="favorIcons" id="homeIcon" (click)="saveIconAddress('1')"></button>
+      <button class="favorIcons" id="heartIcon" (click)="saveIconAddress('2')"></button>
+      <button class="favorIcons" id="shoppingIcon"(click)="saveIconAddress('3')"></button>
+    </div>
+    <div class="icon2">
+      <button class="favorIcons" id="workIcon" (click)="saveIconAddress('4')"></button>
+      <button class="favorIcons" id="starIcon" (click)="saveIconAddress('5')"></button>
+      <button class="favorIcons" id="bookIcon" (click)="saveIconAddress('6')"></button>
+    </div>
+    <div>
+      <button ion-button class="saveFavorite" (click)="saveFarvo()">Als Favorite speichern</button>
+    </div>
+    <div>
+      <button class="cancel" (click)="dismiss()"></button>
+    </div>
+  </div>
 
-    <ion-slide>
-      <div (click)="dismiss()" style="margin-top: 118vh;"></div>
-
-      <div class="circle" (click)="dismiss()">
-        <div class="tick"><ion-fab-button class ="small-button" size="small" (click)="saveIconAddress('1')"><ion-icon name="star-outline"></ion-icon></ion-fab-button></div>
-        <div class="tick"><ion-fab-button class ="small-button" size="small" (click)="saveIconAddress('2')"><ion-icon name="pricetags-outline"></ion-icon></ion-fab-button></div>
-        <div class="tick"><ion-fab-button class ="small-button" size="small" (click)="saveIconAddress('3')"><ion-icon name="briefcase-outline"></ion-icon></ion-fab-button></div>
-        <div class="tick"><ion-fab-button class ="small-button" size="small" (click)="saveIconAddress('4')"><ion-icon name="heart-outline"></ion-icon></ion-fab-button></div>
-        <div class="tick"><ion-fab-button class ="small-button" size="small" (click)="saveIconAddress('5')"><ion-icon name="home-outline"></ion-icon></ion-fab-button></div>
-        <ion-button class="test" shape="round">
-          <ion-icon style="background-color:chartreuse;color:white "name="checkmark-outline"></ion-icon>
-      </ion-button>
-      </div>
-    </ion-slide>
-  </ion-slides>
-</ion-content>
+</div>

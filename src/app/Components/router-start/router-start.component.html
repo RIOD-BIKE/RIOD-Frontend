@@ -1,10 +1,77 @@
-<div class="over">
-
-   <div class="wrap" style="vertical-align: middle;">
-      <button ion-button id="btn1" (click)=startRoute()></button> 
+<div class="over" id="myOver">
+   <div class="wrap1">
+       <button ion-button class="btn1" id="hide-div"></button>
+       <button ion-button class="btn1" id="show-div" hidden="true"></button>
    </div>
-
-    <div class="wrap">
-      <button ion-button id="btn3" (click)="closeView()"></button> 
+   <div class="wrap" id="infoText">
+        <p>Sammelpunkte anzeigen</p>
    </div>
+   <div class="wrap2">
+        <button ion-button id="createRoute" (click)="startRoute()">ROUTE ERSTELLEN</button>
+        <button ion-button id="cancel" (click)="closeView()">
+            <ion-icon name="close-outline" style="font-size: 30px; color: white; --ionicon-stroke-width: 30px;"></ion-icon>
+        </button>
+        <button ion-button id="trash" (click)="deleteAPPoints()" hidden>
+            <ion-icon name="trash" style="font-size: 30px; color: white; --ionicon-stroke-width: 20px;"></ion-icon>
+        </button>
+   </div>
+   <!-- <div class="wrap wrap2">
+   </div> -->
+   <!-- <div class="wrap wrap3">
+       <div class="icon">
+           <button ion-button id="btn2-toChange"> <h4 style="line-height: 0; margin: 0px;"> {{minute}}:{{second}}</h4></button>
+       </div>
+
+   </div> -->
+
+   <!-- <div class="wrap">
+       <div class="item">
+           <input type="checkbox" class="riod-toggle" /> onclick='handleClick(this);'
+       </div>
+   </div> -->
 </div>
+
+
+<!-- <ion-header style="background-color: #383838; height: 12vh; border-radius: 12px 12px 0px 0px;" mode="ios" id="header">
+    <ion-grid> 
+    <ion-row>
+       <ion-col [hidden]="lastLeg" size="2">
+        <h1 class="icon-align"><ion-icon slot="start" name="flag-outline"></ion-icon></h1>
+       </ion-col>
+       <ion-col size="2">
+        <ion-row class="text-row top"><h4 class="text toptext">Ankunft:</h4></ion-row>
+        <ion-row class="text-row"><h3 class="text">{{timeToTarget}}</h3></ion-row>
+      </ion-col>
+  
+      <ion-col size="8"></ion-col>
+     </ion-row>
+  
+     <ion-row [hidden]="sammelpunktLeg">
+      <ion-col  size="2">
+       <h1 class="icon-align"><ion-icon slot="start" src="../../../assets/icon/assemblypoint1.svg"></ion-icon></h1>
+      </ion-col>
+      <ion-col size="2">
+       <ion-row class="text-row top"><h4 class="text toptext">Ankunft</h4></ion-row>
+       <ion-row class="text-row"><h3 class="text">{{timeToTarget}}</h3></ion-row>
+     </ion-col>
+     <ion-col  size="2">
+       <h1 class="icon-align"><ion-icon slot="start" name="bike"></ion-icon></h1>
+      </ion-col>
+      <ion-col size="2">
+       <ion-row class="text-row top"><h4 class="text toptext">Bald da:</h4></ion-row>
+       <ion-row class="text-row"><h3 class="text">5</h3></ion-row>
+     </ion-col>
+     <ion-col size="4"></ion-col>
+    </ion-row>
+  
+    </ion-grid>
+
+    <ion-toolbar mode="md">
+      <ion-title>{{title}}</ion-title>
+    </ion-toolbar>
+
+  </ion-header>
+   <ion-content>
+     <h1>halloooootest</h1>
+     <ng-content ></ng-content>
+  </ion-content> -->
