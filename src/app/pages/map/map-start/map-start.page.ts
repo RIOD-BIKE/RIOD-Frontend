@@ -119,7 +119,7 @@ export class MapStartPage implements OnInit {
   public toggleShowIndicatorScreen() {
     const animation = this.animationController.create()
       .addElement(this.indicatorScreen.nativeElement)
-      .duration(500)
+      .duration(250)
       .easing('ease-in-out');
     if (this.showIndicatorScreen) {
       animation.fromTo('transform', 'translateY(0%)', 'translateY(100%)')
