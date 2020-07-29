@@ -11,7 +11,6 @@ import * as turf from '@turf/turf'
 })
 export class RoutingUserService {
 
- // TODO: fix all type safety
 
   private finishPoint: RoutingGeoAssemblyPoint = null;
   private startPoint: any= null;

@@ -1,73 +1,42 @@
 <ion-header>
-  <search-bar id="searchbar"></search-bar>
-  <button ion-button id="closeWindow" (click)="closeView()" hidden>
-    <ion-icon name="close-outline"
-    style="font-size: 33.25px; color: white; --ionicon-stroke-width: 25px;">
-    </ion-icon>
-  </button>
+  <search-bar></search-bar>
 </ion-header>
 <map-box></map-box>
 
+
 <ion-row id="ONLY FOR TESTING" style="position: absolute; bottom: 50px;">
-  <ion-button
-    color="tertiary"
-    shape="round"
-    style="height: 60px; width: 60px;"
-    (click)="locateDevice()"
-  >
+  <ion-button color="tertiary" shape="round" style="height: 60px; width: 60px;" (click)="locateDevice()">
     <div>
       <ion-icon icon="locate-outline"></ion-icon>
     </div>
   </ion-button>
-  <ion-button
-    color="primary"
-    shape="round"
-    style="height: 60px; width: 60px;"
-    (click)="setShowChange()"
-  >
+  <ion-button color="primary" shape="round" style="height: 60px; width: 60px;" (click)="setShowChange()">
     <div>
       <ion-icon icon="book"></ion-icon>
     </div>
   </ion-button>
-  <ion-button
-    color="primary"
-    shape="round"
-    style="height: 60px; width: 60px;"
-    (click)="presentModal()"
-  >
+  <ion-button color="primary" shape="round" style="height: 60px; width: 60px;" (click)="presentModal()">
     <div>
       <ion-icon icon="help"></ion-icon>
     </div>
   </ion-button>
-  <ion-button
-    color="primary"
-    shape="round"
-    style="height: 60px; width: 60px;"
-    (click)="DEMOsendToRTDB()"
-  >
+  <ion-button color="primary" shape="round" style="height: 60px; width: 60px;" (click)="DEMOsendToRTDB()">
     <div>
       <ion-icon icon="server"></ion-icon>
     </div>
   </ion-button>
 </ion-row>
 
-<riding-toggle
-  style="
-    /* width: fit-content; align-self: flex-end; margin-bottom: -35.2vh; margin-right: 7vw; */
-    position: absolute;
-    bottom: 2.6vh;
-    right: 3vh;
-  "
-></riding-toggle>
+
+<riding-toggle style="width: fit-content; align-self: flex-end; margin-bottom: -35.2vh; margin-right: 7vw;">
+</riding-toggle>
 
 <!-- @Frontend FIXME: This DIV is slightly moved up, may be related to riding-toggle margin-bottom -->
-<div
-  #indicatorScreen
-  style="z-index: 10; transform: translateY(100%); margin-top: -16vh;"
->
+<div #indicatorScreen style="z-index: 10; transform: translateY(100%);">
   <app-ride-indicator></app-ride-indicator>
 </div>
 <div [ngSwitch]="showType">
+
   <router-start *ngSwitchCase="'showMain'"></router-start>
   <app-riding-info *ngSwitchCase="'showRouterInfo'"></app-riding-info>
   <!-- DONT USE THIS! LINE 52 WORKS AS WELL <riding-toggle *ngSwitchCase="''" style="width: fit-content; align-self: flex-end; margin-bottom: 2.8vh; margin-right: 7vw;"></riding-toggle>  -->

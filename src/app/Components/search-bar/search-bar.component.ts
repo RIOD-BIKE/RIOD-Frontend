@@ -8,6 +8,7 @@ import { Feature, iconShortcut, recentShortcut } from "../../Classess/map/map";
 import { UserService } from "src/app/services/user/user.service";
 import { NavController } from "@ionic/angular";
 import { UsersDataFetchService } from "src/app/services/users-data-fetch/users-data-fetch.service";
+import { EditFavoriteComponent } from '../edit-favorite/edit-favorite.component';
 
 @Component({
   selector: "search-bar",
@@ -40,6 +41,7 @@ export class SearchBarComponent implements OnInit {
         this.clear();
         this.routingUserService.setRouteFinished();
       }
+      
     });
     // Temp before saving and edit components are available
     this.shortcuts.push(
@@ -67,9 +69,15 @@ export class SearchBarComponent implements OnInit {
       )
     );
     this.search();
+    
+    console.log(this.shortcuts);
+    console.log(this.userService.getAllShortcuts);
+    
     this.userService.getAllShortcuts().then((allRoutes) => {
       if (allRoutes.length > 0) {
-        // this.shortcuts=allRoutes; //override temporary
+         //this.shortcuts=allRoutes; //override temporary
+         console.log("hier all Router" + allRoutes);
+         
       }
       if (this.shortcuts.length == 0) {
         document.getElementById("with-content").hidden = true;
@@ -79,6 +87,8 @@ export class SearchBarComponent implements OnInit {
         document.getElementById("edit-no-content").hidden = true;
       }
     });
+    console.log(this.shortcuts);
+
     this.mapIntegration.getAllSavedRoutes().then((allSavedRoutes) => {
       const temp = [];
       for (const route of allSavedRoutes) {
@@ -116,7 +126,9 @@ export class SearchBarComponent implements OnInit {
     });
     document.getElementById("recents-results").hidden = true;
 
-    this.specialAvatarURL = await this.userDataFetch.storage_getSpecialAvatar();
+    this.userDataFetch.storage_getSpecialAvatarURL().then((url) => {
+      this.specialAvatarURL = url;
+    });
   }
 
   back() {
@@ -426,6 +438,17 @@ export class SearchBarComponent implements OnInit {
       component: ButtonOverlayComponent,
     });
     return await modal.present();
+  }
+
+  editFavor(){
+    this.editModal();
+  }
+
+  async editModal(){
+    const modal2 = await this.modalController.create({
+      component: EditFavoriteComponent,
+    });
+    return await modal2.present();
   }
 
   openSettings() {

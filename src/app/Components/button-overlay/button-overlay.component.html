@@ -5,14 +5,14 @@
     <h2 style="font-weight: 100; opacity: 1; margin-top: 10px;">{{city}}</h2>
     <h4 style="font-weight: 200; opacity: 1;">Wähle ein Icon:</h4>
     <div class="icon1">
-      <button class="favorIcons" id="homeIcon" (click)="saveIconAddress('1')"></button>
-      <button class="favorIcons" id="heartIcon" (click)="saveIconAddress('2')"></button>
-      <button class="favorIcons" id="shoppingIcon"(click)="saveIconAddress('3')"></button>
+      <button class="favorIcons" id="homeIcon" (click)="saveIconAddress('home-outline')"></button>
+      <button class="favorIcons" id="heartIcon" (click)="saveIconAddress('heart-outline')"></button>
+      <button class="favorIcons" id="shoppingIcon"(click)="saveIconAddress('shopping-outline')"></button>
     </div>
     <div class="icon2">
-      <button class="favorIcons" id="workIcon" (click)="saveIconAddress('4')"></button>
-      <button class="favorIcons" id="starIcon" (click)="saveIconAddress('5')"></button>
-      <button class="favorIcons" id="bookIcon" (click)="saveIconAddress('6')"></button>
+      <button class="favorIcons" id="workIcon" (click)="saveIconAddress('briefcase-outline')"></button>
+      <button class="favorIcons" id="starIcon" (click)="saveIconAddress('star-outline')"></button>
+      <button class="favorIcons" id="bookIcon" (click)="saveIconAddress('book-outline')"></button>
     </div>
     <div>
       <button ion-button class="saveFavorite" (click)="saveFarvo()">Als Favorite speichern</button>

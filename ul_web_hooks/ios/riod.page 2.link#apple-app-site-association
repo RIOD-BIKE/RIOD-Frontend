@@ -1,0 +1,14 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "676A87K448.bike.riod.app",
+        "paths": [
+          "*",
+          "/"
+        ]
+      }
+    ]
+  }
+}

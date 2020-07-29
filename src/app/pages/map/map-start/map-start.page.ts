@@ -1,4 +1,3 @@
-import { RoutingGeoAssemblyPoint } from 'src/app/Classess/map/map';
 import { MapDataFetchService } from './../../../services/map-data-fetch/map-data-fetch.service';
 import { Component, OnInit, Directive, ViewChild, Input, ElementRef } from '@angular/core';
 import { MapBoxComponent } from 'src/app/Components/map-box/map-box.component';
@@ -36,11 +35,11 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 
 export class MapStartPage implements OnInit {
 
-  public showRidingToggle: boolean = true;
-  public showMain: boolean = false;
-  public showRouterInfo: boolean=false;
-  private showRide: boolean= false;
-  @Input() public showType: string = '';
+  public showRidingToggle:boolean = true;
+  public showMain:boolean = false;
+  public showRouterInfo:boolean=false;
+  private showRide:boolean= false;
+  @Input() private showType:string= "";
   private showIndicatorScreen = false;
   @ViewChild('indicatorScreen') indicatorScreen: ElementRef;
 
@@ -73,34 +72,12 @@ export class MapStartPage implements OnInit {
  }
 
   ngOnInit() {
-    // TODO subscribe this.routingUserService if length >= 2
-    // this.hideSearchbar(true, false);
-    // else
-    // this.hideSearchbar(false, true);
-  }
-
-  closeView() {
-    this.mainMenu.closeView();
-    this.routingUserService.setDisplayType('Start');
-    this.routingUserService.resetAll();
-    this.mapBox.removeRoute();
-    this.mapBox.disableAssemblyClick().then(() => {
-      this.mapBox.updateAssemblyPoints();
-      this.mapBox.moveMapToCurrent();
-      this.routingUserService.routeFinished.next(true);
-    });
-  }
-
-  hideSearchbar(searchbar: boolean, closeWindow: boolean) {
-    const search = document.getElementById('searchbar');
-    const cancel = document.getElementById('closeWindow');
-
-    search.hidden = searchbar;
-    cancel.hidden = closeWindow;
 
   }
 
 
+
+  
   locateDevice() {
     this.mapBox.moveMapToCurrent();
   }
@@ -142,7 +119,7 @@ export class MapStartPage implements OnInit {
   public toggleShowIndicatorScreen() {
     const animation = this.animationController.create()
       .addElement(this.indicatorScreen.nativeElement)
-      .duration(250)
+      .duration(500)
       .easing('ease-in-out');
     if (this.showIndicatorScreen) {
       animation.fromTo('transform', 'translateY(0%)', 'translateY(100%)')

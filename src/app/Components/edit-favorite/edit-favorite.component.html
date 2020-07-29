@@ -1,0 +1,28 @@
+<div class="over">
+  <div class class="wrap">
+    <div class="arrow">
+      <button ion-button class="back-btn" id="back" (click)="back()"
+        style="background-color: transparent; margin-top: 10px; padding: 0;">
+        <ion-icon slot="icon-only" style="color: white; width: 30px; height: 30px;" name="arrow-back">
+        </ion-icon>
+      </button>
+    </div>
+    <div class="mt20" style="width: 100%;">
+      <ion-list>
+        <ion-item slot="icon-only" name="home-outline"></ion-item>
+        <h4>Hochschule</h4>
+      </ion-list>
+
+    </div>
+    
+    <div>
+      <h3 style="background-color: transparent; width: 90%;padding-right: 5%; float: right;">Meine Favoriten</h3>
+    </div>
+    <div>
+      <button ion-button class="move-favor">Reihenfolge ändern</button>
+    </div>
+    <div>
+      <button ion-button class="save-favor" (click)="dismiss()">Änderungen speichern</button>
+    </div>
+  </div>
+</div>

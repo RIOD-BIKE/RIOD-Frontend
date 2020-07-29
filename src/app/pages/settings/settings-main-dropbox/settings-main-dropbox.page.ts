@@ -1,8 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UsersDataFetchService } from 'src/app/services/users-data-fetch/users-data-fetch.service';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Platform, AlertController, NavController } from '@ionic/angular';
 @Component({
   selector: 'app-settings-main-dropbox',
@@ -18,20 +17,22 @@ export class SettingsMainDropboxPage implements OnInit {
   public display = true;
   public gps = true;
   public vibration = true;
-  public specialAvatarURL: string;
+  public specialAvatarURL = "../../../assets/settings/profile-pic.jpg";
 
   constructor(public platform: Platform, private userDataFetch: UsersDataFetchService, private authService: AuthService,
-    private router: Router, private alertController: AlertController, private navController: NavController, private http: HttpClient) {
+    private router: Router, private alertController: AlertController, private navController: NavController) {
     this.platform.ready().then(() => {
       this.rangeVolume = "5";
     });
   }
 
   async ngOnInit() {
-    this.specialAvatarURL = await this.userDataFetch.storage_getSpecialAvatar();
     this.uid = await this.authService.getCurrentUID();
     this.name = await this.userDataFetch.firestore_getName(this.uid);
     this.contact = await this.userDataFetch.firestore_getContact(this.uid);
+    
+    const URL = await this.userDataFetch.storage_getSpecialAvatarURL();
+    if(URL) { this.specialAvatarURL = URL; }
   }
 
   async deleteAccount() {

@@ -1,0 +1,45 @@
+.over {
+    background-color: #383838;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    .wrap {
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  .move-favor{
+    margin: 0 auto;
+    margin-top: 20px;
+    width: 60%;
+    height: 50px;
+    border-radius: 25px;
+    font-family: effra;
+    font-size: 90%;
+    font-weight: 500;
+    background-color: #4f4f4f;
+    color: white;
+  }
+  .save-favor{
+    position: fixed;
+    top: 85%;
+    left: 20%;
+    width: 60%;
+    height: 50px;
+    border-radius: 25px;
+    font-family: effra;
+    font-size: 90%;
+    font-weight: 500;
+    background-color: white;
+    color: #4f4f4f;
+  }
+  .arrow {
+    position: fixed;
+    float: left;
+    width: 10%;
+  }
