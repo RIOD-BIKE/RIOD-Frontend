@@ -11,9 +11,6 @@ import { UserService } from "src/app/services/user/user.service";
 export class ButtonOverlayComponent implements OnInit {
   public city: any = "";
   public street: any = "";
-  public favorite: any = "";
-  public saveAddress: any = "";
-  
   
   constructor(
     private modalController: ModalController,
@@ -34,15 +31,11 @@ export class ButtonOverlayComponent implements OnInit {
 
   saveIconAddress(iconNumber) {
     this.routingUserService.getfinishPoint().then((address) => {
-      console.log(iconNumber + " " + address);
-      this.favorite = iconNumber;
-      this.saveAddress = address;
+      console.log(iconNumber);
+      this.userService.saveShortcut(address, iconNumber);
     });
   }
-  saveFarvo(){ 
-    console.log(this.saveAddress + " " + this.favorite);
-    
-    this.userService.saveShortcut(this.saveAddress, this.favorite );
+  saveFarvo(){
     this.modalController.dismiss({
       dismissed: true,
     });

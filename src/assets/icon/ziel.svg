@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="27.076" height="33.093" viewBox="0 0 27.076 33.093">
+  <g id="Gruppe_140" data-name="Gruppe 140" transform="translate(0 0)">
+    <g id="map-pin" transform="translate(0 0)">
+      <path id="Pfad_39" data-name="Pfad 39" d="M30.076,14.538c0,10.53-13.538,19.555-13.538,19.555S3,25.068,3,14.538a13.538,13.538,0,1,1,27.076,0Z" transform="translate(-3 -1)" fill="#fff"/>
+    </g>
+    <g id="flag" transform="translate(8.914 10.318)">
+      <path id="Pfad_55" data-name="Pfad 55" d="M4,8.753a3.324,3.324,0,0,1,2.193-.519c1.645,0,2.741,1.039,4.386,1.039a3.324,3.324,0,0,0,2.193-.519V2.519a3.324,3.324,0,0,1-2.193.519C8.934,3.039,7.837,2,6.193,2A3.324,3.324,0,0,0,4,2.519Z" transform="translate(-4 -2)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <line id="Linie_30" data-name="Linie 30" y1="4" transform="translate(0.255 6.866)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+    </g>
+  </g>
+</svg>

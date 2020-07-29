@@ -3,6 +3,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
 import { BehaviorSubject } from 'rxjs';
+import { resolve } from 'url';
 
 
 
@@ -12,6 +13,8 @@ import { BehaviorSubject } from 'rxjs';
 export class UsersDataFetchService {
   private usersRef;
   private dataAPRef: BehaviorSubject<Array<string>>
+  private specialAvatarCached: string;
+
   constructor(private rtdb: AngularFireDatabase, private afs: AngularFirestore) {
   this.usersRef = rtdb.list('/users');
   }
@@ -84,11 +87,36 @@ export class UsersDataFetchService {
     return user.contact as string;
   }
 
-  async storage_getSpecialAvatarURL() {
+  private async storage_getSpecialAvatarURL() {
     try {
       return await firebase.storage().ref('special-avatar.png').getDownloadURL() as string;
     } catch (e) {
-      if (e.code !== 'storage/object-not-found') { throw e }
+      if (e.code !== 'storage/object-not-found') {
+        throw e;
+      } else {
+        return null;
+      }
     }
+  }
+
+  private async storage_getSpecialAvatarHelper(): Promise<string> {
+    const url = await this.storage_getSpecialAvatarURL();
+    if(!url) {
+      this.specialAvatarCached = '../../../assets/settings/profile-pic.jpg';
+      return this.specialAvatarCached;
+    }
+    const blob = await (await fetch(url)).blob();
+    const reader = new FileReader();
+    return new Promise((resolve, reject) => {
+      reader.readAsDataURL(blob);
+      reader.onload = () => {
+        this.specialAvatarCached = reader.result as string;
+        return resolve(reader.result as string);
+      }
+    });
+  }
+
+  async storage_getSpecialAvatar() {
+    return this.specialAvatarCached ?? await this.storage_getSpecialAvatarHelper();
   }
 }

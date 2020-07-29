@@ -8,7 +8,7 @@
   id="header"
 >
   <ion-grid>
-    <ion-row style="height: 20%;">
+    <ion-row style="height: 30%;">
       <ion-col>
         <div class="wrap1">
           <button ion-button class="btn1" id="hide-div"></button>
@@ -16,16 +16,19 @@
         </div>
       </ion-col>
     </ion-row>
-    <ion-row id="infoText">
+    <!-- <ion-row >
       <ion-col>
-        <div class="wrap">
+        <div class="wrap" id="infoTextOUT">
+          <p>Sammelpunkte anzeigen</p>
+        </div>
+        <div class="wrap" id="infoTextIN">
           <p>Sammelpunkte anzeigen</p>
         </div>
       </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col >
-        <button ion-button id="createRoute" (click)="startRoute()">
+    </ion-row> -->
+    <ion-row id="selectAP" >
+      <ion-col>
+        <button ion-button id="createRouteButton" (click)="startRoute()" [disabled]="disableCreateButton">
           ROUTE ERSTELLEN
         </button>
       </ion-col>
@@ -36,12 +39,58 @@
             style="font-size: 30px; color: white; --ionicon-stroke-width: 30px;"
           ></ion-icon>
         </button>
+        <button ion-button id="trash" (click)="deleteAPPoints()" hidden>
+          <ion-icon
+            name="trash"
+            style="font-size: 30px; color: white; --ionicon-stroke-width: 20px;"
+          ></ion-icon>
+        </button>
       </ion-col>
     </ion-row>
+    <ion-row id="startRoute" hidden>
+      <ion-col>
+        <button ion-button id="startButton" (click)="startNavi()">
+          START
+        </button>
+      </ion-col>
+      <ion-col>
+        <ion-row>
+          <p>Minuten</p>
+        </ion-row>
+        <ion-row>
+          <p>strecke</p>
+        </ion-row>
+      </ion-col>
+      <ion-col size="3">
+        <button ion-button id="edit" (click)="deleteAPPoints()" hidden>
+          <ion-icon
+            name="create"
+            style="font-size: 30px; color: white; --ionicon-stroke-width: 20px;"
+          ></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+
   </ion-grid>
 </ion-header>
 
 <ion-content>
-  <h1>halloooootest</h1>
-  <!-- <ng-content ></ng-content> -->
+  <ion-grid>
+    <ion-row style="height: 2%;">
+<!-- spacing  -->
+    </ion-row>
+    <ion-row>
+      <ion-col size="3">
+        <ion-icon id="userPosition"></ion-icon>
+      </ion-col>
+
+      <ion-col>
+
+      </ion-col>
+
+      <ion-col size="3">
+        <ion-icon id="destination"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
