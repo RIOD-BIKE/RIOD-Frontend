@@ -46,22 +46,25 @@ export class UserService {
 
 
 //Uncomplete -> Dependend on new UI System
-  public saveShortcut(address,iconName,routeName?):Promise<any> {
+  public saveShortcut(address,iconName,plz):Promise<any> {
     return new Promise(resolve=>{
       var i=0;
+      var j=0;
       this.storage.length().then(length=>{
         this.storage.forEach((value,key,index)=>{
           let keySpliced = key.split('_');
           if(keySpliced[0] == "SavedIcon"){
-            if(keySpliced[1]===iconName){  //iconName already saved -> override? Question
-              this.storage.set(key,{address:address})
+            j++;
+            console.log(value);
+            if(value.iconName===iconName){  //iconName already saved -> override? Question
+              this.storage.set(key,{address:address,plz:plz,iconName:iconName})
               resolve("Updated Address with icon");
               return;
             }
           }
           i++;
           if(i==length){
-            this.storage.set("SavedIcon_"+iconName,{address:address});
+            this.storage.set("SavedIcon_"+j,{address:address,plz:plz,iconName:iconName});
             resolve("New Address saved with icon");
           }
         })
@@ -79,10 +82,10 @@ export class UserService {
         this.storage.forEach((value,key,index)=>{
           let keySpliced = key.split('_');
           if(keySpliced[0] == "SavedIcon"){
-              tempArray.push(value);
+              tempArray.push(new iconShortcut(value.iconName,i,value.address,value.plz));
           }
           i++;
-          if(i==length ){
+          if(i==length){
             resolve(tempArray);
           }
         });

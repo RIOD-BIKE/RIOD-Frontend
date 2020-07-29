@@ -41,34 +41,21 @@ export class SearchBarComponent implements OnInit {
         this.routingUserService.setRouteFinished();
       }
     });
+
     // Temp before saving and edit components are available
-    this.shortcuts.push(
-      new iconShortcut(
-        "home-outline",
-        1,
-        "Klingensberg 9, 49074 Osnabrück, Germany",
-        [8.04098, 52.279913]
-      )
-    );
-    this.shortcuts.push(
-      new iconShortcut(
-        "briefcase-outline",
-        2,
-        "Barbarastraße 20, 49076 Osnabrück, Germany",
-        [8.022824, 52.284357]
-      )
-    );
-    this.shortcuts.push(
-      new iconShortcut(
-        "heart-outline",
-        3,
-        "Jakobstraße, 49074 Osnabrück, Germany",
-        [8.0425307, 52.2787108]
-      )
-    );
+
+    //Abhängig in welcher Reihenfolge die eingelesen / gespeichert werden, werden die in der UI-Horizontale Liste auch in unterschiedlicher
+    //Reihenfolge dargestellt
+    this.userService.saveShortcut("Klingensberg 9, 49074 Osnabrück, Germany","home-outline",[8.04098, 52.279913]);
+    this.userService.saveShortcut("Jakobstraße, 49074 Osnabrück, Germany","heart-outline",[8.0425307, 52.2787108]);
+    this.userService.saveShortcut("Barbarastraße 20, 49076 Osnabrück, Germany","briefcase-outline",[8.022824, 52.284357]);
+
+
     this.search();
-    this.userService.getAllShortcuts().then((allRoutes) => {
-      if (allRoutes.length > 0) {
+    this.userService.getAllShortcuts().then((allShortcuts) => {
+      console.log(allShortcuts);
+      this.shortcuts=allShortcuts;
+      if (allShortcuts.length > 0) {
         // this.shortcuts=allRoutes; //override temporary
       }
       if (this.shortcuts.length == 0) {

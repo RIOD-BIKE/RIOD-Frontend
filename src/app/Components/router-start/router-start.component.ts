@@ -169,7 +169,11 @@ export class RouterStartComponent implements OnInit, AfterViewInit {
     this.presentModal();
     this.routingUserService.getfinishPoint().then(x => {
       this.routingUserService.getPoints().then(y => {
-        this.userService.saveShortcut(x, y);
+       // this.userService.saveShortcut(x, y); 
+       //Muss mit IconName und Koordinaten erzeugt werden
+
+
+
       });
     });
   }
