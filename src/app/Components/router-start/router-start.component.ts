@@ -32,13 +32,15 @@ export class RouterStartComponent implements OnInit, AfterViewInit {
     private userService: UserService, private modalController: ModalController, private search: SearchBarComponent,
     private statusAudio: StatusAudioService, private vibrationService: VibrationService,
     private gestureCtrl: GestureController, private element: ElementRef, private renderer: Renderer2) { }
-  private duration: number;
-  private distance: number;
-  private count: any;
-  private moveOn: any = true;
+
+  // private duration: number;
+  // private distance: number;
+  // private count: any;
+  // private moveOn: any = true;
   private state = 'bottom';
   @Input() handleHeight = 100;
   public infoArray = [];
+  public disableCreateButton = true;
 
   private seletectedAPs: RoutingGeoAssemblyPoint[];
 
@@ -46,13 +48,13 @@ export class RouterStartComponent implements OnInit, AfterViewInit {
   // TODO: move statusAudio & vibrationService somewhere else?
 
   ngOnInit() {
-    // this.routingUserService.getDistance();
 
     addIcons({
       'ios-trash-outline': trash,
       'ios-create-outline': create
     });
 
+    // get routing info
     this.routingUserService.getDurationasSub().subscribe(duration => {
       this.routingUserService.getDistanceasSub().subscribe(distance => {
         if (duration != null && distance != null) {
@@ -61,35 +63,40 @@ export class RouterStartComponent implements OnInit, AfterViewInit {
       });
     });
 
-    // this.routingUserService.getPoints().
+    // check if routing finished/aborted
+    this.routingUserService.routeFinished.subscribe( value => {
+      if (value) {
+        // reset slider view
+        this.changeViewCreateStart(false, true);
+      }
+    });
+
+    // TODO subscribe this.routingUserService.getPoints() >= 2
+    // this.changeButtons(true);
+    //else
+    // this.changeButtons(false);
+
   }
 
-// Das nachher in map-start verschieben
+// close the view & reset
   closeView() {
+    this.mainMenu.closeView();
+    this.infoArray = [];
     this.routingUserService.setDisplayType('Start');
     this.routingUserService.resetAll();
     this.mapBox.removeRoute();
     this.mapBox.disableAssemblyClick().then(() => {
       this.mapBox.updateAssemblyPoints();
       this.mapBox.moveMapToCurrent();
+      // indicates if routing is finished/aborted
       this.routingUserService.routeFinished.next(true);
     });
-
-    // this.mainMenu.closeView();
-    // this.infoArray = [];
-    // this.routingUserService.resetAll();
-    // this.mapBox.removeRoute();
-    // this.mapBox.disableAssemblyClick().then(() => {
-    // this.mapBox.updateAssemblyPoints();
-    // });
-    // this.routingUserService.setDisplayType('Start');
-    // this.mapBox.moveMapToCurrent();
-    // this.routingUserService.routeFinished.next(true);
   }
 
+  // calculate route with selected APs
   startRoute() {
     this.routingUserService.getPoints().then(points => {
-      //missing this.mapIntegration.saveRouteOffline()
+      // missing this.mapIntegration.saveRouteOffline()
       let pointString = '';
       for (let i = 0; i < points.length; i++) {
         pointString += (points[i].position.longitude + ',' + points[i].position.latitude + ';');
@@ -97,10 +104,11 @@ export class RouterStartComponent implements OnInit, AfterViewInit {
       this.mapBox.drawRoute(pointString).then(() => {
 
       });
-      this.routingUserService.setDisplayType('Route_Info');
     });
+    this.changeViewCreateStart(true, false);
   }
 
+  // start the navigation
   startNavi() {
     this.routingUserService.getPoints().then(points => {
       this.routingUserService.getDuration().then(duration => {
@@ -126,6 +134,37 @@ export class RouterStartComponent implements OnInit, AfterViewInit {
     });
   }
 
+  // change view of slider component creating route or start navigation
+  changeViewCreateStart(createR: boolean, startN: boolean) {
+    const createRoute = document.getElementById('selectAP');
+    createRoute.hidden = createR;
+    const startNavi = document.getElementById('startRoute');
+    startNavi.hidden = startN;
+  }
+
+  // change buttons if more than 2 APs selected
+  changeButtons(twoAP: boolean) {
+    const createButton = document.getElementById('createRouteButton');
+    const cancel = document.getElementById('cancel');
+    const trashy = document.getElementById('trash');
+    // const placeholderDiv
+    // const selectedAPs
+
+    if (twoAP) {
+      this.disableCreateButton = false;
+      cancel.hidden = true;
+      trashy.hidden = false;
+      // placeholderDiv hidden true
+      // selectedAPs hidden false
+    } else {
+      this.disableCreateButton = true;
+      cancel.hidden = false;
+      trashy.hidden = true;
+      // placeholderDiv hidden false
+      // selectedAPs hidden true
+    }
+  }
+
   saveRoute() {
     this.presentModal();
     this.routingUserService.getfinishPoint().then(x => {
@@ -141,6 +180,7 @@ export class RouterStartComponent implements OnInit, AfterViewInit {
     return await modal.present();
   }
 
+  // delete all selected APs
   deleteAPPoints() {
     // delete all selected AP Points
   }
@@ -169,6 +209,7 @@ export class RouterStartComponent implements OnInit, AfterViewInit {
     // cancel.hidden = false;
   }
 
+  // slider logic
   async ngAfterViewInit() {
     const windowHeight = window.innerHeight;
     const drawerHeight = windowHeight - this.handleHeight;

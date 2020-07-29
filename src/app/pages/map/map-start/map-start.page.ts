@@ -73,7 +73,10 @@ export class MapStartPage implements OnInit {
  }
 
   ngOnInit() {
-
+    // TODO subscribe this.routingUserService if length >= 2
+    // this.hideSearchbar(true, false);
+    // else
+    // this.hideSearchbar(false, true);
   }
 
   closeView() {
@@ -88,23 +91,18 @@ export class MapStartPage implements OnInit {
     });
   }
 
-  hideSearchbar() {
+  hideSearchbar(searchbar: boolean, closeWindow: boolean) {
     const search = document.getElementById('searchbar');
     const cancel = document.getElementById('closeWindow');
 
-    // TODO if this.routingService.getPoints().length >= 2
-    search.hidden = true;
-    cancel.hidden = false;
-    // Else
-    // search.hidden = false;
-    // cancel.hidden = true;
+    search.hidden = searchbar;
+    cancel.hidden = closeWindow;
+
   }
 
 
   locateDevice() {
     this.mapBox.moveMapToCurrent();
-    // Testing
-    this.hideSearchbar();
   }
 
   setChildView(){

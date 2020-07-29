@@ -1,3 +1,8 @@
+ion-grid {
+  height: 100%;
+  width: 100%;
+}
+
 .btn1 {
   position: relative;
   width: 100%;
@@ -26,7 +31,7 @@ h2 {
   font-family: effra;
   font-size: 75%;
   font-weight: 700;
-  margin-left: 15px;
+  margin-left: 20px;
   margin-top: 10px;
 }
 
@@ -87,8 +92,24 @@ h2 {
   z-index: 9999;
 }
 
-ion-grid {
-    height: 100%;
+#userPosition {
+    float: left;
+    width: 40px;
+    height: 40px;
+    background: url('../../../assets/icon/standort.svg');
+    background-size: 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#destination {
+    float: right;
+    width: 40px;
+    height: 40px;
+    background: url('../../../assets/icon/ziel.svg');
+    background-size: 30px;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 // #infoTextIN {
