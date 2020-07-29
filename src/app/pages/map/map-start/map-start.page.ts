@@ -89,13 +89,15 @@ export class MapStartPage implements OnInit {
   }
 
   hideSearchbar() {
+    const search = document.getElementById('searchbar');
+    const cancel = document.getElementById('closeWindow');
 
     // TODO if this.routingService.getPoints().length >= 2
-    const search = document.getElementById('searchbar');
     search.hidden = true;
-    const cancel = document.getElementById('closeWindow');
     cancel.hidden = false;
-
+    // Else
+    // search.hidden = false;
+    // cancel.hidden = true;
   }
 
 
