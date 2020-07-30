@@ -1,27 +1,26 @@
 <div class="over" id="over">
   <div class="rand">
     <div class="arrow" id="arrow">
-        <button ion-button class="back-btn" id="back"
-            style="background-color: transparent; margin-top: 10px; padding: 0;" (click)="back()">
-            <ion-icon id="btn-icon" slot="icon-only" style="color: white; width: 30px; height: 30px;"
-                name="arrow-back">
-            </ion-icon>
-        </button>
+      <button ion-button class="back-btn" id="back" style="background-color: transparent; margin-top: 10px; padding: 0;"
+        (click)="back()">
+        <ion-icon id="btn-icon" slot="icon-only" style="color: white; width: 30px; height: 30px;" name="arrow-back">
+        </ion-icon>
+      </button>
     </div>
     <div class="wrap" id="wrap">
-        <ion-input #inputField class="search" style="color: white;" [(ngModel)]="searchBarInputV" type="text" 
+      <ion-input #inputField class="search" style="color: white;" [(ngModel)]="searchBarInputV" type="text"
         (ngModelChange)="search($event)" debounce="400" (click)="onTouchSearch()" placeholder="Hier suchen...">
-        </ion-input>
-        <button class="ava" id="cross" (click)="clear()" hidden>
-          <ion-icon name="close-outline" style="font-size: 30px; color: white; --ionicon-stroke-width: 18px;"></ion-icon>
-        </button>
-        <button class="ava" id="avaBtn" (click)="openSettings()">
-          <img id="avatar" src="{{ specialAvatarURL }}" alt="Avatar" />
-        </button>
-        <button class="ava" id="saveBtn" hidden (click)=saveRoute()>
-        </button>
+      </ion-input>
+      <button class="ava" id="cross" (click)="clear()" hidden>
+        <ion-icon name="close-outline" style="font-size: 30px; color: white; --ionicon-stroke-width: 18px;"></ion-icon>
+      </button>
+      <button class="ava" id="avaBtn" (click)="openSettings()">
+        <img id="avatar" src="{{ specialAvatarURL }}" alt="Avatar" />
+      </button>
+      <button class="ava" id="saveBtn" hidden (click)=saveRoute()>
+      </button>
     </div>
-</div>
+  </div>
 
   <!-- no content-->
   <div class="container" id="no-content" hidden>
@@ -33,8 +32,8 @@
   </div>
 
 
-  <div class="container-1" >
-    <div id="edit-no-content" hidden >
+  <div class="container-1">
+    <div id="edit-no-content" hidden>
       <button class="edit" style="margin-top: 15px;"></button>
       <div style="float: left; width: 180px; background-color: transparent;">
         <h5 style="text-align: left;padding-top:5px; padding-left: 15px; color: #747474; opacity: 1;">
@@ -47,9 +46,9 @@
 
 
   <!-- icon with content-->
-  <div class="container" id="with-content" >
+  <div class="container" id="with-content">
     <div class="scroll" scrollX="true">
-      <span id="edit-span" style="margin-left: 0px; margin-right: 10px;"*ngIf="shortcuts[0]==0">
+      <span id="edit-span" style="margin-left: 0px; margin-right: 10px;" *ngIf="shortcuts[0]==0">
         <ion-button class="s-btn primary edit" style="--background: #383838;">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
@@ -59,18 +58,21 @@
         </ion-button>
       </span>
 
-      <span *ngFor="let shortcut of shortcuts" style="margin-left: 0px;" >
-        <ion-button class="s-btn primary edit" style="--background: #383838;margin-left: 10px;" *ngIf="shortcut.orderNumber==1 && searchBarOpen" (click)= "editFavor()">
+      <span *ngFor="let shortcut of shortcuts" style="margin-left: 0px;">
+        <ion-button class="s-btn primary edit" style="--background: #383838;margin-left: 10px;"
+          *ngIf="shortcut.orderNumber==1 && searchBarOpen" (click)="editFavor()">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
             class="feather feather-edit-2">
             <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
           </svg>
         </ion-button>
-        <ion-button class="s-btn primary" style="margin-left: 10px;" *ngIf="shortcut.orderNumber!=1" (click)="onSelect(shortcut.coords,shortcut.address)">
+        <ion-button class="s-btn primary" style="margin-left: 10px;" *ngIf="shortcut.orderNumber!=1"
+          (click)="onSelect(shortcut.coords,shortcut.address)">
           <ion-icon name={{shortcut.iconName}}></ion-icon>
         </ion-button>
-        <ion-button class="s-btn primary" style="margin-left: 10px;" *ngIf="shortcut.orderNumber==1" (click)="onSelect(shortcut.coords,shortcut.address)">
+        <ion-button class="s-btn primary" style="margin-left: 10px;" *ngIf="shortcut.orderNumber==1"
+          (click)="onSelect(shortcut.coords,shortcut.address)">
           <ion-icon name={{shortcut.iconName}}></ion-icon>
         </ion-button>
       </span>
@@ -93,34 +95,59 @@
     </div>
 
   </div>
-  <div class="container" id="search-results"  hidden>
-    <div id="list-addresses" >
-      <div style="width:100%;float: left; background-color: transparent;" id="container" >
-        <div class="listElement"  *ngFor="let address of addressesString; index as i" [style.--animation-order]="i" (click)="onSelect(address.coords,address.address, address.street, address.city)">
-          <h5 style="margin-left: 15px;margin-right: 15px;border-top:thin solid white; text-align: left;margin-top:5px;padding-top:10px; margin-bottom:0px;padding-bottom:1px; color: white; font-weight: 500; font-size: 16px;">
-            {{address.street}}
-          </h5>
-          <h5 style=" text-align: left;padding-top:0px;margin-top:5px;margin-bottom: 0px; padding-left: 15px; color: white; font-weight: 300;font-size: 15px;">
-            {{address.city}}
-          </h5>
+  <div class="container" id="search-results" hidden>
+    <div id="list-addresses">
+      <div style="width:100%;float: left; background-color: transparent;" id="container">
+        <div class="listElement" *ngFor="let address of addressesString; index as i" [style.--animation-order]="i"
+          (click)="onSelect(address.coords,address.address, address.street, address.city)">
+          <div style="width:80%;float: left">
+            <h5
+              style=" margin-left: 15px;border-top:thin solid white; text-align: left;margin-top:5px;padding-top:10px; margin-bottom:0px;padding-bottom:1px; color: white; font-weight: 500; font-size: 16px;">
+              {{address.street}}
+            </h5>
+            <h5
+              style="text-align: left;padding-top:0px;margin-top:5px;margin-bottom: 0px; padding-left: 15px; color: white; font-weight: 300;font-size: 15px;">
+              {{address.city}}
+            </h5>
+          </div>
+          
+          <div style="width:20%;float: left; ">
+            <button class="ava" style=" width: 100%;
+            height: 50px;
+            border-top: thin solid white;
+            margin-top: 5px;
+            padding-top: 10px; opacity: 0.87; background-color: transparent;" (click)=saveRoute()>
+            <ion-icon name="" style=" width: 25px;
+            height: 25px;
+            color: white;"></ion-icon>
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="container" id="recents-results"  hidden>
-    <div id="list-addresses" >
-      <div style="width:100%;float: left; background-color: transparent;" >
-        <h5 style="text-align: left;padding-top:10px;padding-bottom: 10px; padding-left: 15px; color: white; font-weight: 400;font-size: 11px;">ZULETZT GESUCHT</h5>
-        <div class="listElement" *ngFor="let route of recentRoutes; index as i" [style.--animation-order]="i" (click)="onSelect(route.coords,route.address)">
-          <h5 style="margin-left: 15px;margin-right: 15px;border-top:thin solid white; text-align: left;margin-top:5px;padding-top:10px; margin-bottom:0px;padding-bottom:1px; color: white; font-weight: 500; font-size: 16px;">
+  <div class="container" id="recents-results" hidden>
+    <div id="list-addresses">
+      <div style="width:100%;float: left; background-color: transparent;">
+        <h5
+          style="text-align: left;padding-top:10px;padding-bottom: 10px; padding-left: 15px; color: white; font-weight: 400;font-size: 11px;">
+          ZULETZT GESUCHT</h5>
+        <div class="listElement" *ngFor="let route of recentRoutes; index as i" [style.--animation-order]="i"
+          (click)="onSelect(route.coords,route.address)">
+          <h5
+            style="margin-left: 15px;margin-right: 15px;border-top:thin solid white; text-align: left;margin-top:5px;padding-top:10px; margin-bottom:0px;padding-bottom:1px; color: white; font-weight: 500; font-size: 16px;">
             {{route.street}}
           </h5>
 
-          <h5 style=" text-align: left;padding-top:0px;margin-top:5px;margin-bottom: 0px; padding-left: 15px; color: white; font-weight: 300;font-size: 15px;">
+          <h5
+            style=" text-align: left;padding-top:0px;margin-top:5px;margin-bottom: 0px; padding-left: 15px; color: white; font-weight: 300;font-size: 15px;">
             {{route.city}}
           </h5>
+          <button class="ava" id="saveBtn" (click)=saveRoute()>
+          </button>
         </div>
       </div>
+
     </div>
   </div>
 </div>

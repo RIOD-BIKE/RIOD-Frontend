@@ -39,9 +39,7 @@ export class SearchBarComponent implements OnInit {
     this.favorUpdate();
     this.userService.updateFavor.subscribe((a) => {
       if (a) {
-        console.log("hey");
-        this.favorUpdate().then(l=>{
-          console.log("hey2");
+        this.favorUpdate().then(l=>{ 
         })
       }
     });
@@ -60,6 +58,7 @@ export class SearchBarComponent implements OnInit {
     */
    this.routingUserService.routeFinished.subscribe((value) => {
     if (value) {
+      document.getElementById("saveBtn").hidden = true;
       this.clear();
       this.routingUserService.setRouteFinished();
     }
@@ -384,7 +383,6 @@ export class SearchBarComponent implements OnInit {
                 this.searchBarOpen = false;
               }
               this.searchBarInputV = address;
-              console.log(coords);
               this.selectedRoute = [address, street, city, coords];
               this.userService.behaviorFavorite.next(this.selectedRoute);
             });
