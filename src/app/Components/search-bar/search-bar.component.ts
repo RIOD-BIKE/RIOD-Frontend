@@ -8,7 +8,7 @@ import { Feature, iconShortcut, recentShortcut } from "../../Classess/map/map";
 import { UserService } from "src/app/services/user/user.service";
 import { NavController } from "@ionic/angular";
 import { UsersDataFetchService } from "src/app/services/users-data-fetch/users-data-fetch.service";
-import { EditFavoriteComponent } from '../edit-favorite/edit-favorite.component';
+import { EditFavoriteComponent } from "../edit-favorite/edit-favorite.component";
 
 @Component({
   selector: "search-bar",
@@ -24,7 +24,6 @@ export class SearchBarComponent implements OnInit {
   @ViewChild("inputField") inputField;
   searchBarOpen = false;
   private selectedRoute: string[];
-
   constructor(
     private navCtrl: NavController,
     private userService: UserService,
@@ -36,75 +35,84 @@ export class SearchBarComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.routingUserService.routeFinished.subscribe((value) => {
-      if (value == true) {
-        this.clear();
-        this.routingUserService.setRouteFinished();
+    this.favorUpdate();
+    this.userService.updateFavor.subscribe((a) => {
+      if (a) {
+        this.favorUpdate();
       }
     });
+  }
 
+  async favorUpdate() {
     // Temp before saving and edit components are available
 
     //Abhängig in welcher Reihenfolge die eingelesen / gespeichert werden, werden die in der UI-Horizontale Liste auch in unterschiedlicher
     //Reihenfolge dargestellt
+    /*
     this.userService.saveShortcut("Klingensberg 9, 49074 Osnabrück, Germany","home-outline",[8.04098, 52.279913]);
     this.userService.saveShortcut("Jakobstraße, 49074 Osnabrück, Germany","heart-outline",[8.0425307, 52.2787108]);
     this.userService.saveShortcut("Barbarastraße 20, 49076 Osnabrück, Germany","briefcase-outline",[8.022824, 52.284357]);
-
-
-    this.search();
-    this.userService.getAllShortcuts().then((allShortcuts) => {
-      console.log(allShortcuts);
-      this.shortcuts=allShortcuts;
-      if (allShortcuts.length > 0) {
-        // this.shortcuts=allRoutes; //override temporary
-      }
-      if (this.shortcuts.length == 0) {
-        document.getElementById("with-content").hidden = true;
-        document.getElementById("edit-no-content").hidden = false;
-      } else {
-        document.getElementById("with-content").hidden = false;
-        document.getElementById("edit-no-content").hidden = true;
-      }
-    });
-    this.mapIntegration.getAllSavedRoutes().then((allSavedRoutes) => {
-      const temp = [];
-      for (const route of allSavedRoutes) {
-        const checkArray = this.shortcuts.filter(
-          (e) => e["address"] === route.endPosition[1]
+    */
+   this.routingUserService.routeFinished.subscribe((value) => {
+    if (value) {
+      this.clear();
+      this.routingUserService.setRouteFinished();
+    }
+  });
+  this.search();
+  this.userService.getAllShortcuts().then((allShortcuts) => {
+    console.log(allShortcuts);
+    this.shortcuts = allShortcuts;
+    if (allShortcuts.length > 0) {
+      // this.shortcuts=allRoutes; //override temporary
+    }
+    if (this.shortcuts.length == 0) {
+      document.getElementById("with-content").hidden = true;
+      document.getElementById("edit-no-content").hidden = false;
+    } else {
+      document.getElementById("with-content").hidden = false;
+      document.getElementById("edit-no-content").hidden = true;
+    }
+  });
+  this.mapIntegration.getAllSavedRoutes().then((allSavedRoutes) => {
+    const temp = [];
+    for (const route of allSavedRoutes) {
+      const checkArray = this.shortcuts.filter(
+        (e) => e["address"] === route.endPosition[1]
+      );
+      const splitString = route.endPosition[1].split(",");
+      const splitPLz = splitString[1].toString().split(" ");
+      const city = splitPLz[2];
+      const street = splitString[0];
+      if (checkArray.length >= 1) {
+        temp.push(
+          new recentShortcut(
+            checkArray[0].iconName,
+            street,
+            city,
+            route.endPosition[1],
+            route.endPosition[0]
+          )
         );
-        const splitString = route.endPosition[1].split(",");
-        const splitPLz = splitString[1].toString().split(" ");
-        const city = splitPLz[2];
-        const street = splitString[0];
-        if (checkArray.length >= 1) {
-          temp.push(
-            new recentShortcut(
-              checkArray[0].iconName,
-              street,
-              city,
-              route.endPosition[1],
-              route.endPosition[0]
-            )
-          );
-        } else {
-          temp.push(
-            new recentShortcut(
-              "null",
-              street,
-              city,
-              route.endPosition[1],
-              route.endPosition[0]
-            )
-          );
-        }
+      } else {
+        temp.push(
+          new recentShortcut(
+            "null",
+            street,
+            city,
+            route.endPosition[1],
+            route.endPosition[0]
+          )
+        );
       }
-      temp.reverse();
-      this.recentRoutes = temp.slice(0, 8);
-    });
-    document.getElementById("recents-results").hidden = true;
+    }
+    temp.reverse();
+    this.recentRoutes = temp.slice(0, 8);
+  });
+  document.getElementById("recents-results").hidden = true;
 
-    this.specialAvatarURL = await this.userDataFetch.storage_getSpecialAvatar();
+  this.specialAvatarURL = await this.userDataFetch.storage_getSpecialAvatar();
+    
   }
 
   back() {
@@ -116,7 +124,7 @@ export class SearchBarComponent implements OnInit {
     document.getElementById("no-recent-content").hidden = true;
     document.getElementById("with-content").hidden = false;
     document.getElementById("wrap").style.width = "100%";
-    if(this.searchBarInputV.length != 0){
+    if (this.searchBarInputV.length != 0) {
       document.getElementById("saveBtn").hidden = false;
       document.getElementById("avaBtn").hidden = true;
     } else {
@@ -137,6 +145,7 @@ export class SearchBarComponent implements OnInit {
   }
 
   onTouchSearch() {
+    document.getElementById("saveBtn").hidden = true;
     this.mapIntegration.getAllSavedRoutes().then((allSavedRoutes) => {
       const temp = [];
       for (const route of allSavedRoutes) {
@@ -174,6 +183,7 @@ export class SearchBarComponent implements OnInit {
     });
     this.searchBarOpen = true;
     if (this.searchBarInputV.length > 0) {
+      
       if (this.addressesString.length == 0) {
         document.getElementById("search-results").hidden = true;
       } else {
@@ -182,6 +192,7 @@ export class SearchBarComponent implements OnInit {
       document.getElementById("no-recent-content").hidden = true;
       document.getElementById("cross").hidden = false;
     } else {
+      document.getElementById("saveBtn").hidden = true;
       if (this.recentRoutes.length > 0) {
         document.getElementById("recents-results").hidden = false;
         document.getElementById("no-recent-content").hidden = true;
@@ -337,6 +348,7 @@ export class SearchBarComponent implements OnInit {
   }
 
   onSelect(coords, address, street, city) {
+    document.getElementById("saveBtn").hidden = false;
     this.routingUserService.setFinishPoint([coords, address]).then(() => {
       this.routingUserService.deleteAllPoints().then(() => {
         this.mapBox.removeRoute().then(() => {
@@ -364,9 +376,8 @@ export class SearchBarComponent implements OnInit {
                 this.searchBarOpen = false;
               }
               this.searchBarInputV = address;
-              console.log(city);
-              this.selectedRoute = [address, street, city];
-              console.log(this.selectedRoute);
+              console.log(coords);
+              this.selectedRoute = [address, street, city, coords];
               this.userService.behaviorFavorite.next(this.selectedRoute);
             });
           });
@@ -415,11 +426,11 @@ export class SearchBarComponent implements OnInit {
     });
     return await modal.present();
   }
-  editFavor(){
+  editFavor() {
     this.editModal();
   }
 
-  async editModal(){
+  async editModal() {
     const modal2 = await this.modalController.create({
       component: EditFavoriteComponent,
     });

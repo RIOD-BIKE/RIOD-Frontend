@@ -22,6 +22,7 @@ export class UserService {
   private firstTimeCalling = true;
   private hashedUID:string=null;
   private assemblyPointReference:any[]=[];
+  public updateFavor: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 
   async getUserPosition(): Promise<PositionI> {

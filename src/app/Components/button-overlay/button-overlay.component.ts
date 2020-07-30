@@ -13,6 +13,7 @@ export class ButtonOverlayComponent implements OnInit {
   public street: any = "";
   public favorite: any = "";
   public saveAddress: any = "";
+  public plz: any = [];
   
   
   constructor(
@@ -22,8 +23,10 @@ export class ButtonOverlayComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+  
     this.street = this.userService.behaviorFavorite.value[1];
     this.city = this.userService.behaviorFavorite.value[2];
+    this.plz = this.userService.behaviorFavorite.value[3];
   }
 
   dismiss() {
@@ -36,13 +39,13 @@ export class ButtonOverlayComponent implements OnInit {
     this.routingUserService.getfinishPoint().then((address) => {
       console.log(iconNumber + " " + address);
       this.favorite = iconNumber;
-      this.saveAddress = address;
+      this.saveAddress = address[1];
     });
   }
-  saveFarvo(){ 
+  saveFavor(){ 
     console.log(this.saveAddress + " " + this.favorite);
-    
-    this.userService.saveShortcut(this.saveAddress, this.favorite );
+    this.userService.saveShortcut(this.saveAddress, this.favorite, this.plz );
+    this.userService.updateFavor.next(true);
     this.modalController.dismiss({
       dismissed: true,
     });
