@@ -58,7 +58,7 @@
         <h3>GPS anschalten</h3>
       </ion-col>
       <ion-col class="col-adjust" size="4">
-        <ion-toggle [(ngModel)]="gps"></ion-toggle>
+        <ion-toggle [(ngModel)]="gps" (ionChange)="onGPSChange()"></ion-toggle>
       </ion-col>
     </ion-row>
     <ion-row style="flex-grow: 1;">
@@ -68,7 +68,8 @@
       <ion-col class="col-adjust" size="10">
         <ion-range
           style="margin-left: 10px;"
-          [(ngModel)]="rangeVolume"
+          [(ngModel)]="volume"
+          (ionChange)="onVolumeChange()"
           pin="true"
           min="0"
           max="10"
@@ -86,7 +87,7 @@
         <h3>Vibration zulassen</h3>
       </ion-col>
       <ion-col class="col-adjust" size="4">
-        <ion-toggle [(ngModel)]="vibration"></ion-toggle>
+        <ion-toggle [(ngModel)]="vibration" (ionChange)="onVibrationChange()"></ion-toggle>
       </ion-col>
     </ion-row>
     <ion-row style="flex-grow: 1;">
@@ -97,7 +98,7 @@
         <h3>Display anlassen</h3>
       </ion-col>
       <ion-col class="col-adjust" size="4">
-        <ion-toggle [(ngModel)]="display"></ion-toggle>
+        <ion-toggle [(ngModel)]="display" (ionChange)="onDisplayChange()"></ion-toggle>
       </ion-col>
     </ion-row>
     <ion-row style="flex-grow: 1;">

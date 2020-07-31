@@ -1,9 +1,10 @@
+import { SettingsService } from './../../../services/settings/settings.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UsersDataFetchService } from 'src/app/services/users-data-fetch/users-data-fetch.service';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Platform, AlertController, NavController } from '@ionic/angular';
+import { Component, OnInit, ViewChild, ElementRef, SimpleChanges, Input } from '@angular/core';
+import { Platform, AlertController, NavController, IonMenuToggle } from '@ionic/angular';
 @Component({
   selector: 'app-settings-main-dropbox',
   templateUrl: './settings-main-dropbox.page.html',
@@ -15,13 +16,16 @@ export class SettingsMainDropboxPage implements OnInit {
   public uid: string;
   public name: string;
   public contact: string;
-  public display = true;
-  public gps = true;
-  public vibration = true;
+
+  public gps: boolean;
+  public volume: string;
+  public vibration: boolean;
+  public display: boolean;
+
   public specialAvatarURL: string;
 
   constructor(public platform: Platform, private userDataFetch: UsersDataFetchService, private authService: AuthService,
-    private router: Router, private alertController: AlertController, private navController: NavController, private http: HttpClient) {
+    private router: Router, private alertController: AlertController, private navController: NavController, private settingsService: SettingsService) {
     this.platform.ready().then(() => {
       this.rangeVolume = "5";
     });
@@ -32,6 +36,11 @@ export class SettingsMainDropboxPage implements OnInit {
     this.uid = await this.authService.getCurrentUID();
     this.name = await this.userDataFetch.firestore_getName(this.uid);
     this.contact = await this.userDataFetch.firestore_getContact(this.uid);
+    
+    this.gps = await this.settingsService.getGPS();
+    this.volume = await this.settingsService.getVolume();
+    this.vibration = await this.settingsService.getVibration();
+    this.display = await this.settingsService.getDisplay();
   }
 
   async deleteAccount() {
@@ -73,5 +82,19 @@ export class SettingsMainDropboxPage implements OnInit {
   cancel() {
     // this.router.navigate(['/map-start']);
     this.navController.back();
+  }
+
+  onGPSChange() {
+    this.settingsService.setGPS(this.gps);
+  }
+  onVolumeChange() {
+    this.settingsService.setVolume(Number.parseInt(this.volume));
+  }
+
+  onVibrationChange() {
+    this.settingsService.setVibration(this.vibration);
+  }
+  onDisplayChange() {
+    this.settingsService.setDisplay(this.display);
   }
 }
