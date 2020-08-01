@@ -64,10 +64,10 @@ export class MapStartPage implements OnInit {
     //   this.showType="showRouterInfo";
     // }
     if(x=='Main'){
-      this.showType="showMain";
+      //this.showType="showMain";
     }
     if(x=='routeStarted'){
-      this.showType="routeStarted";
+      //this.showType="routeStarted";
     }
   })
  }

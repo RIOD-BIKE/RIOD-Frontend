@@ -673,4 +673,16 @@ export class MapBoxComponent implements OnInit {
       resolve();
     });
   }
+
+
+  removeAllPoints(): Promise<any>{
+    return new Promise(resolve => {
+      const temp = this.assemblyPointMarkers;
+      temp.forEach(element => {
+        element.properties.iconName='marker_DAP';
+        element.properties.textField='';
+      });
+      
+    });
+  }
 }

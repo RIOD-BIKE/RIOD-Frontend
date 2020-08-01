@@ -197,6 +197,7 @@ export class RouterStartComponent implements OnInit, AfterViewInit {
     // TODO not working
     this.seletectedAPs = [];
     this.routingUserService.deleteAllPoints();
+    this.mapBox.removeAllPoints();
   }
 
   // delete the route and go back to create route

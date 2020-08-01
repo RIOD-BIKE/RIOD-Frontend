@@ -1,6 +1,6 @@
-<ion-header>
+<ion-header style="z-index: 5; position: fixed;">
   <search-bar id="searchbar"></search-bar>
-  <button ion-button id="closeWindow" (click)="closeView()" hidden>
+  <button ion-button id="closeWindow" (click)="closeView()" hidden style=" margin-top:1.5em; margin-right:1.5em">
     <ion-icon name="close-outline"
     style="font-size: 33.25px; color: white; --ionicon-stroke-width: 25px;">
     </ion-icon>
@@ -12,7 +12,7 @@
   <ion-button
     color="tertiary"
     shape="round"
-    style="height: 60px; width: 60px;"
+    style="height: 60px; width: 60px"
     (click)="locateDevice()"
   >
     <div>
@@ -63,7 +63,7 @@
 <!-- @Frontend FIXME: This DIV is slightly moved up, may be related to riding-toggle margin-bottom -->
 <div
   #indicatorScreen
-  style="z-index: 10; transform: translateY(100%); margin-top: -16vh;"
+  style="z-index: 10; position:relative; transform: translateY(100%); "
 >
   <app-ride-indicator></app-ride-indicator>
 </div>

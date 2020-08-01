@@ -268,7 +268,17 @@ p {
 
 .modal-wrapper, .inner-scroll{
     background: transparent !important;
-  }
+}
 
+.mapboxgl-ctrl-top-right{
+    visibility: hidden !important;  
+}
+
+.mapboxgl-ctrl-bottom-right{
+    visibility: hidden !important;  
+}
+.mapboxgl-ctrl-bottom-left{
+    visibility: hidden !important;  
+}
 
   
