@@ -181,4 +181,8 @@ export class MapStartPage implements OnInit {
     this.mapDataFetch.sendUserPosition();
   }
 
+  setShowChange(){
+    
+  }
+
 }

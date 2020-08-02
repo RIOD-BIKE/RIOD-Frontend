@@ -1,4 +1,4 @@
-<div class="over" id="over">
+<div class="over" id="over" >
   <div class="rand">
     <div class="arrow" id="arrow">
       <button ion-button class="back-btn" id="back" style="background-color: transparent; margin-top: 10px; padding: 0;"
@@ -9,7 +9,7 @@
     </div>
     <div class="wrap" id="wrap">
       <ion-input #inputField class="search" style="color: white;" [(ngModel)]="searchBarInputV" type="text"
-        (ngModelChange)="search($event)" debounce="400" (click)="onTouchSearch()" placeholder="Hier suchen...">
+        (ngModelChange)="search()" debounce="400" (click)="onTouchSearch()" placeholder="Hier suchen...">
       </ion-input>
       <button class="ava" id="cross" (click)="clear()" hidden>
         <ion-icon name="close-outline" style="font-size: 30px; color: white; --ionicon-stroke-width: 18px;"></ion-icon>
@@ -54,7 +54,7 @@
   <!-- icon with content-->
   <div class="container" id="with-content">
     <div class="scroll" scrollX="true">
-      <span id="edit-span" style="margin-left: 0px; margin-right: 10px;" *ngIf="shortcuts[0]==0">
+      <span id="edit-span" id="edit-with-content" hidden style="margin-left: 0px; margin-right: 10px;" >
         <ion-button class="s-btn primary edit" style="--background: #383838;">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
@@ -64,7 +64,10 @@
         </ion-button>
       </span>
 
+
+      
       <span *ngFor="let shortcut of shortcuts" style="margin-left: 0px;">
+
         <ion-button class="s-btn primary edit" style="--background: #383838;margin-left: 10px;"
           *ngIf="shortcut.orderNumber==1 && searchBarOpen" (click)="editFavor()">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -105,7 +108,7 @@
     <div id="list-addresses">
       <div style="width:100%;float: left; background-color: transparent;" id="container">
         <div class="listElement" *ngFor="let address of addressesString; index as i" [style.--animation-order]="i"
-          (click)="onSelect(address.coords,address.address, address.street, address.city)">
+          (click)="onSelect(address.coords,address.address, address.street, address.city, address.iconName)">
           <div style="width:80%;float: left">
             <h5
               style=" margin-left: 15px;border-top:thin solid white; text-align: left;margin-top:5px;padding-top:10px; margin-bottom:0px;padding-bottom:1px; color: white; font-weight: 500; font-size: 16px;">
@@ -140,7 +143,7 @@
         style="text-align: left;padding-top:10px;padding-bottom: 10px; padding-left: 15px; color: white; font-weight: 400;font-size: 11px;">
         ZULETZT GESUCHT</h5>
       <div class="listElement" *ngFor="let route of recentRoutes; index as i" [style.--animation-order]="i"
-        (click)="onSelect(route.coords,route.address)">
+        (click)="onSelect(route.coords,route.address, route.street, route.city, route.iconName)">
         <div style="width:80%;float: left">
           <h5
             style="margin-left: 15px;margin-right: 15px;border-top:thin solid white; text-align: left;margin-top:5px;padding-top:10px; margin-bottom:0px;padding-bottom:1px; color: white; font-weight: 500; font-size: 16px;">
