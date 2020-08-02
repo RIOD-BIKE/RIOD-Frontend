@@ -109,6 +109,9 @@ export class RouterStartComponent implements OnInit, AfterViewInit {
         pointString += (points[i].position.longitude + ',' + points[i].position.latitude + ';');
       }
       this.mapBox.drawRoute(pointString).then(() => {
+        this.mapBox.disableFutureChooseAssemblyPoints().then(()=>{
+
+        })
 
       });
     });
@@ -199,7 +202,8 @@ export class RouterStartComponent implements OnInit, AfterViewInit {
 
   // delete the route and go back to create route
   goBackToCreateRoute() {
-
+    this.mapBox.enableFutureChooseAssemblyPoints();
+    this.changeViewCreateStart(false, true);
   }
 
   slideUp() {

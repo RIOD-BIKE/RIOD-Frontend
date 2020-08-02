@@ -457,7 +457,6 @@ export class MapBoxComponent implements OnInit {
       layout: {
         'line-join': 'round',
         'line-cap': 'round',
-        'icon-allow-overlap': true,
       },
       paint: {
         'line-color': '#3b9ddd',
@@ -653,7 +652,6 @@ export class MapBoxComponent implements OnInit {
 
   removeAllPoints(): Promise<any>{
     return new Promise(resolve => {
-      console.log("hello2");
       const temp = this.assemblyPointMarkers;
       temp.forEach(element => {
         element.properties.iconName='marker_DAP';
@@ -662,6 +660,53 @@ export class MapBoxComponent implements OnInit {
       this.assemblyPointMarkers=temp;
       this.drawUpdateChooseAssemblyPoints();
       resolve();
+    });
+  }
+
+  disableFutureChooseAssemblyPoints():Promise<any>{
+    return new Promise(resolve => {
+      const temp = this.assemblyPointMarkers;
+      temp.forEach(element => {
+        if(element.properties.iconName != 'marker_CAP'){
+          element.properties.iconName='marker_UNAP';
+          element.properties.textField='';
+        }
+      });
+      this.assemblyPointMarkers=temp;
+      this.disableAssemblyClick();
+      this.drawUpdateChooseAssemblyPoints();
+      resolve();
+    
+    });
+  }
+
+  enableFutureChooseAssemblyPoints():Promise<any>{
+    return new Promise(resolve => {
+      const temp = this.assemblyPointMarkers;
+      let number=0;
+      this.routingUserService.getPoints().then(x=>{
+        number = Number(x[x.length-1].textField);
+        console.log(x);
+        temp.forEach(element => {
+           x[x.length-1].available.forEach(ava => {
+             if(element.properties.title == ava){
+               console.log(ava);
+               if(element.properties.textField==''){
+                element.properties.iconName='marker_DAP';
+                element.properties.textField='';
+               }
+             }
+           });
+        });
+        if (this.map.getLayer('route') != undefined) {
+          this.map.removeLayer('route');
+          this.map.removeSource('routeSource');
+        }
+        this.assemblyPointMarkers=temp;
+        this.map.on('click', 'assemblyPoints', this.drawChooseAssemblyPoints);
+        this.drawUpdateChooseAssemblyPoints();
+        resolve();
+      })
     });
   }
 }

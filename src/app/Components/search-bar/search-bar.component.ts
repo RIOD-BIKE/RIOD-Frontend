@@ -23,7 +23,7 @@ export class SearchBarComponent implements OnInit {
   @Input() recentRoutes: recentShortcut[] = [];
   public specialAvatarURL = "../../../assets/settings/profile-pic.jpg";
   @Input() searchBarInputV = "";
-  private iconNew: any ="";
+  public iconNew: any ="";
   @ViewChild("inputField") inputField;
   searchBarOpen = false;
   private selectedRoute: string[];
@@ -116,6 +116,7 @@ export class SearchBarComponent implements OnInit {
   back() {
     
     this.searchBarOpen = false;
+    document.getElementById("edit-with-content").hidden = true;
     document.getElementById("no-recent-content").hidden = true;
     document.getElementById("recent-results").hidden = true;
     document.getElementById("search-results").hidden = true;
@@ -164,6 +165,7 @@ export class SearchBarComponent implements OnInit {
 
   onTouchSearch() {
     this.routingUserService.setDisplaySwitchCase(false);
+
     document.getElementById("saveBtn").hidden = true;
     this.mapIntegration.getAllSavedRoutes().then((allSavedRoutes) => {
       const temp = [];
@@ -231,7 +233,9 @@ export class SearchBarComponent implements OnInit {
     arrow.style.float = "left";
     arrow.style.display = "block";
     arrow.style.visibility = "visible";
-
+    if(this.shortcuts.length!=0){
+      document.getElementById("edit-with-content").hidden = false;
+    }
     document.getElementById("avaBtn").hidden = true;
     document.getElementById("favor").hidden = true;
     document.getElementById("back").style.display = "block";
