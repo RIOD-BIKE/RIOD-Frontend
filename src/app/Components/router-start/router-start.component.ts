@@ -16,8 +16,7 @@ import { MapIntegrationService } from 'src/app/services/map-integration/map-inte
 import { distance } from '@turf/turf';
 import { GestureController } from '@ionic/angular';
 import { Gesture, GestureConfig } from '@ionic/core';
-// import { addIcons } from 'ionicons';
-// import { trash, create } from 'ionicons/icons';
+
 
 
 
@@ -144,32 +143,30 @@ export class RouterStartComponent implements OnInit, AfterViewInit {
 
   // change view of slider component creating route or start navigation
   changeViewCreateStart(createR: boolean, startN: boolean) {
-    const createRoute = document.getElementById('selectAP');
-    createRoute.hidden = createR;
-    const startNavi = document.getElementById('startRoute');
-    startNavi.hidden = startN;
+    document.getElementById('selectAP').hidden = createR;
+    document.getElementById('startRoute').hidden = startN;
   }
 
   // change buttons if more than 2 APs selected
   changeButtons(twoAP: boolean) {
-    const cancel = document.getElementById('cancel');
-    const trashy = document.getElementById('trash');
-    const infoText = document.getElementById('infoText');
 
     if (twoAP) {
       this.disableCreateButton = false;
-      cancel.hidden = true;
-      trashy.hidden = false;
+      document.getElementById('cancel').hidden = true;
+      document.getElementById('trash').hidden = false;
+      document.getElementById('infoText').hidden = true;
       this.hidePlaceholder = true;
       this.hideselectedAp = false;
-      infoText.hidden = true;
+
     } else {
       this.disableCreateButton = true;
-      cancel.hidden = false;
-      trashy.hidden = true;
+
+      document.getElementById('cancel').hidden = false;
+      document.getElementById('trash').hidden = true;
+      document.getElementById('infoText').hidden = false;
       this.hidePlaceholder = false;
       this.hideselectedAp = true;
-      infoText.hidden = false;
+      
     }
   }
 

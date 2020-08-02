@@ -227,7 +227,6 @@ export class MapBoxComponent implements OnInit {
           }
         });
       }
-      //  setTimeout(() => {
       this.assemblyPointSource = this.map.getSource('assemblyPoints');
       const data2 = new AssemblyPointCollection(this.assemblyPointMarkers);
       this.assemblyPointSource.setData(data2);
@@ -246,8 +245,8 @@ export class MapBoxComponent implements OnInit {
           img3.onload = () => {
             this.map.addImage('marker_CAP', img3);
             const img4 = new Image(66.7, 79.38);
-            img4.src = 'assets/icon/Sammelpunkt.svg';
-            img4.style.opacity="0.6";
+            img4.src = 'assets/icon/Sammelpunkt_UNAC.svg';
+            
             img4.onload = () => {
               this.map.addImage('marker_UNAP', img4);
               if (this.map.getLayer('assemblyPoints') === undefined) {
@@ -257,7 +256,6 @@ export class MapBoxComponent implements OnInit {
           }
         }
       }
-      //    }, 2000);
     });
   }
   drawUserPoint() {
@@ -459,6 +457,7 @@ export class MapBoxComponent implements OnInit {
       layout: {
         'line-join': 'round',
         'line-cap': 'round',
+        'icon-allow-overlap': true,
       },
       paint: {
         'line-color': '#3b9ddd',
@@ -583,13 +582,15 @@ export class MapBoxComponent implements OnInit {
             if (this.map.hasImage('target')==true) {
               this.mapDrawFinishMarkerHelper();
             } else {
-              this.map.loadImage('assets/icon/target.png', (error, image) => {
+              const img = new Image(62.7, 75);
+              img.src = 'assets/icon/Ziel.svg';
+              img.onload = () => {
                 if(this.map.hasImage("target")==true){
                   this.map.removeImage("target");
                 } 
-                this.map.addImage('target', image);
+                this.map.addImage('target', img);
                 this.mapDrawFinishMarkerHelper();
-              });
+              };
             }
           })
 
@@ -632,41 +633,11 @@ export class MapBoxComponent implements OnInit {
     });
   }
 
-  drawStartMarker(startPoint, map) { // Depreceated //unusable
-    if (map.getLayer('startMarker') !== undefined) {
-      // map.removeLayer("startMarker");
-      //  map.removeSource("startMarker");
-      console.log('StartMarker esxists');
-    }
-    map.addSource('startMarker', {
-      type: 'geojson',
-      data: { type: 'FeatureCollection', features: [] }
-    });
-    let startingPointSource;
-    startingPointSource = map.getSource('startMarker') as mapboxgl.GeoJSONSource;
-    const startPointData = new PointMarker(Array(new GeoPointMarker(startPoint[0])));
-    startPointData.features.forEach(x => { const el = document.createElement('div'); el.className = 'marker'; });
-    startingPointSource.setData(startPointData);
-    map.addLayer({
-      id: 'startMarker',
-      source: 'startMarker',
-      type: 'symbol',
-      layout: {
-        'visibility': 'visible',
-        'icon-image': 'marker-15',
-        'icon-size': 2,
-        'icon-allow-overlap': false
-      },
-    });
-  }
 
   removeRoute(): Promise<any> {
     return new Promise(resolve => {
       this.assemblyPointMarkers = this.mapDataFetchService.aps;
-      if (this.map.getLayer('startMarker') != undefined) {
-        this.map.removeLayer('startMarker');
-        this.map.removeSource('startMarker');
-      }
+      
       if (this.map.getLayer('finishMarker') != undefined) {
         this.map.removeLayer('finishMarker');
         this.map.removeSource('finishMarker');
@@ -682,12 +653,15 @@ export class MapBoxComponent implements OnInit {
 
   removeAllPoints(): Promise<any>{
     return new Promise(resolve => {
+      console.log("hello2");
       const temp = this.assemblyPointMarkers;
       temp.forEach(element => {
         element.properties.iconName='marker_DAP';
         element.properties.textField='';
       });
-      
+      this.assemblyPointMarkers=temp;
+      this.drawUpdateChooseAssemblyPoints();
+      resolve();
     });
   }
 }
