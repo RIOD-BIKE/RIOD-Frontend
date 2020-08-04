@@ -2,20 +2,24 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Storage } from '@ionic/storage';
+import { riodMembersAtAP } from 'src/app/Classess/map/map';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersDataFetchService {
-  private usersRef;
-  private dataAPRef: BehaviorSubject<Array<string>>
+
   private specialAvatarCached: string;
+  public  riodMembers: Array<riodMembersAtAP>; 
+  public riodMembersValueChange:BehaviorSubject<riodMembersAtAP> = new BehaviorSubject<riodMembersAtAP>(null);
+  private riodRef;
+  private riodSubscribtion;
 
   constructor(private rtdb: AngularFireDatabase, private afs: AngularFirestore, private storage: Storage) {
-    this.usersRef = rtdb.list('/users');
+
     this.refreshCurrentSpecialAvatar();
   }
 
@@ -29,11 +33,55 @@ export class UsersDataFetchService {
   async rtdb_deleteOldAps(oldAps:string,oldfollowingAps:string,userHash:string){
     await this.rtdb.object('assemblyPoints/'+oldAps+"/"+oldfollowingAps+"/"+userHash).remove();
   }
-  async rtdb_getDetailsAP(AP:string,followingAp:string){
-    //out
+  async rtdb_deleteLastAps(oldAps:string,oldfollowingAps:string,userHash:string){
+    await this.rtdb.object('assemblyPoints/'+oldAps+"/"+oldfollowingAps+"/"+userHash).remove();
+  }
+  async rtdb_getDetailsAP(AP:string,followingAp:string,caseSwitch:boolean,userTimestamp,userHash){
+    let returnArray:riodMembersAtAP[]=[];
+    if(caseSwitch==true){
+      console.log('assemblyPoints/'+AP+"/"+followingAp);
+      this.riodRef = this.rtdb.list('assemblyPoints/'+AP+"/"+followingAp);
+      this.riodSubscribtion= this.riodRef.snapshotChanges().subscribe(items=>{
+        this.riodMembers=[];
+        returnArray=[];
+        for(let i=1; i<items.length;i++){
+          //&& items[i].key!=userHash
+         if(items[i].key!="__DUMMY__" ){
+          let recalculateWriteDBTime =items[i].payload.node_.children_.root_.value.value_+(60000*items[i].payload.node_.children_.root_.left.value.value_)*2;
+          
+          if(recalculateWriteDBTime>userTimestamp || items[i].payload.node_.children_.root_.left.value.value_ == 0){
+            returnArray.push(new riodMembersAtAP(items[i].payload.node_.children_.root_.left.value.value_,items[i].payload.node_.children_.root_.value.value_));
+            
+            if(items.length==i+1){
+
+              this.riodMembers=returnArray;
+              this.riodMembersValueChange.next(new riodMembersAtAP(items[i].payload.node_.children_.root_.left.value.value_,items[i].payload.node_.children_.root_.value.value_));
+            }
+          }
+          if(items.length==i+1 && items[i].payload.node_.children_.root_.left.value.value_ != 0){
+            this.riodMembers=returnArray;
+            this.riodMembersValueChange.next(new riodMembersAtAP(items[i].payload.node_.children_.root_.left.value.value_,items[i].payload.node_.children_.root_.value.value_));
+          }
+        }
+        }
+      })
+    } else{
+      console.log("No buddys");
+      this.riodMembersValueChange.next(new riodMembersAtAP("Last",""));
+    }
+  }
+
+  async rtdb_getDetailsAP_unsub(){
+    if(this.riodSubscribtion!=null){
+      this.riodSubscribtion.unsubscribe();
+      this.riodSubscribtion=null;
+      console.log("RTDB_UNSUBSCRIBED");
+    }
+    this.riodRef=null;
+ 
 
   }
-  
+
   async rtdb_createUser(uid: string) {
     await this.rtdb.object('users/' + uid).set({
       bearing: 0,

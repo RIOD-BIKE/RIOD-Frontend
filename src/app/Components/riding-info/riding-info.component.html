@@ -20,6 +20,17 @@
 
     <ion-col size="8"></ion-col>
    </ion-row>
+   <ion-row [hidden]="finish" class="margin-row">
+    <ion-col class="padding-top" size="2">
+     <h1 class="icon-align"><ion-icon slot="start" name="flag-outline"></ion-icon></h1>
+    </ion-col>
+    <ion-col class="padding-top" size="6">
+     <ion-row class="text-row top"><h4 class="text toptext">Ankunft:</h4></ion-row>
+     <ion-row class="text-row"><h3 class="text">Ziel erreicht</h3></ion-row>
+   </ion-col>
+
+   <ion-col size="8"></ion-col>
+  </ion-row>
 
    <ion-row [hidden]="atSammelpunkt" class="margin-row">
     <ion-col  class="padding-top" size="2">
@@ -27,12 +38,12 @@
     </ion-col>
     <ion-col class="padding-top" size="2">
      <ion-row class="text-row top"><h4 class="text toptext">Bald da</h4></ion-row>
-     <ion-row class="text-row"><h3 class="text">7</h3></ion-row>
+     <ion-row class="text-row"><h3 class="text">{{countOfRiods}}</h3></ion-row>
    </ion-col>
     <ion-col class="padding-top" style="align-self: center;" size="4">
-      <p id="timeRect">02:24</p>
+      <p id="timeRect" style="color: white;">{{timeToDispatch}}</p>
    </ion-col>
-   <ion-col class="padding-top" size="4"></ion-col>
+
   </ion-row>
 
 
@@ -50,8 +61,23 @@
     </ion-col>
     <ion-col class="padding-top" size="2">
      <ion-row class="text-row top"><h4 class="text toptext">Bald da:</h4></ion-row>
-     <ion-row class="text-row"><h3 class="text">5</h3></ion-row>
+     <ion-row class="text-row"><h3 class="text">{{countOfRiods}}</h3></ion-row>
    </ion-col>
+   <ion-col class="padding-top" size="4">
+
+   </ion-col>
+  </ion-row>
+
+  <ion-row [hidden]="fromStartLeg" class="margin-row">
+    <ion-col  class="padding-top" size="2">
+     <h1 class="icon-align"><ion-icon slot="start" src="../../../assets/icon/assemblypoint1.svg"></ion-icon></h1>
+    </ion-col>
+    <ion-col class="padding-top" size="2">
+     <ion-row class="text-row top"><h4 class="text toptext">Ankunft</h4></ion-row>
+     <ion-row class="text-row"><h3 class="text">{{timeToTarget}} </h3> </ion-row>
+   </ion-col>
+
+
    <ion-col class="padding-top" size="4">
 
    </ion-col>
@@ -62,31 +88,38 @@
     <ion-title>{{title}}</ion-title>
   </ion-toolbar> -->
 </ion-header>
- <ion-content >
+ <ion-content style=" top:-1px" >
     <ion-row [hidden]="lastLeg"  class="info-margin">
      <ion-col size="9">
-      <p class="info-text">in {{timeToTarget}} hast du dein Ziel erreicht!</p>
-     </ion-col>
-     <ion-col size="3">
+      <p class="info-text" style="color: white; opacity: 0.4;">In {{timeToTarget}} hast du dein Ziel erreicht!</p>
      </ion-col>
   </ion-row>
+  <ion-row [hidden]="finish"  class="info-margin">
+    <ion-col size="9">
+     <p class="info-text" style="color: white; opacity: 0.4;">Du kannst die Route nun abbrechen, oder eine neue starten</p>
+    </ion-col>
+ </ion-row>
 
-  <ion-content>
+
     <ion-row [hidden]="atSammelpunkt" class="info-margin" >
       <ion-col size="9">
-       <p class="info-text">in maximal {{timeToTarget}} werden 7 weitere RIODS zusammen mit dir weiterfahren.</p>
+       <p class="info-text" style="color: white; opacity: 0.4;">In maximal {{timeToDispatch}} werden {{countOfRiods}} weitere RIODS zusammen mit dir weiterfahren.</p>
       </ion-col>
-      <ion-col size="3">
-      </ion-col>
+
    </ion-row> 
 
   <ion-row [hidden]="toSammelpunktLeg" class="info-margin" >
     <ion-col size="9">
       <!-- <h1>hallooo</h1> -->
-     <p class="info-text">Fahre zu dem nächsten Sammelpunkt auf deiner Route</p>
-    </ion-col>
-    <ion-col size="3">
+     <p class="info-text" style="color: white; opacity: 0.4;">Fahre zu dem nächsten Sammelpunkt auf deiner Route</p>
     </ion-col>
  </ion-row>
+
+ <ion-row [hidden]="fromStartLeg" class="info-margin" >
+  <ion-col size="9">
+    <!-- <h1>hallooo</h1> -->
+   <p class="info-text" style="color: white; opacity: 0.4;">Starte deine Route, indem Du zum ersten Sammelpunkt fährst</p>
+  </ion-col>
+</ion-row>
    <!-- <ng-content ></ng-content> -->
 </ion-content>

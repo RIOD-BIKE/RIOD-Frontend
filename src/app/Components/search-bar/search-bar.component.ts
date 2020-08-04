@@ -125,6 +125,7 @@ export class SearchBarComponent implements OnInit {
     document.getElementById("with-content").hidden = false;
     document.getElementById("wrap").style.width = "100%";
     if (this.searchBarInputV.length > 0) {
+      console.log("should be vissible")
       document.getElementById("saveBtn").hidden = false;
       document.getElementById("avaBtn").hidden = true;
     } else {
@@ -143,6 +144,7 @@ export class SearchBarComponent implements OnInit {
       //document.getElementById("edit-no-content").hidden = false;
     }
     if(this.iconNew != "" && this.searchBarInputV.length > 0){
+      console.log("this.ICONNEW != ''")
       document.getElementById("favor").hidden = false;
       document.getElementById("saveBtn").hidden = true;
       document.getElementById("cross").hidden = true;
@@ -151,10 +153,12 @@ export class SearchBarComponent implements OnInit {
     } else {
       if(this.searchBarInputV.length<1){
         this.iconNew="";
+        console.log("this.ICONNEW22 != ''")
         document.getElementById("saveBtn").hidden = true;
         document.getElementById("favor").hidden = true; 
         document.getElementById("avaBtn").hidden = false;
       } else{
+        console.log("this.ICONNEW33 != ''")
         document.getElementById("saveBtn").hidden = false;
         document.getElementById("favor").hidden = true; 
         document.getElementById("avaBtn").hidden = true;
@@ -371,8 +375,9 @@ export class SearchBarComponent implements OnInit {
     document.getElementById("cross").hidden = true;
     this.back();
     this.iconNew = icon;
-    
-    if(icon != null){
+    console.log(icon)
+    if(icon==""){
+      console.log("nulllslls")
       document.getElementById("favor").hidden = false;
       document.getElementById("saveBtn").hidden = true;
       document.getElementById("cross").hidden = true;

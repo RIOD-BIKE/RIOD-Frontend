@@ -103,6 +103,9 @@ export class MapDataFetchService {
     return this.apsValueChange = new BehaviorSubject<Array<GeoAssemblyPoint>>(this.aps);
   }
 
+  retrieveAssemblyPointsObservable(): Observable<Array<GeoAssemblyPoint>> {
+    return this.apsValueChange.asObservable();
+  }
 
 
 
@@ -128,15 +131,27 @@ export class MapDataFetchService {
   }
 
   // send UserPosition to Firebase RealTime DB
-  async sendUserPosition() {
+  async sendUserPosition(coords?) {
     const uid = await this.auth.getCurrentUID();
     // note: is blocking until user moved!
-    let t=this.userService.behaviorMyOwnPosition.value;
-    this.rtDB.object('users/' + uid).set({
-      bearing: 0,
-      latitude: t.coords.latitude,
-      longitude: t.coords.longitude
-    });
+    let t
+    if(coords){
+       t=coords;
+      this.rtDB.object('users/' + uid).set({
+        bearing: 0,
+        latitude: t.position.latitude,
+        longitude: t.position.longitude
+      });
+    } else{
+      t=this.userService.behaviorMyOwnPosition.value; 
+      this.rtDB.object('users/' + uid).set({
+        bearing: 0,
+        latitude: t.coords.latitude,
+        longitude: t.coords.longitude
+      });
+    }
+
+
   }
 
 }

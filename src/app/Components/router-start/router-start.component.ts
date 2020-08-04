@@ -84,6 +84,7 @@ export class RouterStartComponent implements OnInit, AfterViewInit {
         this.changeViewCreateStart(false, true);
       }
     });
+    
 
   }
  
@@ -100,6 +101,7 @@ export class RouterStartComponent implements OnInit, AfterViewInit {
 
 // close the view & reset
   closeView() {
+    this.mapIntegration.deleteAllRTDB_Entries();
     this.mainMenu.closeView();
     this.infoArray = [];
     this.routingUserService.setDisplayType('Start');

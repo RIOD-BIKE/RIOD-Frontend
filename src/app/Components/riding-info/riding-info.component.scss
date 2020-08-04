@@ -7,7 +7,8 @@
 }
 
 ion-content{
-    --background: #222222 ;
+  //  --background: #222222 ;
+  --background:#383838;
 }
 
 .text-row {
@@ -24,6 +25,11 @@ ion-content{
 
 .text {
     margin: 0 !important;
+}
+.text_min {
+    margin: 0 !important;
+    font-size:16px !important;
+    opacity: 0,8 !important;
 }
 
 .toptext {

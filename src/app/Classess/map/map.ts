@@ -248,4 +248,13 @@ export class miniShortcut{
   }
 }
 
+export class riodMembersAtAP{
+  duration:string;
+  timestamp:string;
+  constructor(duration:string,timestamp:string){
+    this.duration=duration;
+    this.timestamp=timestamp;
+  }
+}
+
 

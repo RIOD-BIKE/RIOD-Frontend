@@ -22,6 +22,7 @@ export class RoutingUserService {
   private centerPoint: BehaviorSubject<RoutingGeoAssemblyPoint> = new BehaviorSubject<RoutingGeoAssemblyPoint>(null);
   private displayType: BehaviorSubject<string> = new BehaviorSubject<string>('MainView');
   private displaySwitchCase: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  private displayManuelShow: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private displayRoutingStart: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private boundingArray: PolygonAssemblyPoint[]=[];
   private pointsDetailed: any=null;
@@ -32,23 +33,34 @@ export class RoutingUserService {
   constructor(private userService: UserService, private displayService: DisplayService) { }
 
   getBoundingArray():Promise<any>{
-      this.boundingArray=[];
+
     return new Promise(resolve=>{
+      let tempArray=[];
+      this.boundingArray=[];
+      console.log(this.boundingArray);
+      this.createPolygon([this.startPoint[0][0],this.startPoint[0][1]]).then(poly=>{
+        const duration = this.pointsDetailed[0].duration/60;
+        const distance = this.pointsDetailed[0].distance*0.001;
+        tempArray.push(new PolygonAssemblyPoint("start",Number((Math.round(distance * 100) / 100).toFixed(1)),Number((Math.round(duration * 100) / 100).toFixed(0)),poly));
+      });
+   
       for(let i=0;i<this.points.length;i++){
-        this.createPolygon([this.points[i].position.longitude,this.points[i].position.latitude]).then(poly=>{
-          const duration = this.pointsDetailed[i].duration/60;
-          const distance = this.pointsDetailed[i].distance*0.001;
-          this.boundingArray.push(new PolygonAssemblyPoint(this.points[i].name,Number((Math.round(distance * 100) / 100).toFixed(1)),Number((Math.round(duration * 100) / 100).toFixed(0)),poly));
-        })
-        if(i+1==this.points.length){
-          this.createPolygon([this.finishPoint[0][0],this.finishPoint[0][1]]).then(poly=>{
+        console.log(i);
+          this.createPolygon([this.points[i].position.longitude,this.points[i].position.latitude]).then(poly=>{
             const duration = this.pointsDetailed[i+1].duration/60;
             const distance = this.pointsDetailed[i+1].distance*0.001;
-            let finishAddress = this.finishPoint[1].split(",")[0];
-            this.boundingArray.push(new PolygonAssemblyPoint(finishAddress,Number((Math.round(distance * 100) / 100).toFixed(1)),Number((Math.round(duration * 100) / 100).toFixed(0)),poly));
-            resolve(this.boundingArray);
+            tempArray.push(new PolygonAssemblyPoint(this.points[i].name,Number((Math.round(distance * 100) / 100).toFixed(1)),Number((Math.round(duration * 100) / 100).toFixed(0)),poly));
           })
-        }
+          if(i+1==this.points.length){
+            this.createPolygon([this.finishPoint[0][0],this.finishPoint[0][1]]).then(poly=>{
+              const duration = 0;
+              const distance = 0;
+              let finishAddress = this.finishPoint[1].split(",")[0];
+              tempArray.push(new PolygonAssemblyPoint(finishAddress,Number((Math.round(distance * 100) / 100).toFixed(1)),Number((Math.round(duration * 100) / 100).toFixed(0)),poly));
+              this.boundingArray=tempArray;
+              resolve(this.boundingArray);
+            })
+          } 
       }
     });
   }
@@ -97,6 +109,7 @@ export class RoutingUserService {
         resolve(this.displayType);
     });
   }
+
 
   setRouteFinished(){
     this.routeFinished.next(false);
@@ -288,6 +301,15 @@ export class RoutingUserService {
 
   getCenterPointObs(): Observable<RoutingGeoAssemblyPoint> {
     return this.centerPoint.asObservable();
+  }
+
+  
+
+  getDisplayManuelShow(): Observable<boolean>{
+    return this.displayManuelShow.asObservable();
+  }
+  setDisplayManuelShow(){
+    this.displayManuelShow.next(true);
   }
 
   getDisplaySwitchCase(): Observable<boolean>{

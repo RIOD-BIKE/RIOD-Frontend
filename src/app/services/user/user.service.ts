@@ -81,7 +81,6 @@ export class UserService {
       this.storage.length().then(length=>{
         this.storage.forEach((value,key,index)=>{
           let keySpliced = key.split('_');
-          
           if(keySpliced[0] == "SavedIcon"){
               console.log(keySpliced);
               tempArray.push(new iconShortcut(value.iconName,i,value.address,value.plz));
@@ -106,11 +105,23 @@ export class UserService {
     return;
   }
 
+
+  public getDetailsToAP(AP:string, followingAP:string,caseSwitch:boolean,userTimestamp){
+    this.assemblyPointReference.forEach(ap=>{
+      if(ap.name == AP){  
+        this.createHashedUID().then(x=>{
+          this.userDataFetch.rtdb_getDetailsAP(ap.reference,followingAP,caseSwitch,userTimestamp,x);
+        })
+      }
+    })
+  }
+
   public updateNextApTimingToRTDB(userTimestamp:number,duration:number,nextAps:string,followingAps:string,){
       this.createHashedUID().then(hash=>{
         console.log(userTimestamp+"|"+duration+"|"+nextAps+"|"+followingAps+"|"+hash);
         this.assemblyPointReference.forEach(ap=>{
           if(ap.name == nextAps){    
+
             this.userDataFetch.rtdb_sendNextAps(ap.reference,followingAps,hash.toString(),duration,userTimestamp);
           }
         }) 
@@ -127,6 +138,8 @@ export class UserService {
       }) 
     })
   }
+
+
 
 
   public createHashedUID():Promise<any>{

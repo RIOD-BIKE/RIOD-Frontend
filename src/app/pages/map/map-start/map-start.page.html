@@ -70,7 +70,7 @@
 </div>
 <div [ngSwitch]="showType">
   <router-start *ngSwitchCase="'showMain'"></router-start>
-  <app-riding-info *ngSwitchCase="'showRouterInfo'"></app-riding-info>
+  <app-riding-info style="z-index: 5; " *ngSwitchCase="'showRouterInfo'"></app-riding-info>
   <!-- DONT USE THIS! LINE 52 WORKS AS WELL <riding-toggle *ngSwitchCase="''" style="width: fit-content; align-self: flex-end; margin-bottom: 2.8vh; margin-right: 7vw;"></riding-toggle>  -->
   <ride-map-assembly *ngSwitchCase="'routeStarted'"></ride-map-assembly>
 </div>

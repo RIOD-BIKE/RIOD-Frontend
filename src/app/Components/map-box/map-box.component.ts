@@ -38,12 +38,14 @@ export class MapBoxComponent implements OnInit {
     try {
       await this.userservice.getUserPosition().then(x => {
         this.myPosition = x;
+        this.mapDataFetchService.sendUserPosition(x);
       });
     } catch (e) {
       console.log(e);
     }
     this.inizializeMap();
     setTimeout(() => this.map.resize(), 0);
+
   }
 
 

@@ -15,6 +15,9 @@ import { RouterStartComponent } from 'src/app/Components/router-start/router-sta
 import { SearchBarComponent } from 'src/app/Components/search-bar/search-bar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { RidingInfoComponent } from 'src/app/Components/riding-info/riding-info.component';
+import { MapIntegrationService } from 'src/app/services/map-integration/map-integration.service';
+import { UsersDataFetchService } from 'src/app/services/users-data-fetch/users-data-fetch.service';
 
  
 
@@ -53,7 +56,7 @@ export class MapStartPage implements OnInit {
  constructor(private popoverController:PopoverController, private routingUserService: RoutingUserService, private mapBox: MapBoxComponent,
              private statusBar: StatusBar, private mainMenu: MainMenuComponent, private modalController: ModalController,
              private mapDataFetch: MapDataFetchService,private routerInfo:RouterInfoInBottomComponent,routerStart:RouterStartComponent,private searchBar: SearchBarComponent,
-             private animationController: AnimationController, private displayService: DisplayService) {
+             private userDataFetch:UsersDataFetchService,private animationController: AnimationController, private displayService: DisplayService, private mapIntegration:MapIntegrationService) {
   this.init();
  }
  init() {
@@ -75,8 +78,9 @@ export class MapStartPage implements OnInit {
       this.showType="showMain";
     }
     if(x=='routeStarted'){
-      this.showType="routeStarted";
+      this.showType="showRouterInfo";
     }
+
   })
  }
 
@@ -96,6 +100,9 @@ export class MapStartPage implements OnInit {
   }
 
   closeView() {
+    this.userDataFetch.rtdb_getDetailsAP_unsub();
+    this.routingUserService.setDisplayManuelShow();
+    this.mapIntegration.deleteAllRTDB_Entries();
     this.mainMenu.closeView();
     this.routingUserService.setDisplayType('Start');
     this.routingUserService.setDisplayRoutingStart(false);
@@ -173,12 +180,14 @@ export class MapStartPage implements OnInit {
     this.displayService.setIsIndicatorScreenVisible(this.showIndicatorScreen);
     animation.play();
   }
-  async presentModal() {
+  async presentModalTutorial() {
     const modal = await this.modalController.create({
       component: TutorialOverlay1Component
     });
     return await modal.present();
   }
+
+
 
   DEMOsendToRTDB() {
     this.mapDataFetch.sendUserPosition();
