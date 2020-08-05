@@ -18,6 +18,7 @@ export class StatusAudioService {
 
   private path = 'assets/audio/';
   private isFirstPlayback = true;
+  private currentSize: number;
 
   constructor(private nativeAudio: NativeAudio, private mapDataFetch: MapDataFetchService, private platform: Platform, private settingsService: SettingsService) {
     this.init();
@@ -32,22 +33,21 @@ export class StatusAudioService {
       ]);
     }
 
-    this.mapDataFetch.activeCluster.subscribe(async (activeCluster) => {
+    this.mapDataFetch.activeClusterStatus.subscribe(async (status) => {
       if(this.isFirstPlayback) {
         this.isFirstPlayback = false;
         return;
       }
-      if (!activeCluster) {
-        console.log('Playing ALONE sound...');
+      if (status === Status.ALONE) {
+        // console.log('Playing ALONE sound...');
         await this.play(Status.ALONE);
         return;
       }
-      const count = activeCluster.count;
-      if (count >= 5 && count <= 15) {
-        console.log('Playing GROUP sound...');
+      if (status === Status.GROUP) {
+        // console.log('Playing GROUP sound...');
         await this.play(Status.GROUP);
-      } else if (count > 15) {
-        console.log('Playing ASSOCIATION sound...');
+      } else if (status === Status.ASSOCIATION) {
+        // console.log('Playing ASSOCIATION sound...');
         await this.play(Status.ASSOCIATION);
       }
     });

@@ -1,3 +1,4 @@
+import { Status } from './../status-audio/status-audio.service';
 import { UserService } from './../user/user.service';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { GeoCluster, GeoAssemblyPoint, AssemblyPointReference } from '../../Classess/map/map';
@@ -6,6 +7,7 @@ import { Subscriber, Observable, BehaviorSubject, Subject, Subscription } from '
 import { AngularFirestore, AngularFirestoreCollection, DocumentReference, DocumentSnapshot, DocumentData  } from '@angular/fire/firestore';
 import { AuthService } from '../auth/auth.service';
 import { ThrowStmt } from '@angular/compiler';
+import { stat } from 'fs';
 
 @Injectable({
   providedIn: 'root'
@@ -25,15 +27,18 @@ export class MapDataFetchService {
 // AssemblyPoint Array and BehaviorSubject
   aps: Array<GeoAssemblyPoint>; apsValueChange: BehaviorSubject<Array<GeoAssemblyPoint>>;
 
-  readonly activeCluster: BehaviorSubject<any>;
+  // readonly activeCluster: BehaviorSubject<any>; // not longer used
+  readonly activeClusterStatus: BehaviorSubject<Status>;
   private activeClusterSubscription: Subscription;
   private activeClusterRef: DocumentReference;
+  private lastClusterStatus: Status;
 
   constructor(private db: AngularFirestore, private auth: AuthService,
               private rtDB: AngularFireDatabase, private userService: UserService) {
     this.aps = new Array<GeoAssemblyPoint>();
     this.cluster = new Array<GeoCluster>();
-    this.activeCluster = new BehaviorSubject<any>(null);
+    // this.activeCluster = new BehaviorSubject<any>(null);
+    this.activeClusterStatus = new BehaviorSubject<Status>(null);
     this.initFirestoreObservables();
   }
 
@@ -42,16 +47,28 @@ export class MapDataFetchService {
 
     // Init activeCluster Observable
     this.userFirestore.subscribe(async data => {
-      if (this.activeClusterRef?.path === data.activeCluster?.path) {return; }
+      if (this.activeClusterRef?.path === data.activeCluster?.path) { return; }
       if (data.activeCluster === null) {
         this.activeClusterRef = null;
         this.activeClusterSubscription.unsubscribe();
-        this.activeCluster.next(null);
+        // this.activeCluster.next(null);
+        this.activeClusterStatus.next(Status.ALONE);
+        this.lastClusterStatus = Status.ALONE;
         return;
       }
       this.activeClusterRef = data.activeCluster;
       this.activeClusterSubscription = this.db.doc(data.activeCluster).valueChanges().subscribe(clusterData => {
-        this.activeCluster.next(clusterData);
+        // this.activeCluster.next(clusterData);
+        const count = clusterData['count'];
+        let status: Status;
+        if (count >= 5 && count <= 15) {
+          status = Status.GROUP;
+        } else if (count > 15) {
+          status = Status.ASSOCIATION;
+        }
+        if (status === this.lastClusterStatus) { return; }
+        this.lastClusterStatus = status;
+        this.activeClusterStatus.next(status);
       });
     });
   }
