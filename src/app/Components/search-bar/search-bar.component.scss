@@ -104,6 +104,46 @@ span {
   opacity: 0.3;
 }
 
+#home-outline{
+  background: url('../../../assets/icon/homeW.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #4f4f4f;
+}
+#heart-outline{
+  background: url('../../../assets/icon/heartW.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #4f4f4f;
+}
+#basket-outline{
+  
+  background: url('../../../assets/icon/shopping-cartW.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #4f4f4f;
+}
+#star-outline{
+  background: url('../../../assets/icon/starW.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color:#4f4f4f;
+}
+
+#briefcase-outline{ 
+  background: url('../../../assets/icon/briefcaseW.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #4f4f4f;
+}
+#book-outline{
+  
+  background: url('../../../assets/icon/bookW.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #4f4f4f;
+}
+
 .listElement {
   animation: popIn 0.2s calc(var(--animation-order) * 15ms) both ease-in;
   margin-bottom: 5px;

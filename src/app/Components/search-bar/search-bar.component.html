@@ -19,12 +19,12 @@
       </button>
       <button class="ava" id="saveBtn" hidden (click)=saveRoute()>
       </button>
-      <button class="ava" id="favor">
-        <ion-icon name={{iconNew}} style=" width: 25px;
-            height: 25px;
-            color: white;">
-        </ion-icon>
+      <button class="ava" id="{{iconNew}}" style=" width: 25px;
+      height: 25px;
+      color: white;" >
       </button>
+      
+      
     </div>
   </div>
 
@@ -76,14 +76,14 @@
             <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
           </svg>
         </ion-button>
-        <ion-button class="s-btn primary" style="margin-left: 10px;" *ngIf="shortcut.orderNumber!=1"
+        <button class="s-btn primary" [id]="shortcut.iconName" style="margin-left: 10px; border-radius: 30px;" *ngIf="shortcut.orderNumber!=1"
           (click)="onSelect(shortcut.coords,shortcut.address,'','', shortcut.iconName)">
-          <ion-icon name={{shortcut.iconName}}></ion-icon>
-        </ion-button>
-        <ion-button class="s-btn primary" style="margin-left: 10px;" *ngIf="shortcut.orderNumber==1"
+          
+        </button>
+        <button class="s-btn primary"  [id]="shortcut.iconName" style="margin-left: 10px; border-radius: 30px;" *ngIf="shortcut.orderNumber==1"
           (click)="onSelect(shortcut.coords,shortcut.address,'','', shortcut.iconName)">
-          <ion-icon name={{shortcut.iconName}}></ion-icon>
-        </ion-button>
+         
+        </button>
       </span>
 
     </div>
