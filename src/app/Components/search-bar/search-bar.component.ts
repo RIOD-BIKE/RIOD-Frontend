@@ -26,6 +26,7 @@ export class SearchBarComponent implements OnInit {
   public iconNew: any ="";
   @ViewChild("inputField") inputField;
   searchBarOpen = false;
+  public showIcon = true;
   private selectedRoute: string[];
   constructor(
     private navCtrl: NavController,
@@ -145,7 +146,7 @@ export class SearchBarComponent implements OnInit {
     }
     if(this.iconNew != "" && this.searchBarInputV.length > 0){
       console.log("this.ICONNEW != ''")
-      document.getElementById("favor").hidden = false;
+      document.getElementById(this.iconNew).hidden = false;
       document.getElementById("saveBtn").hidden = true;
       document.getElementById("cross").hidden = true;
       document.getElementById("avaBtn").hidden = true;
@@ -155,12 +156,12 @@ export class SearchBarComponent implements OnInit {
         this.iconNew="";
         console.log("this.ICONNEW22 != ''")
         document.getElementById("saveBtn").hidden = true;
-        document.getElementById("favor").hidden = true; 
+        this.showIcon = true;
         document.getElementById("avaBtn").hidden = false;
       } else{
         console.log("this.ICONNEW33 != ''")
         document.getElementById("saveBtn").hidden = false;
-        document.getElementById("favor").hidden = true; 
+        this.showIcon = true; 
         document.getElementById("avaBtn").hidden = true;
       }
     }
@@ -241,7 +242,7 @@ export class SearchBarComponent implements OnInit {
       document.getElementById("edit-with-content").hidden = false;
     }
     document.getElementById("avaBtn").hidden = true;
-    document.getElementById("favor").hidden = true;
+    this.showIcon = true;
     document.getElementById("back").style.display = "block";
 
     const over = document.getElementById("over");
@@ -378,14 +379,14 @@ export class SearchBarComponent implements OnInit {
     console.log(icon)
     if(icon==""){
       console.log("nulllslls")
-      document.getElementById("favor").hidden = false;
+      this.showIcon = false;
       document.getElementById("saveBtn").hidden = true;
       document.getElementById("cross").hidden = true;
       document.getElementById("avaBtn").hidden = true;
   
     } else {
       document.getElementById("saveBtn").hidden = false;
-      document.getElementById("favor").hidden = true;
+      this.showIcon = true;
       this.iconNew ="";
       
     }
@@ -451,7 +452,7 @@ export class SearchBarComponent implements OnInit {
       this.back;
       
       document.getElementById("avaBtn").hidden = false;
-      document.getElementById("favor").hidden = true;
+      this.showIcon = true;
       
     }
   }
