@@ -152,7 +152,7 @@ export class MapDataFetchService {
     const uid = await this.auth.getCurrentUID();
     // note: is blocking until user moved!
     let t
-    /*
+    
     if(coords){
        t=coords;
       this.rtDB.object('users/' + uid).set({
@@ -168,7 +168,7 @@ export class MapDataFetchService {
         longitude: t.coords.longitude
       });
     }
-    */
+    
 
   }
 
