@@ -4,7 +4,7 @@ import { RideIndicatorComponent } from './../ride-indicator/ride-indicator.compo
 import { ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { RoutingUserService } from 'src/app/services/routing-user/routing-user.service';
-import { Status } from 'src/app/services/status-audio/status-audio.service';
+import { Status } from 'src/app/Classess/map/status';
 
 @Component({
   selector: 'riding-toggle',

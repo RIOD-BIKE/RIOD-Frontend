@@ -1,4 +1,3 @@
-import { Status } from './../status-audio/status-audio.service';
 import { UserService } from './../user/user.service';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { GeoCluster, GeoAssemblyPoint, AssemblyPointReference } from '../../Classess/map/map';
@@ -9,6 +8,7 @@ import { AuthService } from '../auth/auth.service';
 import { ThrowStmt } from '@angular/compiler';
 import { stat } from 'fs';
 import { computeStackId } from '@ionic/angular/directives/navigation/stack-utils';
+import { Status } from 'src/app/Classess/map/status';
 
 @Injectable({
   providedIn: 'root'

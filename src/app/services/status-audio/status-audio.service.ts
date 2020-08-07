@@ -4,12 +4,7 @@ import { MapDataFetchService } from './../map-data-fetch/map-data-fetch.service'
 import { Injectable } from '@angular/core';
 import { NativeAudio } from '@ionic-native/native-audio/ngx';
 import { Platform } from '@ionic/angular';
-
-export enum Status {
-  ALONE = 'statusAlone',
-  GROUP = 'statusGroup',
-  ASSOCIATION = 'statusAssociation'
-}
+import { Status } from 'src/app/Classess/map/status';
 
 @Injectable({
   providedIn: 'root'

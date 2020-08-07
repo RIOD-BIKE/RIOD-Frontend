@@ -2,7 +2,7 @@ import { MapDataFetchService } from './../../services/map-data-fetch/map-data-fe
 import { ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { Status } from 'src/app/services/status-audio/status-audio.service';
+import { Status } from 'src/app/Classess/map/status';
 
 @Component({
   selector: 'app-ride-indicator',
