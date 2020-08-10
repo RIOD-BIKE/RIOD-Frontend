@@ -26,7 +26,7 @@ export class SearchBarComponent implements OnInit {
   public iconNew: any ="";
   @ViewChild("inputField") inputField;
   searchBarOpen = false;
-  public showIcon = true;
+  public hideIcon = true;
   private selectedRoute: string[];
   constructor(
     private navCtrl: NavController,
@@ -146,7 +146,7 @@ export class SearchBarComponent implements OnInit {
     }
     if(this.iconNew != "" && this.searchBarInputV.length > 0){
       console.log("this.ICONNEW != ''")
-      document.getElementById(this.iconNew).hidden = false;
+      this.hideIcon = false;
       document.getElementById("saveBtn").hidden = true;
       document.getElementById("cross").hidden = true;
       document.getElementById("avaBtn").hidden = true;
@@ -156,12 +156,12 @@ export class SearchBarComponent implements OnInit {
         this.iconNew="";
         console.log("this.ICONNEW22 != ''")
         document.getElementById("saveBtn").hidden = true;
-        this.showIcon = true;
+        this.hideIcon = true;
         document.getElementById("avaBtn").hidden = false;
       } else{
         console.log("this.ICONNEW33 != ''")
         document.getElementById("saveBtn").hidden = false;
-        this.showIcon = true; 
+        this.hideIcon = true; 
         document.getElementById("avaBtn").hidden = true;
       }
     }
@@ -220,6 +220,8 @@ export class SearchBarComponent implements OnInit {
       }
       document.getElementById("search-results").hidden = false;
       document.getElementById("cross").hidden = false;
+      this.hideIcon = true;
+
     }
 
     if(this.searchBarInputV.length<=2 && this.recentRoutes.length==0){
@@ -242,7 +244,7 @@ export class SearchBarComponent implements OnInit {
       document.getElementById("edit-with-content").hidden = false;
     }
     document.getElementById("avaBtn").hidden = true;
-    this.showIcon = true;
+    this.hideIcon = true;
     document.getElementById("back").style.display = "block";
 
     const over = document.getElementById("over");
@@ -376,18 +378,21 @@ export class SearchBarComponent implements OnInit {
     document.getElementById("cross").hidden = true;
     this.back();
     this.iconNew = icon;
-    console.log(icon)
+    console.log(this.iconNew)
     if(icon==""){
       console.log("nulllslls")
-      this.showIcon = false;
+      this.hideIcon = true;
       document.getElementById("saveBtn").hidden = true;
       document.getElementById("cross").hidden = true;
       document.getElementById("avaBtn").hidden = true;
   
     } else {
-      document.getElementById("saveBtn").hidden = false;
-      this.showIcon = true;
-      this.iconNew ="";
+      document.getElementById("saveBtn").hidden = true;
+      document.getElementById("cross").hidden = true;
+      document.getElementById("avaBtn").hidden = true;
+
+      this.hideIcon = false;
+      //this.iconNew ="";
       
     }
     this.routingUserService.setDisplaySwitchCase(true);
@@ -452,7 +457,7 @@ export class SearchBarComponent implements OnInit {
       this.back;
       
       document.getElementById("avaBtn").hidden = false;
-      this.showIcon = true;
+      this.hideIcon = true;
       
     }
   }
