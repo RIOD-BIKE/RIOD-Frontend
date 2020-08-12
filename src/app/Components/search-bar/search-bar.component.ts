@@ -375,6 +375,7 @@ export class SearchBarComponent implements OnInit {
   }
 
   onSelect(coords: string, address: string, street: string, city: string, icon: string) {
+    console.log(coords + address + icon);
     document.getElementById('cross').hidden = true;
     this.back();
     this.iconNew = icon;
