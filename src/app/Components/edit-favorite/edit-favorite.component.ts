@@ -24,6 +24,15 @@ export class EditFavoriteComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.loadShortcuts();
+    this.userService.updateFavor.subscribe( a => {
+      if (a) {
+        this.userService.getAllShortcuts();
+      }
+    });
+  }
+
+  loadShortcuts() {
     this.userService.getAllShortcuts().then((allShortcuts) => {
       let temp: iconShortcut[] = [];
       temp = allShortcuts;
@@ -57,7 +66,10 @@ export class EditFavoriteComponent implements OnInit {
     this.dismiss();
   }
   deleteFavor(shortcut: miniShortcut) {
-    this.userService.deleteShortcut(shortcut.icon);
+    this.userService.deleteShortcut(shortcut.icon).then(x => {
+      this.userService.updateFavor.next(true);
+      this.favorList = this.favorList.filter(item => item !== shortcut);
+    });
   }
   saveRoute(){}
 }

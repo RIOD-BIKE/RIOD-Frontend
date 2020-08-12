@@ -35,8 +35,8 @@ export class UserService {
         if (this.firstTimeCalling === true) {
           this.firstTimeCalling = false;
           this.geolocation.watchPosition(options).subscribe(x => {
-            this.behaviorMyOwnPosition.next(x);
-          });
+          this.behaviorMyOwnPosition.next(x);
+        });
         }
         this.geolocation.getCurrentPosition().then((resp) => {
           resolve(new PositionI(resp.coords.longitude, resp.coords.latitude));
@@ -45,8 +45,8 @@ export class UserService {
     });
   }
 
-  // TODO change plz to coords
-  // Uncomplete -> Dependend on new UI System
+// TODO change plz to coords
+// Uncomplete -> Dependend on new UI System
   public saveShortcut(address: any, iconName: any, plz: any): Promise<any> {
     return new Promise(resolve => {
       let i = 0;
@@ -58,13 +58,13 @@ export class UserService {
             j++;
             console.log(value);
             if (value.iconName === iconName) {  // iconName already saved -> override? Question
-              this.storage.set(key, { address, plz, iconName });
+              this.storage.set(key, {address, plz, iconName});
               resolve('Updated Address with icon');
             }
           }
           i++;
           if (i == length) {
-            this.storage.set('SavedIcon_' + j, { address, plz, iconName });
+            this.storage.set('SavedIcon_' + j, {address, plz, iconName});
             resolve('New Address saved with icon');
           }
         });
@@ -75,13 +75,12 @@ export class UserService {
   // Delete Shortcut
   public async deleteShortcut(icon: iconShortcut) {
     this.storage.length().then(length => {
-      this.storage.forEach(async (value, key, index) => {
+      this.storage.forEach((value, key, index) => {
         const keySpliced = key.split('_');
         if (keySpliced[0] === 'SavedIcon') {
-          if (value.iconName === icon.iconName && value.address === icon.address && value.plz === icon.coords) {
-            const iconS = await this.storage.get(key);
-            console.log(iconS);
-            this.storage.remove(iconS);
+          if (value.iconName === icon.iconName && value.address === icon.address &&
+            value.plz[0] === icon.coords[0] && value.plz[1] === icon.coords[1]) {
+            this.storage.remove(key);
           }
         }
       });
@@ -96,8 +95,8 @@ export class UserService {
         this.storage.forEach((value, key, index) => {
           const keySpliced = key.split('_');
           if (keySpliced[0] === 'SavedIcon') {
-            console.log(keySpliced);
-            tempArray.push(new iconShortcut(value.iconName, i, value.address, value.plz));
+              console.log(keySpliced);
+              tempArray.push(new iconShortcut(value.iconName, i, value.address, value.plz));
           }
           i++;
           if (i == length) {
@@ -130,16 +129,16 @@ export class UserService {
     });
   }
 
-  public updateNextApTimingToRTDB(userTimestamp: number, duration: number, nextAps: string, followingAps: string,) {
-    this.createHashedUID().then(hash => {
-      console.log(userTimestamp + '|' + duration + '|' + nextAps + '|' + followingAps + '|' + hash);
-      this.assemblyPointReference.forEach(ap => {
-        if (ap.name == nextAps) {
+  public updateNextApTimingToRTDB(userTimestamp: number, duration: number, nextAps: string, followingAps: string, ) {
+      this.createHashedUID().then(hash => {
+        console.log(userTimestamp + '|' + duration + '|' + nextAps + '|' + followingAps + '|' + hash);
+        this.assemblyPointReference.forEach(ap => {
+          if (ap.name == nextAps) {
 
-          this.userDataFetch.rtdb_sendNextAps(ap.reference, followingAps, hash.toString(), duration, userTimestamp);
-        }
+            this.userDataFetch.rtdb_sendNextAps(ap.reference, followingAps, hash.toString(), duration, userTimestamp);
+          }
+        });
       });
-    });
   }
 
   public deleteOldApTimingtoRTDB(nextAps: string, followingAps: string) {
@@ -161,13 +160,13 @@ export class UserService {
       if (this.hashedUID != null) {
         resolve(this.hashedUID.toString());
       } else {
-        this.storage.get('user-access-token').then(value => {
-          const uid: string = value.uid;
-          this.hashString(uid).then(hash => {
-            this.hashedUID = hash.slice(0, 13);
-            resolve(this.hashedUID.toString());
-          });
+      this.storage.get('user-access-token').then(value => {
+        const uid: string = value.uid;
+        this.hashString(uid).then(hash => {
+          this.hashedUID = hash.slice(0, 13);
+          resolve(this.hashedUID.toString());
         });
+      });
       }
     });
 

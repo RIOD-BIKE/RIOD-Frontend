@@ -61,7 +61,7 @@ export class SearchBarComponent implements OnInit {
    this.userService.getAllShortcuts().then((allShortcuts) => {
 
     this.shortcuts = allShortcuts;
-    console.log(this.shortcuts.length);
+    console.log(this.shortcuts);
     if (this.shortcuts.length == 0) {
       document.getElementById('with-content').hidden = true;
       document.getElementById('edit-no-content').hidden = false;
