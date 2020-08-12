@@ -476,10 +476,7 @@ export class SearchBarComponent implements OnInit {
 
 
   editFavor() {
-    console.log("click111");
-    
     this.editModal();
-    console.log("click222");
   }
 
   async editModal() {

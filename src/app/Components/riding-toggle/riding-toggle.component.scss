@@ -86,11 +86,11 @@
 
       &:checked {
           &:before {
-              background: url('../../../assets/icon/riod.svg');
+              background: url('../../../assets/icon/riod_transparent.svg');
               background-repeat: no-repeat;
               background-position: center;
               background-color: $input-bg-pseudo-static;
-              transform: translateX(100%);
+              transform: translateX(103%);
           }
       }
   }
