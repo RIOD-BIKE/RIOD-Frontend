@@ -46,7 +46,7 @@ export class EditFavoriteComponent implements OnInit {
         const splitString = route.address.split(",");
        // console.log(splitString); 
         const splitPLz = splitString[2].toString().split(" ");
-        console.log(splitPLz);
+        // console.log(splitPLz);
 
         const city = splitPLz[1];
         const street = splitString[0] + ", " + splitString[1]; 
@@ -71,11 +71,13 @@ export class EditFavoriteComponent implements OnInit {
 
 // save all changes send icon list with new order to storage
   saveChanges() {
-    let newIconOrder: iconShortcut[] = [];
+    const newIconOrder: iconShortcut[] = [];
     for (let i = 0; i < this.favorList.length; i++) {
       this.favorList[i].icon.orderNumber = i;
       newIconOrder.push(this.favorList[i].icon);
     }
+    console.log(newIconOrder);
+    this.userService.saveAllShortcuts(newIconOrder);
     this.back();
   }
 

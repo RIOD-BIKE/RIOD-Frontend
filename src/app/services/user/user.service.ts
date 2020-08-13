@@ -60,7 +60,7 @@ export class UserService {
           const keySpliced = key.split('_');
           if (keySpliced[0] == 'SavedIcon') {
             j++;
-            console.log(value);
+            // console.log(value);
             if (value.iconName === iconName) {  // iconName already saved -> override? Question
               this.storage.set(key, {address, coords, iconName});
               console.log("hey");
@@ -70,7 +70,7 @@ export class UserService {
           i++;
           if (i == length) {
             this.storage.set('SavedIcon_' + j+1, {address, coords, iconName});
-            console.log("hey2");
+            // console.log("hey2");
             resolve('New Address saved with icon');
           }
         });
@@ -79,14 +79,14 @@ export class UserService {
   }
 
   // Delete Shortcut
-  public async deleteShortcut(icon: iconShortcut) : Promise<any>{
+  public async deleteShortcut(icon: iconShortcut): Promise<any>{
     return new Promise(resolve => {
     this.storage.length().then(length => {
       this.storage.forEach((value, key, index) => {
         const keySpliced = key.split('_');
         if (keySpliced[0] === 'SavedIcon') {
-          if (value.iconName === icon.iconName && value.address === icon.address &&
-            value.coords[0] === icon.coords[0] && value.coords[1] === icon.coords[1]) {
+          if (value.iconName === icon.iconName && value.address === icon.address) {
+            console.log(value);
             this.storage.remove(key);
             resolve();
           }
@@ -95,13 +95,14 @@ export class UserService {
     });
     });
   }
-  public async deleteAllShortcuts(icon: iconShortcut[]):Promise<any>{
+  public async deleteAllShortcuts(icon: iconShortcut[]): Promise<any> {
     return new Promise(resolve => {
     icon.forEach(element=>{
+      console.log(element);
       this.deleteShortcut(element);
-      console.log("timer inside");
+      // console.log("timer inside");
     });
-    resolve(console.log("timer outside"));
+    resolve();
     });
   }
 
@@ -113,7 +114,7 @@ export class UserService {
         this.storage.forEach((value, key, index) => {
           const keySpliced = key.split('_');
           if (keySpliced[0] === 'SavedIcon') {
-              console.log(keySpliced);
+              // console.log(keySpliced);
               tempArray.push(new iconShortcut(value.iconName, i, value.address, value.coords));
           }
           i++;
@@ -128,21 +129,25 @@ export class UserService {
 
   public saveAllShortcuts(iconList:iconShortcut[]):Promise<any>{
     return new Promise(resolve => {
-      this.getAllShortcuts().then(allShortcuts=>{
+      // here right order
+      console.log(iconList);
+      this.getAllShortcuts().then(allShortcuts => {
         this.deleteAllShortcuts(allShortcuts).then(()=>{
-          for(let i=0; i<allShortcuts.length();i++){
-            this.saveShortcut(allShortcuts[i].address,allShortcuts[i].iconName,allShortcuts[i].coords);
-            if(i==allShortcuts.length()-1){
-              this.getAllShortcuts().then(x=>{
+          for(let i = 0; i < iconList.length; i++) {
+            //here correct order 
+            console.log(iconList[i]);
+            this.saveShortcut(iconList[i].address, iconList[i].iconName, iconList[i].coords);
+            if( i == iconList.length-1) {
+              this.getAllShortcuts().then (x=>{
+                // here wrong order 
                 console.log(x);
                 resolve();
-              })
-            
+              });
 
             }
           }
         });
-      })
+      });
     });
   }
 
