@@ -57,7 +57,6 @@ export class UserService {
           const keySpliced = key.split('_');
           if (keySpliced[0] == 'SavedIcon') {
             j++;
-            console.log(value);
             if (value.iconName === iconName) {  // iconName already saved -> override? Question
               this.storage.set(key, {address, plz, iconName});
               resolve('Updated Address with icon');
@@ -74,7 +73,7 @@ export class UserService {
   }
 
   // Delete Shortcut
-  public async deleteShortcut(icon: iconShortcut) : Promise<any>{
+  public deleteShortcut(icon: iconShortcut): Promise<any> {
     return new Promise(resolve => {
     this.storage.length().then(length => {
       this.storage.forEach((value, key, index) => {
@@ -89,6 +88,11 @@ export class UserService {
       });
     });
     });
+  }
+
+  // Clear ShortcutList and set new one
+  public setNewOrder(iconList: iconShortcut): Promise<any> {
+    
   }
 
   public getAllShortcuts(): Promise<any> {

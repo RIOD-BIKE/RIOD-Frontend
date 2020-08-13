@@ -383,7 +383,6 @@ export class SearchBarComponent implements OnInit {
     if (this.iconNew.length == 4) {
       this.hideIcon = true;
 
-      
       document.getElementById('saveBtn').hidden = false;
       document.getElementById('cross').hidden = true;
       document.getElementById('avaBtn').hidden = true;

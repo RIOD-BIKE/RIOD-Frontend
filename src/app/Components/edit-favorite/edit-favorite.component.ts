@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ModalController, NavController } from '@ionic/angular';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { ModalController, NavController, IonReorderGroup } from '@ionic/angular';
 import { RoutingUserService } from 'src/app/services/routing-user/routing-user.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { iconShortcut, miniShortcut } from 'src/app/Classess/map/map';
@@ -13,6 +13,10 @@ import { Router } from '@angular/router';
 })
 export class EditFavoriteComponent implements OnInit {
   public favorList: miniShortcut[] = [];
+  @ViewChild(IonReorderGroup) reorderGroup: IonReorderGroup;
+  public hideTrash = false;
+  public hideChange = false;
+  public hideSave = true;
 
   constructor(
     private modalController: ModalController,
@@ -25,11 +29,11 @@ export class EditFavoriteComponent implements OnInit {
 
   ngOnInit() {
     this.loadShortcuts();
-    this.userService.updateFavor.subscribe( a => {
-      if (a) {
-        this.userService.getAllShortcuts();
-      }
-    });
+    // this.userService.updateFavor.subscribe( a => {
+    //   if (a) {
+    //     this.userService.getAllShortcuts();
+    //   }
+    // });
   }
 
   loadShortcuts() {
@@ -53,18 +57,33 @@ export class EditFavoriteComponent implements OnInit {
   }
 
   changeSequence(){
-    this.navController.navigateForward('edit-favor-sequence');
+    // this.navController.navigateForward('edit-favor-sequence');
+    this.hideTrash = !this.hideTrash;
+    this.hideChange = !this.hideChange;
+    this.hideSave = !this.hideSave;
+    this.reorderGroup.disabled = !this.reorderGroup.disabled;
   }
 
+  doReorder(ev: any) {
+    this.favorList = ev.detail.complete(this.favorList);
+  }
 
-  dismiss() {
+// save all changes send icon list with new order to storage
+  saveChanges() {
+    let newIconOrder: iconShortcut[] = [];
+    for (let i = 0; i < this.favorList.length; i++) {
+      this.favorList[i].icon.orderNumber = i;
+      newIconOrder.push(this.favorList[i].icon);
+    }
+    this.back();
+  }
+
+  back() {
     this.modalController.dismiss({
       dismissed: true,
     });
   }
-  back(){
-    this.dismiss();
-  }
+
   deleteFavor(shortcut: miniShortcut) {
     this.userService.deleteShortcut(shortcut.icon).then(x => {
       this.userService.updateFavor.next(true);

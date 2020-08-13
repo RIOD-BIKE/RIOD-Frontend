@@ -17,49 +17,61 @@
       float: left;
       background-color: transparent;
       margin-top: 25px;" id="container">
-        <div class="listElement" *ngFor="let shortcut of favorList">
-          
-          <div style="width:80%;float: left;" >
+      <ion-reorder-group (ionItemReorder)="doReorder($event)">
+       
+          <div class="listElement" *ngFor="let shortcut of favorList">
+            <ion-item>
+            <div style="width:80%;float: left;" >
+              <div style="width:20%;float: left; ">
+                <button class="ava" style=" width: 100%;
+                height: 50px;
+                border-top: thin solid white;
+                margin-top: 5px;
+                padding-top: 10px; opacity: 0.87; background-color: transparent;" (click)=saveRoute()>
+                  <ion-icon name={{shortcut.iconName}} style=" width: 25px;
+                height: 25px;
+                color: white;"></ion-icon>
+                </button>
+              </div>
+              <h5
+                style="border-top:thin solid white; text-align: left;margin-top:5px;padding-top:10px; margin-bottom:0px;padding-bottom:1px; color: white; font-weight: 500; font-size: 16px;">
+                {{shortcut.street}}
+              </h5>
+              <h5
+                style="padding-left: 20%; text-align: left;padding-top:0px;margin-top:5px;margin-bottom: 0px; color: white; font-weight: 300;font-size: 15px;">
+                {{shortcut.city}}
+              </h5>
+            </div>
             <div style="width:20%;float: left; ">
               <button class="ava" style=" width: 100%;
               height: 50px;
               border-top: thin solid white;
               margin-top: 5px;
-              padding-top: 10px; opacity: 0.87; background-color: transparent;" (click)=saveRoute()>
-                <ion-icon name={{shortcut.iconName}} style=" width: 25px;
+              padding-top: 10px; opacity: 0.87; background-color: transparent;" (click)=deleteFavor(shortcut) [hidden]="hideTrash">
+                <ion-icon name="trash-outline" style=" width: 25px;
               height: 25px;
               color: white;"></ion-icon>
               </button>
+              <ion-reorder slot="end"></ion-reorder>
             </div>
-            <h5
-              style="border-top:thin solid white; text-align: left;margin-top:5px;padding-top:10px; margin-bottom:0px;padding-bottom:1px; color: white; font-weight: 500; font-size: 16px;">
-              {{shortcut.street}}
-            </h5>
-            <h5
-              style="padding-left: 20%; text-align: left;padding-top:0px;margin-top:5px;margin-bottom: 0px; color: white; font-weight: 300;font-size: 15px;">
-              {{shortcut.city}}
-            </h5>
-          </div>
-          <div style="width:20%;float: left; ">
-            <button class="ava" style=" width: 100%;
-            height: 50px;
-            border-top: thin solid white;
-            margin-top: 5px;
-            padding-top: 10px; opacity: 0.87; background-color: transparent;" (click)=deleteFavor(shortcut)>
-              <ion-icon name="trash-outline" style=" width: 25px;
-            height: 25px;
-            color: white;"></ion-icon>
-            </button>
+          </ion-item>
+         
           </div>
           
-        </div>
+        
+       
+      </ion-reorder-group>
+        
       </div>
     </div>
 
     <div>
-      <button ion-button class="move-favor" (click)="changeSequence()">Reihenfolge ändern</button>
+      <button ion-button class="move-favor" (click)="changeSequence()">
+      <p [hidden]="hideChange">Reihenfolge ändern</p>
+      <p [hidden]="hideSave" >Reihenfolge speichern</p>
+      </button>
     </div>
     <div>
-      <button ion-button class="save-favor" (click)="dismiss()">Änderungen speichern</button>
+      <button ion-button class="save-favor" (click)="saveChanges()">Änderungen speichern</button>
     </div>
   </div>
