@@ -11,7 +11,7 @@ import { Status } from 'src/app/Classess/map/status';
 })
 export class RideIndicatorComponent implements OnInit {
 
- public statusColor: string = '';
+ public statusColor: string = '#ffe500';
 
   constructor(private modalController: ModalController, private mapDataFetch: MapDataFetchService) { }
 
@@ -19,12 +19,12 @@ export class RideIndicatorComponent implements OnInit {
     this.mapDataFetch.activeClusterStatus.subscribe(status => {
       if (status === Status.ALONE) {
         this.statusColor = '#ffe500';
-      } else if (status === Status.GROUP) {
+      } else if (status === Status.GROUP) { 
         this.statusColor = '#00eeff';
       } else if (status === Status.ASSOCIATION) {
         this.statusColor = '#ff1ad9';
       }
-      console.log("haha" + status);
+      //console.log("haha" + status);
       document.getElementById('overID').style.backgroundColor = this.statusColor;
     });
     //console.log("hihhihi"+ this.statusColor);
