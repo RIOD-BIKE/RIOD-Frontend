@@ -25,6 +25,8 @@ export class MapBoxComponent implements OnInit {
   private assemblyPointSource: any;
   private assemblyPointTempSource: any;
   private assemblyPointMarkers: any;
+  private routingActive:boolean=false;
+  private tempSaveingassemblyPointMarkers: any;
 
   constructor(private routingUserService: RoutingUserService, private userservice: UserService,
               private mapDataFetchService: MapDataFetchService, private mapIntegration: MapIntegrationService) {
@@ -58,12 +60,14 @@ export class MapBoxComponent implements OnInit {
           this.updateCluster();
         });
       });
-      this.mapDataFetchService.retrieveAssemblyPoints().subscribe((value) => {
-        this.assemblyPointMarkers = value;
-        this.mapDataFetchService.apsValueChange.subscribe(y => {
-          this.assemblyPointMarkers = y;
+ this.mapDataFetchService.retrieveAssemblyPoints().subscribe((value) => {
+        console.log("hey111")
+        if(this.routingActive==false){
+          this.assemblyPointMarkers = value;
           this.updateAssemblyPoints();
-        });
+        } else{
+          this.tempSaveingassemblyPointMarkers=value;
+        }
       });
       resolve();
     });
@@ -212,8 +216,10 @@ export class MapBoxComponent implements OnInit {
       const data3 = new AssemblyPointCollection(temp);
       const drawnBuilding = Object.assign({}, data3);
       this.assemblyPointTempSource.setData(drawnBuilding);
-    }
+    } 
   }
+
+
 
   drawAssemblyPoints() {
     this.map.on('load', () => {
@@ -376,6 +382,7 @@ export class MapBoxComponent implements OnInit {
 
   async drawRoute(pointString): Promise<any> {
     return new Promise(resolve => {
+      this.routingActive=true;
       this.routingUserService.getstartPoint().then(y => {
         this.routingUserService.getfinishPoint().then(x => {
           const start = y[0]; // StartCoords
@@ -429,7 +436,7 @@ export class MapBoxComponent implements OnInit {
                 const line = turf.lineString(arr);
                 const bboxTurf = turf.bbox(line);
                 console.log(bboxTurf);
-                map.fitBounds(bboxTurf, { padding: { top: 200, bottom: 130, left: 40, right: 40 } });
+                //map.fitBounds(bboxTurf, { padding: { top: 200, bottom: 130, left: 40, right: 40 } });
                 this.drawThisFinishMarker(map, arr);
                 resolve();
               });
@@ -556,12 +563,14 @@ export class MapBoxComponent implements OnInit {
             let finishPointdata;
             finishPointSource = map.getSource('finishMarker') as mapboxgl.GeoJSONSource;
             if (pointArray !== undefined) {
+              console.log(pointArray);
               finishPointdata = new PointMarker(Array(new GeoPointMarker(pointArray)));
               const arr = [startpoint[0], pointArray, finishPoint];
               const line = turf.lineString(arr);
               const bbox = turf.bbox(line);
 
-              console.log('DrawThisFinishPointMarker' + bbox);
+              console.log('DrawThisFinishPointMarker1' + bbox);
+              finishPointSource.setData(finishPointdata);
               map.fitBounds(bbox, { padding: { top: 200, bottom: 130, left: 40, right: 40 } });
             } else {
               finishPointdata = new PointMarker(Array(new GeoPointMarker(finishPoint[0])));
@@ -573,9 +582,11 @@ export class MapBoxComponent implements OnInit {
               arr.push(startpoint[0]);
               const line = turf.lineString(arr);
               const bboxTurf = turf.bbox(line);
+              console.log('DrawThisFinishPointMarker2' + bboxTurf);
+              finishPointSource.setData(finishPointdata);
               map.fitBounds(bboxTurf, { padding: { top: 200, bottom: 130, left: 40, right: 40 } });
             }
-            finishPointSource.setData(finishPointdata);
+            
             console.log(this.map.hasImage('target'));
             if (this.map.hasImage('target') === true) {
               this.mapDrawFinishMarkerHelper();
@@ -633,6 +644,7 @@ export class MapBoxComponent implements OnInit {
 
   removeRoute(): Promise<any> {
     return new Promise(resolve => {
+      this.routingActive=false;
       this.assemblyPointMarkers = this.mapDataFetchService.aps;
 
       if (this.map.getLayer('finishMarker') !== undefined) {
@@ -650,14 +662,26 @@ export class MapBoxComponent implements OnInit {
 
   removeAllPoints(): Promise<any> {
     return new Promise(resolve => {
-      const temp = this.assemblyPointMarkers;
-      temp.forEach(element => {
-        element.properties.iconName = 'marker_DAP';
-        element.properties.textField = '';
-      });
-      this.assemblyPointMarkers = temp;
-      this.drawUpdateChooseAssemblyPoints();
-      resolve();
+      if(this.tempSaveingassemblyPointMarkers!=undefined){
+        const temp = this.tempSaveingassemblyPointMarkers;
+        temp.forEach(element => {
+          element.properties.iconName = 'marker_DAP';
+          element.properties.textField = '';
+        });
+        this.assemblyPointMarkers = temp;
+        this.tempSaveingassemblyPointMarkers=undefined;
+        this.drawUpdateChooseAssemblyPoints();
+        resolve();
+      }else{
+        const temp = this.assemblyPointMarkers;
+        temp.forEach(element => {
+          element.properties.iconName = 'marker_DAP';
+          element.properties.textField = '';
+        });
+        this.assemblyPointMarkers = temp;
+        this.drawUpdateChooseAssemblyPoints();
+        resolve();
+      }
     });
   }
 

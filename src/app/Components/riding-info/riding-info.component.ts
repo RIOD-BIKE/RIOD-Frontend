@@ -30,6 +30,7 @@ export class RidingInfoComponent implements AfterViewInit {
   @Input() countOfRiods=0;
   @Input() timeToDispatch="0:30";
   private targetAP;
+  private stopCount:boolean=false;
   private membersAtAP:riodMembersAtAP[]=[];
   private bounding:riodMembersAtAP[]=[];
   private tempSeconds:number;
@@ -94,6 +95,7 @@ export class RidingInfoComponent implements AfterViewInit {
           if(highestNumber!=null){
 
             this.countTimeToDepartcher(highestNumber).then(()=>{
+              this.stopCount=true;
               this.setDisplayToAPWait();
             });
           }
@@ -106,6 +108,7 @@ export class RidingInfoComponent implements AfterViewInit {
        if(nextAP!=null){
          console.log(nextAP);
          this.targetAP=nextAP;
+         console.log(this.timeToTarget);
          this.timeToTarget=this.bounding[nextAP-1].duration + " min";
          if(this.bounding.length>nextAP+1){
 
@@ -139,6 +142,7 @@ export class RidingInfoComponent implements AfterViewInit {
     this.toSammelpunktLeg=false;
     this.fromStartLeg=true;
     this.finish=true;
+
   }
 
   setDisplayToLastLeg(){
@@ -148,6 +152,7 @@ export class RidingInfoComponent implements AfterViewInit {
     this.fromStartLeg=true;
     this.finish=true;
   }
+
   setDisplayToFinish(){
     this.toSammelpunktLeg=true;
     this.lastLeg=true;
@@ -171,10 +176,13 @@ export class RidingInfoComponent implements AfterViewInit {
     console.log(time);
     let totalSec = time*60;
     let firstTry:boolean=false;
+    this.tempSeconds=30;
+    this.stopCount=false;
     var x = setInterval(() => {
     //clears countdown when all seconds are counted
-    if (totalSec <= 0) {
+    if (totalSec <= 0 || this.stopCount==true) {
         clearInterval(x);
+        this.stopCount=false;
         console.log("TIMER == 0 -> GO");
     }
     if(firstTry==true){
