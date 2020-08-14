@@ -63,23 +63,22 @@
                     {{ shortcut.city }}
                   </h5>
                 </ion-col>
-                <ion-col size="2">
+                <ion-col size="2" >
                   <button class="ava" style="
                     padding-top: 50%;
                     background-color: transparent;
-                  " (click)="deleteFavor(shortcut)" [hidden]="hideTrash">
-                    <ion-icon name="trash-outline" style="width: 25px; height: 25px; color: white;"></ion-icon>
+                  " (click)="deleteFavor(shortcut)" >
+                    <ion-icon name="trash-outline" [hidden]="hideTrash" style="width: 25px; height: 25px; color: white;"></ion-icon>
                   </button>
-                  <ion-reorder slot="end"></ion-reorder>
+                  <ion-reorder [hidden]="hideMove"></ion-reorder>
                 </ion-col>
               </ion-row>
-            </div>
-            </ion-item>
+            </div>          
+            </ion-item>   
           </div>
         </ion-reorder-group>
       </div>
     </div>
-
     <div>
       <button ion-button class="move-favor" (click)="changeSequence()">
         <p [hidden]="hideChange">Reihenfolge ändern</p>

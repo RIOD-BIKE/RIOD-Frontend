@@ -17,6 +17,9 @@ export class EditFavoriteComponent implements OnInit {
   public hideTrash = false;
   public hideChange = false;
   public hideSave = true;
+  public hideMove = true;
+
+  
 
   constructor(
     private modalController: ModalController,
@@ -28,6 +31,7 @@ export class EditFavoriteComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
     this.loadShortcuts();
     // this.userService.updateFavor.subscribe( a => {
     //   if (a) {
@@ -59,6 +63,7 @@ export class EditFavoriteComponent implements OnInit {
 
   changeSequence(){
     // this.navController.navigateForward('edit-favor-sequence');
+    this.hideMove = !this.hideMove;
     this.hideTrash = !this.hideTrash;
     this.hideChange = !this.hideChange;
     this.hideSave = !this.hideSave;
