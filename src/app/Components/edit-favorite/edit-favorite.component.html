@@ -86,10 +86,10 @@
                         {{ shortcut.city }}
                       </h5>
                     </ion-col>
-                    <ion-col size="2">
+                    <ion-col size="2" style="padding-top: 25px">
                       <button
                         class="ava"
-                        style="padding-top: 50%; background-color: transparent;"
+                        style="background-color: transparent;"
                         (click)="deleteFavor(shortcut)"
                         [hidden]="hideTrash"
                       >
@@ -98,7 +98,7 @@
                           style="width: 25px; height: 25px; color: white;"
                         ></ion-icon>
                       </button>
-                      <ion-reorder style="--margin-top:50%;" [hidden]="hideReorder"></ion-reorder>
+                      <ion-reorder [hidden]="hideReorder"></ion-reorder>
                     </ion-col>
                   </ion-row>
                 </div>
