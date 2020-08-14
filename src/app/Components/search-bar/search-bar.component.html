@@ -64,7 +64,7 @@
 
 
       
-      <span *ngFor="let shortcut of shortcuts" style="margin: 0;">
+      <span *ngFor="let shortcut of shortcuts" id="shortcutList" style="margin: 0;">
         
         <button class="s-btn primary" [id]="shortcut.iconName" style="margin-left: 10px;  background-color: #4f4f4f; border-radius: 30px;" *ngIf="shortcut.orderNumber!=1"
           (click)="onSelect(shortcut.coords,shortcut.address,'','', shortcut.iconName)">
