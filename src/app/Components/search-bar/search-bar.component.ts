@@ -33,6 +33,7 @@ export class SearchBarComponent implements OnInit {
   searchBarOpen = false;
   public hideIcon = true;
   private selectedRoute: string[];
+  private noneResult = true;
   constructor(
     private navCtrl: NavController,
     private userService: UserService,
@@ -119,7 +120,7 @@ export class SearchBarComponent implements OnInit {
   }
 
   back() {
-    this.searchBarOpen = false;
+    this.searchBarOpen = false; 
     document.getElementById("edit-with-content").hidden = true;
     document.getElementById("no-recent-content").hidden = true;
     document.getElementById("no-address").hidden = true;
@@ -129,10 +130,17 @@ export class SearchBarComponent implements OnInit {
     document.getElementById("cross").hidden = true;
     document.getElementById("with-content").hidden = false;
     document.getElementById("wrap").style.width = "100%";
-    if (this.searchBarInputV.length > 0) {
+   
+    if (this.searchBarInputV.length > 0 && this.noneResult == false) {
       document.getElementById("saveBtn").hidden = false;
       document.getElementById("avaBtn").hidden = true;
-    } else {
+    } 
+    if (this.searchBarInputV.length > 0 && this.noneResult == true){
+      document.getElementById("saveBtn").hidden = true;
+      document.getElementById("avaBtn").hidden = false;
+     // console.log("da Thang 222 " +this.searchBarInputV.length);
+    }
+    if(this.searchBarOpen == false && this.searchBarInputV.length == 0){
       document.getElementById("saveBtn").hidden = true;
       document.getElementById("avaBtn").hidden = false;
     }
@@ -148,26 +156,27 @@ export class SearchBarComponent implements OnInit {
       document.getElementById("edit-no-content").hidden = true;
     }
     if (this.iconNew != "" && this.searchBarInputV.length > 0) {
-      console.log("this.ICONNEW != ''");
-      this.hideIcon = false;
-      document.getElementById("saveBtn").hidden = true;
-      document.getElementById("cross").hidden = true;
-      document.getElementById("avaBtn").hidden = true;
-    } else {
+      if (this.searchBarInputV.length > 0 && this.noneResult == true){
+        document.getElementById("saveBtn").hidden = true;
+        document.getElementById("avaBtn").hidden = false;
+        console.log("da Thang");
+        
+      }
+    } 
+    /*else {
       if (this.searchBarInputV.length < 1) {
         this.iconNew = "";
-        console.log("this.ICONNEW22 != ''");
         document.getElementById("saveBtn").hidden = true;
         this.hideIcon = true;
         document.getElementById("avaBtn").hidden = false;
       } else {
         this.iconNew = "";
-        console.log("this.ICONNEW33 != ''");
         document.getElementById("saveBtn").hidden = false;
         this.hideIcon = true;
         document.getElementById("avaBtn").hidden = true;
       }
     }
+    */
     this.routingUserService.setDisplaySwitchCase(true);
   }
 
@@ -256,14 +265,7 @@ export class SearchBarComponent implements OnInit {
     over.style.borderBottomLeftRadius = "0px";
     over.style.borderBottomRightRadius = "0px";
     over.style.transition = "2s !important";
-    if (this.shortcuts.length == 0) {
-      // document.getElementById("no-content").hidden = true;
-      // document.getElementById("edit-no-content").hidden = false;
-      // document.getElementById("with-content").hidden = true;
-    } else {
-      // document.getElementById("edit-no-content").hidden = true;
-      // document.getElementById("with-content").hidden = false;
-    }
+    
   }
 
   search() {
@@ -349,11 +351,15 @@ export class SearchBarComponent implements OnInit {
           });
           if (tempArray.length > 0) {
             document.getElementById("no-address").hidden = true;
+            this.noneResult = false;
           } else {
+            this.noneResult = true;
             document.getElementById("no-address").hidden = false;
             document.getElementById("edit-with-content").hidden = true;
-            document.getElementById("shortcutList").hidden = true;
             document.getElementById("edit-no-content").hidden = true;
+            if(this.shortcuts.length != 0){
+              document.getElementById("shortcutList").hidden = false;
+            }
           }
           if (
             JSON.stringify(this.addressesString) !=
@@ -484,6 +490,9 @@ export class SearchBarComponent implements OnInit {
     const modal = await this.modalController.create({
       component: ButtonOverlayComponent,
     });
+    document.getElementById("saveBtn").hidden = true;
+    this.hideIcon = true;
+    document.getElementById("avaBtn").hidden = false;
     return await modal.present();
   }
 
