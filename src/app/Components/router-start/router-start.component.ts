@@ -228,7 +228,7 @@ export class RouterStartComponent implements OnInit, AfterViewInit {
     const windowHeight = window.innerHeight;
     const drawerHeight = windowHeight - this.handleHeight;
     // const drawerHeight = windowHeight - 118; 
-    this.renderer.setStyle(this.element.nativeElement, 'top', windowHeight - this.handleHeight + 'px');
+    this.renderer.setStyle(this.element.nativeElement, 'top', '88%');
 
     const options: GestureConfig = {
       el: document.querySelector('#header'),
