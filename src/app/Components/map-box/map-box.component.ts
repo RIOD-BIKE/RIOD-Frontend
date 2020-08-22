@@ -475,6 +475,7 @@ export class MapBoxComponent implements OnInit {
   drawFinishMarker(): Promise<boolean> {
     return new Promise(resolve => {
       this.drawExistingAssemblyPointRoute().then(x => {
+        console.log('test');
         if (x !== false && x.assemblyPoints !== undefined && x.assemblyPoints.length > 0) {
           let i = 0;
           const apMarker = this.assemblyPointMarkers;

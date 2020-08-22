@@ -1,25 +1,19 @@
-import { BehaviorSubject } from 'rxjs';
+import { interval } from 'rxjs';
 import { DisplayService } from './../../../services/display/display.service';
-import { RoutingGeoAssemblyPoint } from 'src/app/Classess/map/map';
 import { MapDataFetchService } from './../../../services/map-data-fetch/map-data-fetch.service';
-import { Component, OnInit, Directive, ViewChild, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, ElementRef } from '@angular/core';
 import { MapBoxComponent } from 'src/app/Components/map-box/map-box.component';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { MainMenuComponent } from 'src/app/Components/main-menu/main-menu.component';
 import { RoutingUserService } from 'src/app/services/routing-user/routing-user.service';
-import { ModalController, PopoverController, AnimationController } from '@ionic/angular';
+import { ModalController, AnimationController } from '@ionic/angular';
 import { TutorialOverlay1Component } from '../../../Components/tutorial/tutorial-overlay1/tutorial-overlay1.component';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { RouterInfoInBottomComponent } from 'src/app/Components/router-info-in-bottom/router-info-in-bottom.component';
-import { RouterStartComponent } from 'src/app/Components/router-start/router-start.component';
-import { SearchBarComponent } from 'src/app/Components/search-bar/search-bar.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { trigger, state, style, transition, animate } from '@angular/animations';
-import { RidingInfoComponent } from 'src/app/Components/riding-info/riding-info.component';
+import { trigger, style, transition, animate } from '@angular/animations';
 import { MapIntegrationService } from 'src/app/services/map-integration/map-integration.service';
 import { UsersDataFetchService } from 'src/app/services/users-data-fetch/users-data-fetch.service';
 
- 
+
 
 @Component({
   selector: 'app-map-start',
@@ -41,47 +35,45 @@ import { UsersDataFetchService } from 'src/app/services/users-data-fetch/users-d
 
 export class MapStartPage implements OnInit {
 
-  public showRidingToggle: boolean = true;
-  public showMain: boolean = false;
-  public showRouterInfo: boolean=false;
-  private showRide: boolean= false;
-  @Input() private zIndexRT: number=1;
-  @Input() public showType: string = '';
+  public showRidingToggle = true;
+  public showMain = false;
+  public showRouterInfo = false;
+  @Input() public showType = '';
   private showIndicatorScreen = false;
   @ViewChild('indicatorScreen') indicatorScreen: ElementRef;
 
   public searchbar = false;
   public closeWindow = true;
 
- constructor(private popoverController:PopoverController, private routingUserService: RoutingUserService, private mapBox: MapBoxComponent,
+ constructor(private routingUserService: RoutingUserService, private mapBox: MapBoxComponent,
              private statusBar: StatusBar, private mainMenu: MainMenuComponent, private modalController: ModalController,
-             private mapDataFetch: MapDataFetchService,private routerInfo:RouterInfoInBottomComponent,routerStart:RouterStartComponent,private searchBar: SearchBarComponent,
-             private userDataFetch:UsersDataFetchService,private animationController: AnimationController, private displayService: DisplayService, private mapIntegration:MapIntegrationService) {
+             private mapDataFetch: MapDataFetchService, private userDataFetch: UsersDataFetchService, private animationController: AnimationController,
+             private displayService: DisplayService, private mapIntegration: MapIntegrationService) {
   this.init();
  }
  init() {
   this.statusBar.overlaysWebView(false);
   this.statusBar.backgroundColorByHexString('#383838');
   this.mapBox.setupMap();
-  //this.presentModal();
-  this.routingUserService.getDisplayTypeObs().subscribe(x=>{
+  // this.presentModal();
+  this.routingUserService.getDisplayTypeObs().subscribe(x => {
     console.log(x);
-    if(x=='Start'){
-     this.showType="";
+    if (x == 'Start') {
+     this.showType = '';
     }
-     if(x=='Route_Info'){
+    if (x == 'Route_Info') {
        this.routingUserService.setDisplayRoutingStart(true);
        this.mapBox.disableFutureChooseAssemblyPoints();
-       this.showType="showMain";
+       this.showType = 'showMain';
      }
-    if(x=='Main'){
-      this.showType="showMain";
+    if (x == 'Main') {
+      this.showType = 'showMain';
     }
-    if(x=='routeStarted'){
-      this.showType="showRouterInfo";
+    if (x == 'routeStarted') {
+      this.showType = 'showRouterInfo';
     }
 
-  })
+  });
  }
 
   ngOnInit() {
@@ -96,6 +88,11 @@ export class MapStartPage implements OnInit {
             this.hideSearchbar(false, true);
           }
       });
+    });
+
+    // locate device every 20 seconds
+    interval(20000).subscribe(() => {
+      this.locateDevice();
     });
   }
 
@@ -121,8 +118,8 @@ export class MapStartPage implements OnInit {
 
   }
 
-  switchIndicatorIcon(switchCase: boolean){
-    document.getElementById("toggleIndicator").hidden = switchCase;
+  switchIndicatorIcon(switchCase: boolean) {
+    document.getElementById('toggleIndicator').hidden = switchCase;
   }
 
 
@@ -130,54 +127,53 @@ export class MapStartPage implements OnInit {
     this.mapBox.moveMapToCurrent();
   }
 
-  setChildView(){
+  setChildView() {
     this.setShowMain();
   }
 
-  presentModal(){
-    
+  presentModal() {
+
   }
 
 
-  setShowRouterInfoBottom():Promise<any>{
+  setShowRouterInfoBottom(): Promise<any> {
     return new Promise(resolve => {
-      this.showRidingToggle=false;
-    this.showRouterInfo= true;
-    resolve();
-    });
-  }
-
-
-  setShowMain(): Promise<any>{
-    return new Promise(resolve => {
-      this.mainMenu.setUpStart();
-      this.showMain = true;
       this.showRidingToggle = false;
-      this.showRouterInfo=false;
+      this.showRouterInfo = true;
       resolve();
     });
   }
 
-  setShowStart(): Promise<any>{
+
+  setShowMain(): Promise<any> {
+    return new Promise(resolve => {
+      this.mainMenu.setUpStart();
+      this.showMain = true;
+      this.showRidingToggle = false;
+      this.showRouterInfo = false;
+      resolve();
+    });
+  }
+
+  setShowStart(): Promise<any> {
     return new Promise(resolve => {
     this.showMain = false;
     this.showRidingToggle = false;
-    this.showRouterInfo=false;
+    this.showRouterInfo = false;
     resolve();
     });
   }
 
   public toggleShowIndicatorScreen() {
-    this.zIndexRT=11;
     const animation = this.animationController.create()
       .addElement(this.indicatorScreen.nativeElement)
       .duration(250)
       .easing('ease-in-out');
     if (this.showIndicatorScreen) {
-      
-      animation.fromTo('transform', 'translateY(0%)', 'translateY(100%)')
+
+      animation.fromTo('transform', 'translateY(0%)', 'translateY(100%)');
     } else {
-      animation.fromTo('transform', 'translateY(100%)', 'translateY(0%)')
+      animation.fromTo('transform', 'translateY(100%)', 'translateY(0%)');
     }
     this.showIndicatorScreen = !this.showIndicatorScreen;
     this.displayService.setIsIndicatorScreenVisible(this.showIndicatorScreen);
@@ -196,8 +192,8 @@ export class MapStartPage implements OnInit {
     this.mapDataFetch.sendUserPosition();
   }
 
-  setShowChange(){
-    
+  setShowChange() {
+
   }
 
 }

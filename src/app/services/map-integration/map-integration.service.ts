@@ -106,18 +106,22 @@ export class MapIntegrationService {
             const endPosData = value.endPosition[0];
             const endPosParam = endPosition[0];
             this.checkAddressProximity(endPosData, endPosParam).then(isEndNear => {
+              console.log(isEndNear);
               if (isEndNear === true) {
                 if (endPosData[0] === endPosParam[0] && endPosParam[1] === endPosData[1]) {
                   endPointExists = true;
                 }
                 this.checkAddressProximity(value.startPosition[0], startPosition[0]).then(isStartNear => {
+                  console.log(isStartNear);
                   if (isStartNear === true) {
                     if (endPointExists === true) {
+                      console.log('test');
                       resolve({value, key, index});
                     } else {
                       i++;
                       tempSaveResolveData = {value, key, index};
                       if (length === i + 1) {
+                        console.log('test');
                         resolve(tempSaveResolveData);
                       }
                     }
@@ -134,8 +138,10 @@ export class MapIntegrationService {
           }
           if (length === i + 1 || i === length) {
             if (tempSaveResolveData !== undefined && endPointExists === false) {
+              console.log('test');
               resolve(tempSaveResolveData);
             } else {
+              console.log('test');
               resolve(false);
             }
           }
@@ -147,25 +153,25 @@ export class MapIntegrationService {
   checkAddressProximity(address1: number[], address2: turf.helpers.Position): Promise<boolean> {
     return new Promise(resolve => {
       const pt = turf.point(address2);
-      const polygon = [];
-      let dLatN = 400;
-      let dLongN = -400;
-      for (let time = 0; time < 4; time++) {
-        const R = 6378137;
-        const dLat = dLatN / R;
-        const dLon = dLongN / (R * Math.cos(Math.PI * address1[0] / 180));
-        polygon.push([address1[0] + dLat * 180 / Math.PI, address1[1] + dLon * 180 / Math.PI]);
-        if (time === 0) {
-          dLongN = 400;
-        }
-        if (time === 1) {
-          dLongN = 400;
-          dLatN = -400;
-        }
-        if (time === 2) {
-          dLongN = -400;
-        }
-      }
+      const polygon = this.calculateBBBox(address1[0], address1[1], 400);
+      // let dLatN = 400;
+      // let dLongN = -400;
+      // for (let time = 0; time < 4; time++) {
+      //   const R = 6378137;
+      //   const dLat = dLatN / R;
+      //   const dLon = dLongN / (R * Math.cos(Math.PI * address1[0] / 180));
+      //   polygon.push([address1[0] + dLat * 180 / Math.PI, address1[1] + dLon * 180 / Math.PI]);
+      //   if (time === 0) {
+      //     dLongN = 400;
+      //   }
+      //   if (time === 1) {
+      //     dLongN = 400;
+      //     dLatN = -400;
+      //   }
+      //   if (time === 2) {
+      //     dLongN = -400;
+      //   }
+      // }
       const poly = turf.polygon([[polygon[0], polygon[1], polygon[2], polygon[3], polygon[0]]]);
       resolve(turf.booleanPointInPolygon(pt, poly));
     });
@@ -447,22 +453,21 @@ export class MapIntegrationService {
     }
 
     // can be used for other locations when parameters are defined
-    calculateBBBox(latitude: number, longitude: number) {
+    calculateBBBox(latitude: number, longitude: number, halfsideInMeter: number) {
       const bbox = [];
       const latD = this.deg2rad(latitude);
       const lonD = this.deg2rad(longitude);
       // halfSide is half-length of boundingbox in meteres
-      const halfSide = 1000 * 20;
 
       // Radius of Earth at given latitude
       const radius = this.WGS84EarthRadius(latD);
       // Radius of the parallel at given latitude
       const pradius = radius * Math.cos(latD);
 
-      bbox.push(this.rad2deg(lonD - halfSide / radius));
-      bbox.push(this.rad2deg(latD - halfSide / radius));
-      bbox.push(this.rad2deg(lonD + halfSide / pradius));
-      bbox.push(this.rad2deg(latD + halfSide / pradius));
+      bbox.push(this.rad2deg(lonD - halfsideInMeter / radius));
+      bbox.push(this.rad2deg(latD - halfsideInMeter / radius));
+      bbox.push(this.rad2deg(lonD + halfsideInMeter / pradius));
+      bbox.push(this.rad2deg(latD + halfsideInMeter / pradius));
       return(bbox);
     }
 
@@ -490,7 +495,7 @@ export class MapIntegrationService {
 
     searchAddress(query: string) {
         const myPosition = this.userService.behaviorMyOwnPosition.value;
-        const bbox = this.calculateBBBox(myPosition.coords.latitude, myPosition.coords.longitude);
+        const bbox = this.calculateBBBox(myPosition.coords.latitude, myPosition.coords.longitude, 20000);
         return this.http.get('https://api.mapbox.com/geocoding/v5/mapbox.places/' + query +
         '.json?autocomplete?types=address&country=de&bbox=' + bbox[0] + ',' + bbox[1] + ',' + bbox[2] + ',' + bbox[3] +
         '&access_token=' + environment.mapbox.accessToken)

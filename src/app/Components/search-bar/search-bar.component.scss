@@ -1,7 +1,7 @@
 .over {
   background-color: #383838;
   width: 100vw;
-  height: 35vw;
+  height: 45vw;
   padding-top: 20px;
   padding-bottom: 10px;
   padding-left: 30px;
@@ -30,6 +30,8 @@
       border-radius: 7px;
       background-color: #4f4f4f;
       transition: 0.2s;
+      
+      margin-top: 10%;
 
       .search {
         background-color: transparent;

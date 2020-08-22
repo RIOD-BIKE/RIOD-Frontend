@@ -20,7 +20,7 @@ export class RidingToggleComponent implements OnInit {
 
   ngOnInit() {
     this.routingUserService.getDisplaySwitchCase().subscribe(x => {
-      console.log(x);
+      // console.log(x);
       if (x == true) {
         this.toggleVisibility(false);
       } else {

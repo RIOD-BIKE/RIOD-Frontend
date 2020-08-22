@@ -393,7 +393,7 @@ export class SearchBarComponent implements OnInit {
     city: string,
     icon: string
   ) {
-    console.log(coords + address + icon);
+    // console.log(coords + address + icon);
     document.getElementById("cross").hidden = true;
     this.back();
     this.iconNew = icon;
@@ -412,6 +412,7 @@ export class SearchBarComponent implements OnInit {
       this.hideIcon = false;
       // this.iconNew ="";
     }
+    
     this.routingUserService.setDisplaySwitchCase(true);
     this.routingUserService.setFinishPoint([coords, address]).then(() => {
       this.routingUserService.deleteAllPoints().then(() => {
@@ -419,6 +420,7 @@ export class SearchBarComponent implements OnInit {
           this.mapBox.disableAssemblyClick().then(() => {
             this.mapBox.updateAssemblyPoints();
             this.mapBox.drawFinishMarker().then((x) => {
+              console.log(x);
               if (x == true) {
                 this.routingUserService.getPoints().then((points) => {
                   let pointString = "";
@@ -438,7 +440,9 @@ export class SearchBarComponent implements OnInit {
                 this.routingUserService.setDisplayType("Main");
                 this.searchBarOpen = false;
               }
+              
               this.searchBarInputV = address;
+              console.log(this.searchBarInputV);
               this.selectedRoute = [address, street, city, coords];
               this.userService.behaviorFavorite.next(this.selectedRoute);
             });
