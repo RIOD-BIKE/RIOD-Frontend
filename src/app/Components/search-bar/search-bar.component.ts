@@ -65,7 +65,7 @@ export class SearchBarComponent implements OnInit {
       this.userService.getAllShortcuts().then((allShortcuts) => {
         this.shortcuts = allShortcuts;
         console.log(this.shortcuts);
-        if (this.shortcuts.length == 0) {
+        if (this.shortcuts.length === 0) {
           document.getElementById('with-content').hidden = true;
           document.getElementById('edit-no-content').hidden = false;
         } else {
@@ -130,16 +130,16 @@ export class SearchBarComponent implements OnInit {
     document.getElementById('with-content').hidden = false;
     document.getElementById('wrap').style.width = '100%';
 
-    if (this.searchBarInputV.length > 0 && this.noneResult == false) {
+    if (this.searchBarInputV.length > 0 && this.noneResult === false) {
       document.getElementById('saveBtn').hidden = false;
       document.getElementById('avaBtn').hidden = true;
     }
-    if (this.searchBarInputV.length > 0 && this.noneResult == true) {
+    if (this.searchBarInputV.length > 0 && this.noneResult === true) {
       document.getElementById('saveBtn').hidden = true;
       document.getElementById('avaBtn').hidden = false;
      // console.log("da Thang 222 " +this.searchBarInputV.length);
     }
-    if (this.searchBarOpen == false && this.searchBarInputV.length == 0) {
+    if (this.searchBarOpen === false && this.searchBarInputV.length === 0) {
       document.getElementById('saveBtn').hidden = true;
       document.getElementById('avaBtn').hidden = false;
     }
@@ -147,35 +147,19 @@ export class SearchBarComponent implements OnInit {
     over.style.height = 'auto';
     over.style.borderBottomLeftRadius = '10px';
     over.style.borderBottomRightRadius = '10px';
-    if (this.shortcuts.length == 0) {
-      // document.getElementById("no-content").hidden = false;
+    if (this.shortcuts.length === 0) {
       document.getElementById('edit-no-content').hidden = false;
     } else {
-      // document.getElementById("no-content").hidden = true;
       document.getElementById('edit-no-content').hidden = true;
     }
-    if (this.iconNew != '' && this.searchBarInputV.length > 0) {
-      if (this.searchBarInputV.length > 0 && this.noneResult == true) {
+    if (this.iconNew !== '' && this.searchBarInputV.length > 0) {
+      if (this.searchBarInputV.length > 0 && this.noneResult === true) {
         document.getElementById('saveBtn').hidden = true;
         document.getElementById('avaBtn').hidden = false;
         console.log('da Thang');
 
       }
     }
-    /*else {
-      if (this.searchBarInputV.length < 1) {
-        this.iconNew = "";
-        document.getElementById("saveBtn").hidden = true;
-        this.hideIcon = true;
-        document.getElementById("avaBtn").hidden = false;
-      } else {
-        this.iconNew = "";
-        document.getElementById("saveBtn").hidden = false;
-        this.hideIcon = true;
-        document.getElementById("avaBtn").hidden = true;
-      }
-    }
-    */
     this.routingUserService.setDisplaySwitchCase(true);
   }
 
@@ -221,7 +205,7 @@ export class SearchBarComponent implements OnInit {
     this.searchBarOpen = true;
 
     document.getElementById('saveBtn').hidden = true;
-    if (this.addressesString.length == 0 && this.searchBarInputV.length == 0) {
+    if (this.addressesString.length === 0 && this.searchBarInputV.length === 0) {
       document.getElementById('recent-results').hidden = true;
       document.getElementById('search-results').hidden = true;
       document.getElementById('cross').hidden = true;
@@ -234,7 +218,7 @@ export class SearchBarComponent implements OnInit {
       this.hideIcon = true;
     }
 
-    if (this.searchBarInputV.length <= 2 && this.recentRoutes.length == 0) {
+    if (this.searchBarInputV.length <= 2 && this.recentRoutes.length === 0) {
       document.getElementById('no-recent-content').hidden = false;
       document.getElementById('edit-with-content').hidden = true;
       document.getElementById('edit-no-content').hidden = true;
@@ -252,7 +236,7 @@ export class SearchBarComponent implements OnInit {
     arrow.style.float = 'left';
     arrow.style.display = 'block';
     arrow.style.visibility = 'visible';
-    if (this.shortcuts.length != 0) {
+    if (this.shortcuts.length !== 0) {
       document.getElementById('edit-with-content').hidden = false;
     }
     document.getElementById('avaBtn').hidden = true;
@@ -268,7 +252,7 @@ export class SearchBarComponent implements OnInit {
   }
 
   search() {
-    if (this.searchBarInputV == '') {
+    if (this.searchBarInputV === '') {
       this.addressesString = [];
       this.searchBarInputV = '';
       if (this.recentRoutes.length > 0) {
@@ -281,7 +265,8 @@ export class SearchBarComponent implements OnInit {
       document.getElementById('no-address').hidden = true;
     }
     const searchTerm = this.searchBarInputV.toLocaleLowerCase();
-    // SearchString is not Empty -> Display Cross //could be improved -> html <ion-input debounde="400"[<- Problem, only 400ms function play] \>
+    // SearchString is not Empty -> Display Cross //could be improved ->
+    // html <ion-input debounde="400"[<- Problem, only 400ms function play] \>
     if (searchTerm.length > 0) {
       document.getElementById('cross').hidden = false;
     } else {
@@ -303,7 +288,8 @@ export class SearchBarComponent implements OnInit {
             feat.properties.address,
           ]);
           temp.forEach((con) => {
-            // filter recent Routes with Search Results -> First Step for adding Similar Results from recent Routes to Search Results for similar Address
+            // filter recent Routes with Search Results ->
+            // First Step for adding Similar Results from recent Routes to Search Results for similar Address
             const checkArray = this.recentRoutes.filter((e) => {
               // check if searched Result is min. 70% similar to recentRoutes [IonicStorage]
               if (
@@ -322,7 +308,7 @@ export class SearchBarComponent implements OnInit {
             const splitPLz = splitString[1].toString().split(' ');
             const city = splitPLz[2];
             const street = splitString[0];
-            if (/^\d+$/.test(street) == false) {
+            if (/^\d+$/.test(street) === false) {
               if (checkArray.length >= 1) {
                 // IF-Case for their are similar Routes to the searchResults -> Then musst add to HTML
                 if (con[2] != undefined) {
@@ -336,7 +322,7 @@ export class SearchBarComponent implements OnInit {
                   );
                 }
               } else {
-                if (con[2] != undefined) {
+                if (con[2] !== undefined) {
                   tempArray.push(
                     new recentShortcut('null', street, con[2], con[1], con[0])
                   );
@@ -356,12 +342,12 @@ export class SearchBarComponent implements OnInit {
             document.getElementById('no-address').hidden = false;
             document.getElementById('edit-with-content').hidden = true;
             document.getElementById('edit-no-content').hidden = true;
-            if (this.shortcuts.length != 0) {
+            if (this.shortcuts.length !== 0) {
               document.getElementById('shortcutList').hidden = false;
             }
           }
           if (
-            JSON.stringify(this.addressesString) !=
+            JSON.stringify(this.addressesString) !==
             JSON.stringify(tempArray.slice(0, 11))
           ) {
             // similar/-same Result-Arrays are not updating FrontEnd [animation]
@@ -377,7 +363,7 @@ export class SearchBarComponent implements OnInit {
     const minLength = a.length > b.length ? b.length : a.length;
     const maxLength = a.length < b.length ? b.length : a.length;
     for (let i = 0; i < minLength; i++) {
-      if (a[i] == b[i]) {
+      if (a[i] === b[i]) {
         equivalency++;
       }
     }
@@ -397,7 +383,7 @@ export class SearchBarComponent implements OnInit {
     this.back();
     this.iconNew = icon;
     // console.log("bbb"+this.iconNew.length+"bbb");
-    if (this.iconNew.length == 4) {
+    if (this.iconNew.length === 4) {
       this.hideIcon = true;
 
       document.getElementById('saveBtn').hidden = false;
@@ -409,7 +395,6 @@ export class SearchBarComponent implements OnInit {
       document.getElementById('avaBtn').hidden = true;
 
       this.hideIcon = false;
-      // this.iconNew ="";
     }
 
     this.routingUserService.setDisplaySwitchCase(true);
@@ -420,7 +405,7 @@ export class SearchBarComponent implements OnInit {
             this.mapBox.updateAssemblyPoints();
             this.mapBox.drawFinishMarker().then((x) => {
               console.log(x);
-              if (x == true) {
+              if (x === true) {
                 this.routingUserService.getPoints().then((points) => {
                   let pointString = '';
                   for (let i = 0; i < points.length; i++) {
@@ -453,7 +438,7 @@ export class SearchBarComponent implements OnInit {
 
   isSearchEmpty(searchBarInputV: string) {
     if (
-      searchBarInputV != '' &&
+      searchBarInputV !== '' &&
       searchBarInputV.length >= 3 &&
       this.addressesString.length >= 1
     ) {
@@ -475,11 +460,11 @@ export class SearchBarComponent implements OnInit {
     // console.log(this.searchBarOpen);
 
     if (this.searchBarOpen == true) {
-      this.search;
+      this.search();
     } else {
       this.iconNew = '';
       this.searchBarInputV = '';
-      this.back;
+      this.back();
 
       document.getElementById('avaBtn').hidden = false;
       this.hideIcon = true;

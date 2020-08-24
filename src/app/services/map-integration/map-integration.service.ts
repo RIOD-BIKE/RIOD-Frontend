@@ -46,8 +46,8 @@ export class MapIntegrationService {
           this.storage.forEach((value, key, index) => {
             const str = 'Route_' + (rLength + 1);
             if (routeExists === false) {
-              const stri = 'Route_' + (rLength + 1);
-              this.storage.set(stri, { startPosition, endPosition, assemblyPoints, duration, distance });
+              const str = 'Route_' + (rLength + 1);
+              this.storage.set(str, { startPosition, endPosition, assemblyPoints, duration, distance });
               resolve('New Route Saved');
             } else {
               const endPosData = routeExists.value.endPosition[0];
@@ -107,6 +107,7 @@ export class MapIntegrationService {
           if (str === 'Route_') {
             const endPosData = value.endPosition[0];
             const endPosParam = endPosition[0];
+            console.log('testsdfbgnh');
             this.checkAddressProximity(endPosData, endPosParam).then(isEndNear => {
               console.log(isEndNear);
               if (isEndNear === true) {
@@ -117,24 +118,46 @@ export class MapIntegrationService {
                   console.log(isStartNear);
                   if (isStartNear === true) {
                     if (endPointExists === true) {
+                      console.log('test');
                       resolve({ value, key, index });
                     } else {
                       i++;
+                      if (length === i + 1 || i === length) {
+                        if (tempSaveResolveData !== undefined && endPointExists === false) {
+                          console.log('test');
+                          resolve(tempSaveResolveData);
+                        } else {
+                          console.log('test');
+                          resolve(false);
+                        }
+                      }
                       tempSaveResolveData = { value, key, index };
                       if (length === i + 1) {
+                        console.log('test');
                         resolve(tempSaveResolveData);
                       }
                     }
                   } else {
                     i++;
+                    if (length === i + 1 || i === length) {
+                      if (tempSaveResolveData !== undefined && endPointExists === false) {
+                        console.log('test');
+                        resolve(tempSaveResolveData);
+                      } else {
+                        console.log('test');
+                        resolve(false);
+                      }
+                    }
                   }
                 });
               } else {
                 i++;
                 if (length === i + 1 || i === length) {
                   if (tempSaveResolveData !== undefined && endPointExists === false) {
+                    console.log('test');
                     resolve(tempSaveResolveData);
                   } else {
+                    console.log('test');
                     resolve(false);
                   }
                 }
@@ -142,6 +165,15 @@ export class MapIntegrationService {
             });
           } else {
             i++;
+            if (length === i + 1 || i === length) {
+              if (tempSaveResolveData !== undefined && endPointExists === false) {
+                console.log('test');
+                resolve(tempSaveResolveData);
+              } else {
+                console.log('test');
+                resolve(false);
+              }
+            }
           }
         });
       });

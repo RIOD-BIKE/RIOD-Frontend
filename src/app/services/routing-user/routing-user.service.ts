@@ -2,8 +2,8 @@ import { DisplayService } from './../display/display.service';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UserService } from '../user/user.service';
-import { RoutingGeoAssemblyPoint,PolygonAssemblyPoint } from 'src/app/Classess/map/map';
-import * as turf from '@turf/turf'
+import { RoutingGeoAssemblyPoint, PolygonAssemblyPoint } from 'src/app/Classess/map/map';
+import * as turf from '@turf/turf';
 
 
 
@@ -12,10 +12,9 @@ import * as turf from '@turf/turf'
 })
 export class RoutingUserService {
 
- // TODO: fix all type safety
 
   private finishPoint: RoutingGeoAssemblyPoint = null;
-  private startPoint: any= null;
+  private startPoint: any = null;
   private duration: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   private distance: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   private points: RoutingGeoAssemblyPoint[] = [];
@@ -24,82 +23,83 @@ export class RoutingUserService {
   private displaySwitchCase: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   private displayManuelShow: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private displayRoutingStart: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private boundingArray: PolygonAssemblyPoint[]=[];
-  private pointsDetailed: any=null;
+  private boundingArray: PolygonAssemblyPoint[] = [];
+  private pointsDetailed: any = null;
   public routeFinished: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   // TODO maybe replace points with pointsBehaviorSubject
   public pointsBehaviorSubject: BehaviorSubject<RoutingGeoAssemblyPoint[]> = new BehaviorSubject<RoutingGeoAssemblyPoint[]>(null);
 
   constructor(private userService: UserService, private displayService: DisplayService) { }
 
-  getBoundingArray():Promise<any>{
+  getBoundingArray(): Promise<any> {
 
-    return new Promise(resolve=>{
-      let tempArray=[];
-      this.boundingArray=[];
-      console.log(this.boundingArray);
-      this.createPolygon([this.startPoint[0][0],this.startPoint[0][1]]).then(poly=>{
-        const duration = this.pointsDetailed[0].duration/60;
-        const distance = this.pointsDetailed[0].distance*0.001;
-        tempArray.push(new PolygonAssemblyPoint("start",Number((Math.round(distance * 100) / 100).toFixed(1)),Number((Math.round(duration * 100) / 100).toFixed(0)),poly));
+    return new Promise(resolve => {
+      const tempArray = [];
+      this.boundingArray = [];
+      this.createPolygon([this.startPoint[0][0], this.startPoint[0][1]]).then(poly => {
+        const duration = this.pointsDetailed[0].duration / 60;
+        const distance = this.pointsDetailed[0].distance * 0.001;
+        tempArray.push(new PolygonAssemblyPoint('start', Number((Math.round(distance * 100) / 100).toFixed(1)),
+        Number((Math.round(duration * 100) / 100).toFixed(0)), poly));
       });
-   
-      for(let i=0;i<this.points.length;i++){
-        console.log(i);
-          this.createPolygon([this.points[i].position.longitude,this.points[i].position.latitude]).then(poly=>{
-            const duration = this.pointsDetailed[i+1].duration/60;
-            const distance = this.pointsDetailed[i+1].distance*0.001;
-            tempArray.push(new PolygonAssemblyPoint(this.points[i].name,Number((Math.round(distance * 100) / 100).toFixed(1)),Number((Math.round(duration * 100) / 100).toFixed(0)),poly));
-          })
-          if(i+1==this.points.length){
-            this.createPolygon([this.finishPoint[0][0],this.finishPoint[0][1]]).then(poly=>{
+
+      for (let i = 0; i < this.points.length; i++) {
+        this.createPolygon([this.points[i].position.longitude, this.points[i].position.latitude]).then(poly => {
+            const duration = this.pointsDetailed[i + 1].duration / 60;
+            const distance = this.pointsDetailed[i + 1].distance * 0.001;
+            tempArray.push(new PolygonAssemblyPoint(this.points[i].name, Number((Math.round(distance * 100) / 100).toFixed(1)),
+            Number((Math.round(duration * 100) / 100).toFixed(0)), poly));
+          });
+        if (i + 1 === this.points.length) {
+            this.createPolygon([this.finishPoint[0][0], this.finishPoint[0][1]]).then(poly => {
               const duration = 0;
               const distance = 0;
-              let finishAddress = this.finishPoint[1].split(",")[0];
-              tempArray.push(new PolygonAssemblyPoint(finishAddress,Number((Math.round(distance * 100) / 100).toFixed(1)),Number((Math.round(duration * 100) / 100).toFixed(0)),poly));
-              this.boundingArray=tempArray;
+              const finishAddress = this.finishPoint[1].split(',')[0];
+              tempArray.push(new PolygonAssemblyPoint(finishAddress, Number((Math.round(distance * 100) / 100).toFixed(1)),
+              Number((Math.round(duration * 100) / 100).toFixed(0)), poly));
+              this.boundingArray = tempArray;
               resolve(this.boundingArray);
-            })
-          } 
+            });
+          }
       }
     });
   }
 
-  createPolygon(address):Promise<any>{
+  createPolygon(address: any[]): Promise<any> {
     return new Promise(resolve => {
-      let polygon=[];
-      let dLatN=100;
-      let dLongN=-100;
-      for(let time=0;time<4;time++){
-        let R=6378137;
-        let dLat =dLatN/R;
-        const dLon =dLongN/(R*Math.cos(Math.PI*address[0]/180));
-        polygon.push([address[0]+dLat*180/Math.PI, address[1]+dLon*180/Math.PI]);
-        if(time==0){
-          dLongN=100;
+      const polygon = [];
+      let dLatN = 100;
+      let dLongN = -100;
+      for (let time = 0; time < 4; time++) {
+        const R = 6378137;
+        const dLat = dLatN / R;
+        const dLon = dLongN / (R * Math.cos(Math.PI * address[0] / 180));
+        polygon.push([address[0] + dLat * 180 / Math.PI, address[1] + dLon * 180 / Math.PI]);
+        if (time === 0) {
+          dLongN = 100;
         }
-        if(time==1){
-          dLongN=100;
-          dLatN=-100;
+        if (time === 1) {
+          dLongN = 100;
+          dLatN = -100;
         }
-        if(time==2){
-          dLongN=-100;
+        if (time === 2) {
+          dLongN = -100;
         }
       }
-      var poly = turf.polygon([[polygon[0],polygon[1],polygon[2],polygon[3],polygon[0]]]);
-      resolve(poly)
+      const poly = turf.polygon([[polygon[0], polygon[1], polygon[2], polygon[3], polygon[0]]]);
+      resolve(poly);
     });
   }
 
-  setPointsDetailed(points:any):Promise<any>{
-    return new Promise(resolve=>{
-      this.pointsDetailed=points;
+  setPointsDetailed(points: any): Promise<any> {
+    return new Promise(resolve => {
+      this.pointsDetailed = points;
       resolve();
     });
   }
 
-  getPointsDetailed():Promise<any>{
-    return new Promise(resolve=>{
+  getPointsDetailed(): Promise<any> {
+    return new Promise(resolve => {
       resolve(this.pointsDetailed);
     });
   }
@@ -111,11 +111,11 @@ export class RoutingUserService {
   }
 
 
-  setRouteFinished(){
+  setRouteFinished() {
     this.routeFinished.next(false);
   }
 
-  setDisplayType(dataPoint:string): Promise<any> {
+  setDisplayType(dataPoint: string): Promise<any> {
     if (dataPoint === 'routeStarted') { this.displayService.setIsRouting(true); }
     return new Promise(resolve => {
         this.displayType.next(dataPoint);
@@ -127,7 +127,7 @@ export class RoutingUserService {
     return this.displayType.asObservable();
   }
 
-  resetAll(){
+  resetAll() {
     this.setDuration(null);
     this.setDistance(null);
     this.setFinishPoint(undefined);
@@ -183,7 +183,7 @@ export class RoutingUserService {
     });
   }
 
-  getstartPoint(): Promise<number[]>{
+  getstartPoint(): Promise<number[]> {
     return new Promise(resolve => {
         this.setStartPoint().then(() => {
           resolve(this.startPoint);
@@ -200,14 +200,13 @@ export class RoutingUserService {
 
   setDuration(dataPoint?: number): Promise<any> {
     return new Promise(resolve => {
-      try{
+      try {
       if (dataPoint != null) {
-        const temp = (Math.round(dataPoint * 100) / 100).toFixed(0);  //toFixed(2) = 2 decimal Places
+        const temp = (Math.round(dataPoint * 100) / 100).toFixed(0);  // toFixed(2) = 2 decimal Places
         this.duration.next(temp);
-        console.log('Duration set to: ' + this.duration.getValue());
         resolve(true);
       }
-    } catch(e) {
+    } catch (e) {
         console.log(e);
         resolve(false);
     }
@@ -217,33 +216,32 @@ export class RoutingUserService {
   setDistance(dataPoint?: number): Promise<any> {
     return new Promise(resolve => {
       try {
-      if (dataPoint != null){
+      if (dataPoint != null) {
         const temp = (Math.round(dataPoint * 100) / 100).toFixed(2);
         this.distance.next(temp);
-        console.log('Distance set to: ' + this.distance.getValue());
         resolve(true);
       }
-    } catch(e) {
+    } catch (e) {
         console.log(e);
         resolve(false);
     }
     });
   }
 
-  setPoints(dataPoint?): Promise<boolean>{
+  setPoints(dataPoint?: RoutingGeoAssemblyPoint): Promise<boolean> {
     return new Promise(resolve => {
-      try{
-        if (dataPoint != null){
-            if(this.points.includes(dataPoint)){
+      try {
+        if (dataPoint != null) {
+            if (this.points.includes(dataPoint)) {
               resolve(false);
-            } else{
+            } else {
               this.points.push(dataPoint);
                 // TODO testing
               this.pointsBehaviorSubject.next(this.points);
               resolve(true);
             }
         }
-      } catch(e) {
+      } catch (e) {
           console.log(e);
           resolve(false);
       }
@@ -252,26 +250,26 @@ export class RoutingUserService {
 
   deletePoints(pointNumber: number): Promise<boolean> {
     return new Promise(resolve => {
-      try{
-        if(pointNumber!=null){
-          let t = this.points.length;
-          for(let i=pointNumber;i<=t;i++){
-            for(let k=0;k<this.points.length;k++){
-              if(this.points[k].textField==i.toString()){
-                this.points.splice(k,1);
+      try {
+        if (pointNumber != null) {
+          const t = this.points.length;
+          for (let i = pointNumber; i <= t; i++) {
+            for (let k = 0; k < this.points.length; k++) {
+              if (this.points[k].textField == i.toString()) {
+                this.points.splice(k, 1);
               }
             }
           }
           resolve(true);
         }
-      }catch(e){
+      } catch (e) {
         console.log(e);
         resolve(false);
       }
     });
   }
 
-  deleteAllPoints(): Promise<boolean>{
+  deleteAllPoints(): Promise<boolean> {
     return new Promise(resolve => {
       this.points = [];
       // TEsting
@@ -280,13 +278,13 @@ export class RoutingUserService {
     });
   }
 
-  setStartPoint(dataPoint?): Promise<boolean> {
+  setStartPoint(dataPoint?: any[]): Promise<boolean> {
     return new Promise(resolve => {
-      if(dataPoint != undefined){
+      if (dataPoint != undefined) {
         this.startPoint = dataPoint;
         resolve(true);
-      } else{
-          this.startPoint = [[this.userService.behaviorMyOwnPosition.value.coords.longitude,this.userService.behaviorMyOwnPosition.value.coords.latitude]];
+      } else {
+          this.startPoint = [[this.userService.behaviorMyOwnPosition.value.coords.longitude, this.userService.behaviorMyOwnPosition.value.coords.latitude]];
           resolve(true);
       }
     });
@@ -303,30 +301,28 @@ export class RoutingUserService {
     return this.centerPoint.asObservable();
   }
 
-  
 
-  getDisplayManuelShow(): Observable<boolean>{
+
+  getDisplayManuelShow(): Observable<boolean> {
     return this.displayManuelShow.asObservable();
   }
-  setDisplayManuelShow(){
+  setDisplayManuelShow() {
     this.displayManuelShow.next(true);
   }
 
-  getDisplaySwitchCase(): Observable<boolean>{
+  getDisplaySwitchCase(): Observable<boolean> {
     return this.displaySwitchCase.asObservable();
   }
-  setDisplaySwitchCase(switchCase:boolean){
+  setDisplaySwitchCase(switchCase: boolean) {
     this.displaySwitchCase.next(switchCase);
   }
 
-  setDisplayRoutingStart(switchCase:boolean){
+  setDisplayRoutingStart(switchCase: boolean) {
     this.displayRoutingStart.next(switchCase);
   }
 
-  getDisplayRoutingStart(): Observable<boolean>{
+  getDisplayRoutingStart(): Observable<boolean> {
     return this.displayRoutingStart.asObservable();
   }
-
-
 
 }

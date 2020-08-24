@@ -13,15 +13,16 @@ import { IonSlides } from '@ionic/angular';
 })
 export class ExplainSlidesComponent implements OnInit {
   @ViewChild('mySlider', { static: true }) slides: IonSlides;
-  hidePrev: boolean = false;
-  hideNext: boolean = true;
-  trenner: boolean = true;
-  showQuestion: boolean = false;
-  currentIndex: Number = 0;
+  hidePrev = false;
+  hideNext = true;
+  trenner = true;
+  showQuestion = false;
+  currentIndex = 0;
   name: string;
   contact: string;
 
-  constructor(public modalController: ModalController, private router: Router, private authService: AuthService, private userDataFetch: UsersDataFetchService, private alertController: AlertController) { }
+  constructor(public modalController: ModalController, private router: Router, private authService: AuthService,
+              private userDataFetch: UsersDataFetchService, private alertController: AlertController) { }
 
   ngOnInit() {
   }
