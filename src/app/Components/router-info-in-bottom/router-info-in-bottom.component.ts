@@ -36,6 +36,8 @@ export class RouterInfoInBottomComponent implements OnInit {
   }
 
   closeView() {
+    //Beenden der Route
+    //Zurücksetzen von Allen Möglichen-Getätigten Routen und AssemblyPoint Auswahlmöglichkeiten
     this.mainMenu.closeView();
     this.infoArray = [];
     this.routingUserService.resetAll();
@@ -43,12 +45,15 @@ export class RouterInfoInBottomComponent implements OnInit {
     this.mapBox.disableAssemblyClick().then(() => {
     this.mapBox.updateAssemblyPoints();
     });
+    //Darstellung der Oberfläche auf Ausgangszustand
     this.routingUserService.setDisplayType('Start');
     this.mapBox.moveMapToCurrent();
     this.routingUserService.routeFinished.next(true);
   }
 
   startRoute() {
+    //Starten der Route
+    //Abfolge von Inverschachtelten Abfragen von Werten
     this.routingUserService.getPoints().then(points => {
       this.routingUserService.getDuration().then(duration => {
         this.routingUserService.getDistance().then(dist => {
@@ -58,9 +63,11 @@ export class RouterInfoInBottomComponent implements OnInit {
               for (const each of points) {
                 pointString += (each.position.longitude + ',' + each.position.latitude + ';');
               }
+              //Speichern der Aktuell gestarteten Route Offline in Speicher
               this.mapIntegration.saveRouteOffline(start, fin, points, duration, dist).then(returnMessage => {
                 console.log(returnMessage);
               });
+              //Routenauswahl als Linie Darstellen
               this.mapBox.drawRoute(pointString).then(() => {
                 // MUST CHECK IF ROUTE THAT IS ALREADY DRAWN IS IDENTICAL TO NEW DRAWING ROUTE
                 this.routingUserService.setDisplayType("routeStarted");

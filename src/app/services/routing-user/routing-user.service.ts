@@ -31,8 +31,10 @@ export class RoutingUserService {
 
   constructor(private userService: UserService, private displayService: DisplayService) { }
 
-  getBoundingArray(): Promise<any> {
 
+  //Bouding Array von Allen Punkten auf X-Route  
+  //Start, Finish, Alle Punkte auf Route
+  getBoundingArray(): Promise<any> {
     return new Promise(resolve => {
       const tempArray = [];
       this.boundingArray = [];
@@ -65,6 +67,7 @@ export class RoutingUserService {
     });
   }
 
+  //Create Polygonn zu adressenArray
   createPolygon(address: any[]): Promise<any> {
     return new Promise(resolve => {
       const polygon = [];
@@ -127,6 +130,7 @@ export class RoutingUserService {
     return this.displayType.asObservable();
   }
 
+  //Alle Lokale Variablen für Routing zurücksetzen
   resetAll() {
     this.setDuration(null);
     this.setDistance(null);

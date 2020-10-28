@@ -23,19 +23,24 @@ export class UsersDataFetchService {
     this.refreshCurrentSpecialAvatar();
   }
 
-
+//Nächsten AssemblyPoint an RTDB senden
   async rtdb_sendNextAps(nextAps:string,followingAps:string,userHash:string,duration:number,userTimestamp:number){
     await this.rtdb.object('assemblyPoints/'+nextAps+"/"+followingAps+"/"+userHash).set({
       duration:duration,
       timestamp:userTimestamp
     });
   }
+  //Alte AssemblyPoint von RTDB löschen
   async rtdb_deleteOldAps(oldAps:string,oldfollowingAps:string,userHash:string){
     await this.rtdb.object('assemblyPoints/'+oldAps+"/"+oldfollowingAps+"/"+userHash).remove();
   }
+  //Letzen AssemblyPoint von RTDB löschen
   async rtdb_deleteLastAps(oldAps:string,oldfollowingAps:string,userHash:string){
     await this.rtdb.object('assemblyPoints/'+oldAps+"/"+oldfollowingAps+"/"+userHash).remove();
   }
+
+  //Details zu AssemblyPoint von RealtimeDatabase holen ->Andere nutzereintragungen bezüglich Zeit/Timeout & co
+  //Abfangen von abgelaufenen Einträgen von Nutzern
   async rtdb_getDetailsAP(AP:string,followingAp:string,caseSwitch:boolean,userTimestamp,userHash){
     let returnArray:riodMembersAtAP[]=[];
     if(caseSwitch==true){
@@ -77,6 +82,7 @@ export class UsersDataFetchService {
     }
   }
 
+  //Unsubscribe to RTDB-AssemblyPoint-X
   async rtdb_getDetailsAP_unsub(){
     if(this.riodSubscribtion!=null){
       this.riodSubscribtion.unsubscribe();
@@ -87,7 +93,7 @@ export class UsersDataFetchService {
  
 
   }
-
+//RTDB Nutzer als Positionen anlegen
   async rtdb_createUser(uid: string) {
     await this.rtdb.object('users/' + uid).set({
       bearing: 0,
@@ -95,11 +101,11 @@ export class UsersDataFetchService {
       longitude: 0
     });
   }
-
+//RTDB Nutzer löschen
   async rtdb_wipeUser(uid: string) {
     await this.rtdb.object('users/' + uid).remove();
   }
-
+//Firestore Nutzer anlegen
   async firestore_createUser(uid: string) {
     const userExists = (await this.afs.collection('users').doc(uid).get().toPromise()).exists;
     if (userExists) {

@@ -21,7 +21,7 @@ export class MapIntegrationService {
     private userService: UserService, private storage: Storage, private routingUserService: RoutingUserService,
     private http: HttpClient) {
   }
-
+  //Speichern von Lokalen Temporären Variablen
   private apsBoundaryData: number = null;
   private apsVisitedData: number[] = [];
   private apDetail: any;
@@ -37,6 +37,11 @@ export class MapIntegrationService {
   public CurrentApNumber: BehaviorSubject<number> = new BehaviorSubject<number>(null);
   public ToApNumber: BehaviorSubject<number> = new BehaviorSubject<number>(null);
 
+
+  //Speichern von Gestarteter Route
+  //Wenn diese schon vorhanden ist, dann soll nicht hinzugefügt werden
+  //Druchgehen der Gepspeicherten Einträge und vergleichen innerhalb von checkifRouteExists() & checkSavedRouteLength()
+  //Bei selber Route und anderer Führung, wird Routenführung innerhalb gespeicherten Beitrag überschrieben
   saveRouteOffline(startPosition: number[], endPosition: RoutingGeoAssemblyPoint,
                    assemblyPoints: RoutingGeoAssemblyPoint[], duration: number, distance: number): Promise<any> {
     return new Promise(resolve => {
@@ -67,6 +72,7 @@ export class MapIntegrationService {
     });
   }
 
+  //Überprüfen ob Länge von Route übereinstimmt
   checkSavedRouteLength(): Promise<number> {
     return new Promise(resolve => {
       let rLength = 0;
@@ -82,6 +88,7 @@ export class MapIntegrationService {
     });
   }
 
+  //Überprüfen ob Start & Endposition gleich
   checkifRouteExists(): Promise<any> {
     return new Promise(resolve => {
       this.routingUserService.getstartPoint().then(startPosition => {
@@ -95,6 +102,10 @@ export class MapIntegrationService {
     });
   }
 
+  //Helper Funktion ob Start & Endposition übereinstimmt
+  //Durch Bounadry Boxes wird verglichen ob der Abstand zwischen den Starts & Zielen des gespeicherten Einträges und des potenziellen
+  //Eintrags je in einem 400 M Box-Radius liegen [z.B. Start zu Start haben je 400 Meter Box um Centerpunkt von Koordinate & es wird verglichen ob die Boxen sich überschneiden]
+  //Dies wird in checkAddressProximity() erstellt
   checkifRouteExistsHelper(startPosition, endPosition): Promise<any> {
     return new Promise(resolve => {
       let i = 0;
@@ -189,6 +200,7 @@ export class MapIntegrationService {
     });
   }
 
+  //Rückgabe aller gespeicherten Routen
   getAllSavedRoutes(): Promise<any> {
     return new Promise(resolve => {
       const arr = [];
@@ -212,7 +224,8 @@ export class MapIntegrationService {
   }
 
 
-
+//Große Funktion zur Überprüfung der Aktuellen Position in Zusammenhang mit den AssemblyPoints / Startpunkt / Zielpunkt bei aktivem Routing
+//Bei Start des Routings wird Funktion in Dauerrun als Hauptfunkion des Routings aufgerufen
   checkGPSChangeRoutingPosition(): Promise<any> {
     return new Promise(resolve => {
       this.routingUserService.getBoundingArray().then((boundingArray) => {
@@ -243,12 +256,13 @@ export class MapIntegrationService {
           lastPosition = userPosition;
 
           const pt = turf.point([userPosition.coords.longitude, userPosition.coords.latitude]);
-
+          //Wenn Ziel erreicht, wird routing beendet
           if (this.ended === true) {
             this.deleteAllRTDB_Entries();
             this.subscription.unsubscribe();
             resolve(false);
           } else {
+            //Ist man nicht am Ende wird Folgendes Ausgeführt
             // go through bboxArray
             for (let i = 0; i < boundingArray.length; i++) {
               // check if position is inside of Element i-BBOX / is near i-AssemblyPoint
@@ -260,6 +274,8 @@ export class MapIntegrationService {
                   this.apsBoundaryData = i;
                   console.log('WAITING');
 
+                  //Wenn Position in Umkreis von Startpunkt des Routings, dann folgendes
+                  //Festlegen des nächsten Anzufahrenden Punktes
                   if (boundingArray[i].name === 'start') {
                     if (temp === false) {
                       boundingArray.forEach((element: { polygon: turf.helpers.Polygon | turf.helpers.MultiPolygon |
@@ -267,7 +283,9 @@ export class MapIntegrationService {
                         name: string; }) => {
                         const booli = turf.booleanPointInPolygon(pt, element.polygon);
                         if (booli === true && element.name !== 'start') {
+                          //Wenn sich Nutzer nicht mehr in Start-Bounding Box befindet und das aktuelle Element=start ist
                           console.log('Inside AP and Start');
+                          //Position an Firestore mitteilen und nächsten AP ankündigen
                           this.userService.updateNextApTimingToRTDB
                           (userPosition.timestamp, 0, boundingArray[i + 1].name, boundingArray[i + 2].name);
                           checkForNewAP = false;
@@ -277,7 +295,7 @@ export class MapIntegrationService {
                       });
                     }
                   }
-
+                    //Ziel erreicht, wird subscription beendet und Funktion abgebrochen
                   if (boundingArray[i].name !== 'start' && boundingArray.length === i + 1) {
                     console.log('Ziel erreicht');
                     checkForNewAP = false;
@@ -308,10 +326,12 @@ export class MapIntegrationService {
                       const n = this.apsBoundaryData;
                       this.apsBoundaryData = i;
                       if (boundingArray.length > n + 2) {
+                        //Neu in einem Assemblypoint 
                         console.log('NEW INSIDE');
                         this.activeBoundary = true;
                         checkForNewAP = false;
                         if (boundingArray[i].name !== this.nextVisitAP[0] && boundingArray[i].name !== 'start') {
+                          //Wenn der Aktuelle befindene AP nicht der nächste in der Reihenfolge war, werden die Werte in Firebase gelöscht
                           console.log('not expected next AP');
                           console.log(this.nextVisitAP);
                           console.log(this.lastVisitedAP);
@@ -320,9 +340,12 @@ export class MapIntegrationService {
                           this.nextVisitAP = [];
                         }
                         if (boundingArray.length - 2 === i) {
+                          //Aktuell angefahrener AP ist letzer bevor das Ziel erreicht wird
+                          //Aktualisieren Firebase Eintrag nächster AP
                           this.userService.updateNextApTimingToRTDB(userPosition.timestamp, 0, boundingArray[i].name, 'lastAP');
                           this.nextVisitAP = [boundingArray[i].name, 'lastAP'];
                         } else {
+                          //Normal nächster wird in Firebase eingetragen
                           this.userService.updateNextApTimingToRTDB
                           (userPosition.timestamp, 0, boundingArray[i].name, boundingArray[i + 1].name);
                         }
@@ -336,6 +359,7 @@ export class MapIntegrationService {
                 }
 
               } else {
+                //Nutzer befindet sich nicht in any AP-Radius
                 if (this.apsBoundaryData == null) { resolve(false); }
                 if (this.commandRun === false) {
 
@@ -350,6 +374,7 @@ export class MapIntegrationService {
                         this.APsubscription = false;
                       }
                       if (boundingArray.length > n + 2) {
+                        //Nutzer hat gerade BoundingBox von AssemblyPoint verlassen
                         console.log('JUST LEFT');
                         console.log(boundingArray[i + 1].name);
                         console.log(n);
@@ -370,6 +395,8 @@ export class MapIntegrationService {
                           }
                         }
                         if (boundingArray[n].name !== 'start') {
+                          //letzer AssemblyPoint bis Ziel wurde gerade verlassen
+                          //löschen aller Eitnträge in Firebase
                           console.log(this.lastVisitedAP);
                           this.userService.deleteOldApTimingtoRTDB(this.lastVisitedAP[0], this.lastVisitedAP[1]);
                           this.userService.deleteOldApTimingtoRTDB(this.nextVisitAP[0], this.nextVisitAP[1]);
@@ -378,11 +405,13 @@ export class MapIntegrationService {
                         if (boundingArray.length === n + 3) {
 
                           this.apsVisitedData.push(i);
+                          //Setzen der Zeit bis zu nächten AssemblyPoint
                           this.userService.updateNextApTimingToRTDB
                           (userPosition.timestamp, boundingArray[n].duration, boundingArray[n + 1].name, 'lastAP');
                           // this.lastVisitedAP=[boundingArray[i].name,"lastAP"]
                           this.nextVisitAP = [boundingArray[i + 1].name, 'lastAP'];
                         } else {
+                           //Setzen der Zeit bis zu nächten AssemblyPoint
                           this.userService.updateNextApTimingToRTDB
                           (userPosition.timestamp, boundingArray[n].duration, boundingArray[n + 1].name, boundingArray[n + 2].name);
                           // this.lastVisitedAP=[boundingArray[i+1].name,boundingArray[i + 2].name]
@@ -394,6 +423,8 @@ export class MapIntegrationService {
                         this.commandRun = true;
                         this.commandRunInside = false;
                       } else {
+                        //Letzer AssemblyPoint before Finish gerade verlassen
+                        //Löschen aller Einträge in Firebase
                         console.log('FINISH LEFT');
                         this.ToApNumber.next(n + 1);
                         this.apsVisitedData.push(i);
@@ -408,6 +439,7 @@ export class MapIntegrationService {
                         this.commandRun = true;
                       }
                     } else {
+                      //Gerade Start verlassen
                       console.log('JUST LEFT Start');
                       this.ToApNumber.next(1);
                       this.userService.updateNextApTimingToRTDB
@@ -444,6 +476,7 @@ export class MapIntegrationService {
   }
 
   deleteAllRTDB_Entries() {
+    //Alle Einträge in Firebase löschen/Aufräumen
     if (this.lastVisitedAP !== []) {
       this.userService.deleteOldApTimingtoRTDB(this.lastVisitedAP[0], this.lastVisitedAP[1]);
       this.lastVisitedAP = [];
@@ -455,6 +488,7 @@ export class MapIntegrationService {
     if (this.subscription != null) {
       this.subscription.unsubscribe();
     }
+    //Alle Variablen zurücksetzen
     this.lastVisitedAP = [];
     this.nextVisitAP = [];
     this.ended = true;
@@ -512,6 +546,7 @@ export class MapIntegrationService {
     return 180.0 * radians / Math.PI;
   }
 
+  //Suche nach Adresse nur in unmittelbarer Umgebung
   searchAddress(query: string) {
     const myPosition = this.userService.behaviorMyOwnPosition.value;
     const bbox = this.calculateBBBox(myPosition.coords.latitude, myPosition.coords.longitude, 20000);

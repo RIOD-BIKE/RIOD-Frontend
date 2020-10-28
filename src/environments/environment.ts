@@ -7,7 +7,8 @@ export const environment = {
 
 
   mapbox: {
-    accessToken: 'pk.eyJ1Ijoiamt1c2VybmFtZSIsImEiOiJjazhyZDg4bW4wODhwM3NxYWN5d3RwbjdqIn0.MmwEx7ODb85Iy8pHZu5gcQ'
+    //AccessToken Deprecated -> Mapbox.com -> GeoToken erstellen und hier einfügen
+    accessToken: 'pk.eyJd1Ijoiamt1c2VybmFtZSIsImEiOiJjazh2yZDg4bW4wODhwM3NxYWN5d3RwbjdqIns0.MmwEx7ODb85Iy8pdHZu5gcQ'
   },
   firebase:{
     apiKey: "AIzaSyCk212gSACMgaE6J9OYsHt7WOnPzxM0xyk",
