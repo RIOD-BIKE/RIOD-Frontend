@@ -24,28 +24,28 @@ export class SettingsMainDropboxPage implements OnInit {
 
   public specialAvatarURL: string;
 
-  @Input() platformAndroid:boolean;
+  @Input() platformAndroid: boolean;
 
   constructor(public platform: Platform, private userDataFetch: UsersDataFetchService, private authService: AuthService,
-    private router: Router, private alertController: AlertController, private navController: NavController,
-    private settingsService: SettingsService, private settingsSerice: SettingsService) {
+              private router: Router, private alertController: AlertController, private navController: NavController,
+              private settingsService: SettingsService, private settingsSerice: SettingsService) {
   }
 
   async ngOnInit() {
-    
-    if(this.platform.is('ios')==false){
-      this.platformAndroid=false;
-      console.log(this.platformAndroid)
-    } else{
-      this.platformAndroid=true;
-      console.log(this.platformAndroid)
+
+    if (this.platform.is('ios') == false) {
+      this.platformAndroid = false;
+      console.log(this.platformAndroid);
+    } else {
+      this.platformAndroid = true;
+      console.log(this.platformAndroid);
     }
-    
+
     this.specialAvatarURL = await this.userDataFetch.storage_getSpecialAvatar();
     this.uid = await this.authService.getCurrentUID();
     this.name = await this.userDataFetch.firestore_getName(this.uid);
     this.contact = await this.userDataFetch.firestore_getContact(this.uid);
-    
+
     this.volume = await this.settingsService.getVolume();
     this.vibration = await this.settingsService.getVibration();
     this.display = await this.settingsService.getDisplay();

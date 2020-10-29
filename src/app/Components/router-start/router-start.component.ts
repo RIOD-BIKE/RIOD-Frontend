@@ -52,7 +52,6 @@ export class RouterStartComponent implements OnInit, AfterViewInit {
   // TODO: move statusAudio & vibrationService somewhere else?
 
   ngOnInit() {
-
     this.routingUserService.getPoints().then(() => {
       this.routingUserService.pointsBehaviorSubject.subscribe( value => {
         this.seletectedAPs = value;
@@ -151,7 +150,6 @@ export class RouterStartComponent implements OnInit, AfterViewInit {
               this.mapBox.drawRoute(pointString).then(() => {
                 // MUST CHECK IF ROUTE THAT IS ALREADY DRAWN IS IDENTICAL TO NEW DRAWING ROUTE
                 this.routingUserService.setDisplayType("routeStarted");
-                //console.log('new Route drawn');
               });
             });
           });

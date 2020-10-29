@@ -11,6 +11,8 @@ import { iconShortcut, miniShortcut } from 'src/app/Classess/map/map';
 export class EditFavoriteComponent implements OnInit {
   public favorList: miniShortcut[] = [];
   @ViewChild(IonReorderGroup) reorderGroup: IonReorderGroup;
+
+  // booleans to hideand show elements
   public hideTrash = false;
   public hideChange = false;
   public hideSave = true;
@@ -27,6 +29,8 @@ export class EditFavoriteComponent implements OnInit {
     this.loadShortcuts();
   }
 
+  // get all shortcuts from userservice and push them into local favorList
+  // peparing shortcuts for the edit favorite view
   loadShortcuts() {
     this.userService.getAllShortcuts().then((allShortcuts) => {
       let temp: iconShortcut[] = [];
@@ -43,6 +47,7 @@ export class EditFavoriteComponent implements OnInit {
     });
   }
 
+  // if changeSequence button pushed then hide and show elements accordingly
   changeSequence() {
     this.hideTrash = !this.hideTrash;
     this.hideChange = !this.hideChange;
@@ -51,6 +56,8 @@ export class EditFavoriteComponent implements OnInit {
     this.reorderGroup.disabled = !this.reorderGroup.disabled;
   }
 
+  // event function for ionItemReorder
+  // updates the new local favorList
   doReorder(ev: any) {
     this.favorList = ev.detail.complete(this.favorList);
   }
@@ -73,6 +80,9 @@ export class EditFavoriteComponent implements OnInit {
     });
   }
 
+  // deletes shortcut from global shortcut list in userService
+  // setting behaviorSubject updateFavor to indicates that shortcut list has been changed
+  // filter local favorList
   deleteFavor(shortcut: miniShortcut) {
     this.userService.deleteShortcut(shortcut.icon).then(x => {
       this.userService.updateFavor.next(true);

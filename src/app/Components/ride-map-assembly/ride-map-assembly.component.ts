@@ -18,15 +18,11 @@ export class RideMapAssemblyComponent implements OnInit {
   constructor(private routingUserService:RoutingUserService,private mapIntegration:MapIntegrationService) { }
 
   ngOnInit() {
-    
    this.mapIntegration.checkGPSChangeRoutingPosition().then(x=>{
-     console.log(x)
-
-   })
+   });
   }
 
   stopRoute(){
-    console.log("stop")
   }
 
 }

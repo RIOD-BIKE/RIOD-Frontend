@@ -91,6 +91,7 @@ export class MapStartPage implements OnInit {
     });
 
     // locate device every 20 seconds
+    // automated for bouncing back to user location because no button available
     interval(20000).subscribe(() => {
       this.locateDevice();
     });
@@ -115,7 +116,6 @@ export class MapStartPage implements OnInit {
   hideSearchbar(searchbar: boolean, closeWindow: boolean) {
     this.searchbar = searchbar;
     this.closeWindow = closeWindow;
-
   }
 
   switchIndicatorIcon(switchCase: boolean) {
@@ -187,7 +187,7 @@ export class MapStartPage implements OnInit {
   }
 
 
-
+  // Dev Debug options
   DEMOsendToRTDB() {
     this.mapDataFetch.sendUserPosition();
   }

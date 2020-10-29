@@ -26,7 +26,6 @@ export class RoutingUserService {
   private boundingArray: PolygonAssemblyPoint[] = [];
   private pointsDetailed: any = null;
   public routeFinished: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  // TODO maybe replace points with pointsBehaviorSubject
   public pointsBehaviorSubject: BehaviorSubject<RoutingGeoAssemblyPoint[]> = new BehaviorSubject<RoutingGeoAssemblyPoint[]>(null);
 
   constructor(private userService: UserService, private displayService: DisplayService) { }
@@ -179,7 +178,6 @@ export class RoutingUserService {
   getPoints(): Promise<any> {
     return new Promise(resolve => {
       if (this.points != null) {
-        // TODO testing
         this.pointsBehaviorSubject.next(this.points);
         resolve(this.points);
       }
@@ -240,7 +238,6 @@ export class RoutingUserService {
               resolve(false);
             } else {
               this.points.push(dataPoint);
-                // TODO testing
               this.pointsBehaviorSubject.next(this.points);
               resolve(true);
             }

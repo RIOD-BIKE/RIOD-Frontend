@@ -28,8 +28,8 @@ export class UserService {
   public updateFavor: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 
-  //Nutzerposition nach Platform Ready [Geolocation] holen und an Aufrufer zurückgeben
-  //BehaviorSubject mit neuer GPS aktualisieren
+  // Nutzerposition nach Platform Ready [Geolocation] holen und an Aufrufer zurückgeben
+  // BehaviorSubject mit neuer GPS aktualisieren
   async getUserPosition(): Promise<PositionI> {
     return new Promise<PositionI>(resolve => {
       this.platform.ready().then(rdy => {
@@ -52,7 +52,7 @@ export class UserService {
 
   // TODO change plz to coords
   // Uncomplete -> Dependend on new UI System
-  //Shortcut einer Route mit Icon speichern, überschreiben, aktualisieren
+  // Shortcut einer Route mit Icon speichern, überschreiben, aktualisieren
   public saveShortcut(address: any, iconName: any, coords: any, iterator?: number): Promise<any> {
     return new Promise( resolve => {
       let updated = false;
@@ -88,7 +88,7 @@ export class UserService {
   }
 
   // Delete Shortcut
-  //Shortcut löschen
+  // Shortcut löschen
   public deleteShortcut(icon: iconShortcut): Promise<any> {
     return new Promise(resolve => {
       this.storage.length().then(length => {
@@ -105,7 +105,7 @@ export class UserService {
     });
   }
 
-  //Alle Shortcuts löschen
+  // Alle Shortcuts löschen
   public deleteAllShortcuts(icon: iconShortcut[]): Promise<any> {
     let i = 0;
     return new Promise(resolve => {
@@ -121,7 +121,7 @@ export class UserService {
     });
   }
 
-  //Alle Shortcuts holen
+  // Alle Shortcuts holen
   public getAllShortcuts(): Promise<any> {
     return new Promise(resolve => {
       let i = 0;
@@ -141,7 +141,7 @@ export class UserService {
     });
   }
 
-//Alle Shortcuts [übergebene Liste] speichern
+// Alle Shortcuts [übergebene Liste] speichern
   public saveAllShortcuts(iconList: iconShortcut[]): Promise<any> {
     let k = 0;
     return new Promise(resolve => {
@@ -171,7 +171,7 @@ export class UserService {
     return;
   }
 
-//Alle Details zu AssemblyPoint holen
+// Alle Details zu AssemblyPoint holen
   public getDetailsToAP(AP: string, followingAP: string, caseSwitch: boolean, userTimestamp: any) {
     this.assemblyPointReference.forEach(ap => {
       if (ap.name == AP) {
@@ -181,8 +181,8 @@ export class UserService {
       }
     });
   }
-//Nächste Duration/Timestamp an RTDB übergeben
-  public updateNextApTimingToRTDB(userTimestamp: number, duration: number, nextAps: string, followingAps: string,) {
+// Nächste Duration/Timestamp an RTDB übergeben
+  public updateNextApTimingToRTDB(userTimestamp: number, duration: number, nextAps: string, followingAps: string, ) {
     this.createHashedUID().then(hash => {
       console.log(userTimestamp + '|' + duration + '|' + nextAps + '|' + followingAps + '|' + hash);
       this.assemblyPointReference.forEach(ap => {
@@ -193,7 +193,7 @@ export class UserService {
       });
     });
   }
-//Letzen/Alten Eintrag in RTDB löschen
+// Letzen/Alten Eintrag in RTDB löschen
   public deleteOldApTimingtoRTDB(nextAps: string, followingAps: string) {
     this.createHashedUID().then(hash => {
       this.assemblyPointReference.forEach(ap => {
@@ -207,7 +207,7 @@ export class UserService {
 
 
 
-//Hashed UID für RTDB erstellen
+// Hashed UID für RTDB erstellen
   public createHashedUID(): Promise<any> {
     return new Promise(resolve => {
       if (this.hashedUID != null) {
@@ -224,7 +224,7 @@ export class UserService {
     });
 
   }
-//Hash String-Helper Funktion
+// Hash String-Helper Funktion
   hashString(str: string): Promise<any> {
     return new Promise(resolve => {
       const returnHash = hash.sha256().update(str).digest('hex');

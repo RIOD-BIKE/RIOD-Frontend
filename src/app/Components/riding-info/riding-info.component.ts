@@ -8,6 +8,7 @@ import { RoutingUserService } from 'src/app/services/routing-user/routing-user.s
 import { ThrowStmt } from '@angular/compiler';
 import { first } from 'rxjs/operators';
 
+// Not used ??
 
 @Component({
   selector: 'app-riding-info',

@@ -24,12 +24,9 @@ export class RideIndicatorComponent implements OnInit {
       } else if (status === Status.ASSOCIATION) {
         this.statusColor = '#ff1ad9';
       }
-      //console.log("haha" + status);
       document.getElementById('overID').style.backgroundColor = this.statusColor;
     });
-    //console.log("hihhihi"+ this.statusColor);
-  
-    
+
     // uncomment for a little party
     // setInterval(() => {
     //   this.statusColor = `rgb(${ Math.floor((Math.random() * 255) + 1) }, ${ Math.floor((Math.random() * 255) + 1) }, ${ Math.floor((Math.random() * 255) + 1) })`;

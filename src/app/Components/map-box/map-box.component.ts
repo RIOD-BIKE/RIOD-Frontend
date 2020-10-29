@@ -8,9 +8,9 @@ import { UserService } from './../../services/user/user.service';
 import { RoutingUserService } from 'src/app/services/routing-user/routing-user.service';
 import * as turf from '@turf/turf';
 
-//Vorwort:
-//Das Map-Box Component ist für die Darstellung und Logik der interaktiven Karte dar
-//Es wird in die page:map-main als Component Selector includiert
+// Vorwort:
+// Das Map-Box Component ist für die Darstellung und Logik der interaktiven Karte dar
+// Es wird in die page:map-main als Component Selector includiert
 
 @Component({
   selector: 'map-box',
@@ -20,9 +20,9 @@ import * as turf from '@turf/turf';
 export class MapBoxComponent implements OnInit {
 
 
-  //Variable zur MapBox Map
+  // Variable zur MapBox Map
   private map: mapboxgl.Map;
-  //Variable zur temporären Positionsspeicherung -> Hinlänglich Startprozedur
+  // Variable zur temporären Positionsspeicherung -> Hinlänglich Startprozedur
   private myPosition: PositionI = new PositionI(0, 0);
 
   private clusterSource: any;
@@ -33,7 +33,7 @@ export class MapBoxComponent implements OnInit {
   private routingActive = false;
   private tempSaveingassemblyPointMarkers: any;
 
-  //Services zur Nutzer-Sensor / Routen / Karten-Daten/ Karten-Interaktion - Verwaltung
+  // Services zur Nutzer-Sensor / Routen / Karten-Daten/ Karten-Interaktion - Verwaltung
   constructor(private routingUserService: RoutingUserService, private userservice: UserService,
               private mapDataFetchService: MapDataFetchService, private mapIntegration: MapIntegrationService) {
   }
@@ -41,61 +41,61 @@ export class MapBoxComponent implements OnInit {
   ngOnInit() { }
 
 
-//Startfunktion
-//Nutzer-Sensor-Position nach Serviceaufruf weitergeben an temp-V. und Karten-Daten Service zur weiterleitung an Firestore
+// Startfunktion
+// Nutzer-Sensor-Position nach Serviceaufruf weitergeben an temp-V. und Karten-Daten Service zur weiterleitung an Firestore
   public async setupMap() {
       await this.userservice.getUserPosition().then(x => {
         this.myPosition = x;
         this.mapDataFetchService.sendUserPosition(x);
       });
-      //Initialisierung der Karte
-    this.inizializeMap();
-      //Kartengröße an Bildschrim anpassen
-    setTimeout(() => this.map.resize(), 0);
+      // Initialisierung der Karte
+      this.inizializeMap();
+      // Kartengröße an Bildschrim anpassen
+      setTimeout(() => this.map.resize(), 0);
 
   }
 
-  //Funktion zum holen der aktuellen Cluster und AssemblyPointdaten
+  // Funktion zum holen der aktuellen Cluster und AssemblyPointdaten
   private pointFetch(): Promise<any> {
     return new Promise<any>(resolve => {
-      //Verschachtelter Service-Aufruf und abfragen der aktuellen Cluster Daten von Firestore
+      // Verschachtelter Service-Aufruf und abfragen der aktuellen Cluster Daten von Firestore
       this.mapDataFetchService.retrieveClusters().subscribe((value) => {
         this.clusterMarkers = value;
         this.mapDataFetchService.clusterValueChange.subscribe(newClusterFetched => {
           this.clusterMarkers = newClusterFetched;
-          //Aufruf AktualisierungFunktion für Cluster
+          // Aufruf AktualisierungFunktion für Cluster
           this.updateCluster();
         });
       });
-      //Verschachtelter Service-Aufruf und abfragen der aktuellen AssemblyPoint Daten von Firestore
+      // Verschachtelter Service-Aufruf und abfragen der aktuellen AssemblyPoint Daten von Firestore
       this.mapDataFetchService.retrieveAssemblyPoints().subscribe((value) => {
         console.log('hey111');
         if (this.routingActive === false) {
           this.assemblyPointMarkers = value;
-          //Aufruf AktualisierungFunktion für AssemblyPoints
+          // Aufruf AktualisierungFunktion für AssemblyPoints
           this.updateAssemblyPoints();
         } else {
-          //Solange keine Route Aktiv auf der Karte ausgeführt wird, soll die Aktualiserung der AssemblyPoints nur temporär als Variable gespeichert werden
+          // Solange keine Route Aktiv auf der Karte ausgeführt wird, soll die Aktualiserung der AssemblyPoints nur temporär als Variable gespeichert werden
           this.tempSaveingassemblyPointMarkers = value;
         }
       });
       resolve();
     });
   }
-  //Initialisierung der Karte und Laden von allen Points
+  // Initialisierung der Karte und Laden von allen Points
   private async inizializeMap() {
     await this.buildMap().then(() => {
-      //Nach Erstellung der Karte & Initialisierung die aktuellen Punkte abfragen und eitnragen
+      // Nach Erstellung der Karte & Initialisierung die aktuellen Punkte abfragen und eitnragen
       this.pointFetch().then(() => {
         this.drawAssemblyPoints();
         this.drawClusters();
       });
-      //Nutzerposition eintragen
+      // Nutzerposition eintragen
       this.drawUserPoint();
     });
   }
 
-  //Karte als MapBox-Map-Object definieren und mit Style / Zoom Values versehen
+  // Karte als MapBox-Map-Object definieren und mit Style / Zoom Values versehen
   buildMap(): Promise<any> {
     return new Promise<any>(resolve => {
       this.map = new mapboxgl.Map({
@@ -111,7 +111,7 @@ export class MapBoxComponent implements OnInit {
     });
   }
 
-  //Die aktuelle Karte zum Nutzer-Center Fliegen lassen
+  // Die aktuelle Karte zum Nutzer-Center Fliegen lassen
   public moveMapToCurrent() {
     try {
       const x = this.userservice.behaviorMyOwnPosition.value.coords;
@@ -122,17 +122,17 @@ export class MapBoxComponent implements OnInit {
       console.log(e);
     }
   }
-  //Nutzerposition aktualisieren
+  // Nutzerposition aktualisieren
   async getUserPos() {
     this.myPosition = await this.userservice.getUserPosition();
   }
-  //Cluster auf der Karte darstellen
+  // Cluster auf der Karte darstellen
   drawClusters() {
-    //Sicherstellung, dass die Karte geladen/erstellt wurde
+    // Sicherstellung, dass die Karte geladen/erstellt wurde
     this.map.on('load', () => {
-      //Layer wurde zuvor nicht verwendet
+      // Layer wurde zuvor nicht verwendet
       if (this.map.getLayer('clusters') === undefined && this.map.getSource('clusters') === undefined) {
-        //dann hinzufügen von Source
+        // dann hinzufügen von Source
         this.map.addSource('clusters', {
           type: 'geojson',
           data: {
@@ -140,17 +140,17 @@ export class MapBoxComponent implements OnInit {
             features: []
           }
         });
-        //Source aus Map-Objekt laden, um Objekt als Source-Objekt temporär zu definieren und spätere Zuweisung zum Map-Objekt zuzulassen
+        // Source aus Map-Objekt laden, um Objekt als Source-Objekt temporär zu definieren und spätere Zuweisung zum Map-Objekt zuzulassen
         this.clusterSource = this.map.getSource('clusters');
         const data = new ClusterCollection(this.clusterMarkers);
         this.clusterSource.setData(data);
-        //Source-Objekt mit neuen ClusterMarkern versehen
+        // Source-Objekt mit neuen ClusterMarkern versehen
 
-        //bei geladenen Cluster-Image [Bilddatei muss dem Map-Objekt hinzugeladen werden] in Funktion übergehen
+        // bei geladenen Cluster-Image [Bilddatei muss dem Map-Objekt hinzugeladen werden] in Funktion übergehen
         if (this.map.hasImage('marker_GEM')) {
           this.mapDrawClusterHelper();
         } else {
-          //Sonst neues Bild definieren und dem Map-Objekt hinzugeben
+          // Sonst neues Bild definieren und dem Map-Objekt hinzugeben
             const img = new Image(78, 78);
 
             img.src = 'assets/icon/Verband_2.svg';
@@ -162,12 +162,12 @@ export class MapBoxComponent implements OnInit {
 
         }
       } else {
-        //Sonst UpadeCluster ausführen
+        // Sonst UpadeCluster ausführen
         this.updateCluster();
       }
     });
   }
-  //Allen Cluster-Objekten das Cluster-Bild und Positionsverschiebung übergeben
+  // Allen Cluster-Objekten das Cluster-Bild und Positionsverschiebung übergeben
   mapDrawClusterHelper(): Promise<any> {
     return new Promise<any>(resolve => {
       resolve(this.map.addLayer({
@@ -189,7 +189,7 @@ export class MapBoxComponent implements OnInit {
     });
   }
 
-  //Allen AssemblyPoint-Objekten das AssemblyPoint-Bild und Positionsverschiebung übergeben
+  // Allen AssemblyPoint-Objekten das AssemblyPoint-Bild und Positionsverschiebung übergeben
   mapDrawAssemblyPointsHelper(): Promise<any> {
     return new Promise<any>(resolve => {
       this.map.addLayer({
@@ -208,14 +208,14 @@ export class MapBoxComponent implements OnInit {
           'text-offset': [0, -0.8]
         },
       });
-      //AssemblyPoints vor Cluster darstellen
+      // AssemblyPoints vor Cluster darstellen
       resolve(this.map.moveLayer('assemblyPoints', 'clusters'));
     });
   }
 
 
-  //UpadeCluster Funktion
-  //Im Laufe des Programms [nicht zur Initialsierung] Aktualisierung der Cluster auf der Karte 
+  // UpadeCluster Funktion
+  // Im Laufe des Programms [nicht zur Initialsierung] Aktualisierung der Cluster auf der Karte
   updateCluster() {
     if (this.map.getSource('clusters') !== undefined) {
       this.clusterSource = this.map.getSource('clusters');
@@ -225,14 +225,14 @@ export class MapBoxComponent implements OnInit {
     }
   }
 
-  //AssemblyPoints Funktion
-  //Im Laufe des Programms [nicht zur Initialsierung] Zurücksetzen der AssemblyPoints auf der Karte [Auswahl von APs durch Nutzer]
+  // AssemblyPoints Funktion
+  // Im Laufe des Programms [nicht zur Initialsierung] Zurücksetzen der AssemblyPoints auf der Karte [Auswahl von APs durch Nutzer]
   updateAssemblyPoints() {
     if (this.map.getSource('assemblyPoints') !== undefined) {
       this.assemblyPointTempSource = this.map.getSource('assemblyPoints');
       const temp = this.assemblyPointMarkers;
       temp.forEach((element: { properties: { textField: string; iconName: string; }; }) => {
-        //Zurücksetzen aller Elemente von Text und Bild
+        // Zurücksetzen aller Elemente von Text und Bild
         element.properties.textField = '';
         element.properties.iconName = 'marker_DAP';
       });
@@ -244,11 +244,11 @@ export class MapBoxComponent implements OnInit {
   }
 
 
-  //AssemblyPoint Source erstellen und die Bilder für Aps hinzuladen
-  //AssemblyPoints-Draw Funktion aufruf, bei bestehen aller Anforderungen
+  // AssemblyPoint Source erstellen und die Bilder für Aps hinzuladen
+  // AssemblyPoints-Draw Funktion aufruf, bei bestehen aller Anforderungen
   drawAssemblyPoints() {
     this.map.on('load', () => {
-      //Wenn Source nicht vorhanden, soll erstellt werden
+      // Wenn Source nicht vorhanden, soll erstellt werden
       if (this.map.getSource('assemblyPoints') === undefined && this.map.getLayer('assemblyPoints') === undefined) {
         this.map.addSource('assemblyPoints', {
           type: 'geojson',
@@ -262,13 +262,13 @@ export class MapBoxComponent implements OnInit {
       const data2 = new AssemblyPointCollection(this.assemblyPointMarkers);
       this.assemblyPointSource.setData(data2);
 
-      //Alle Bilder vorhanden, soll mapDrawAssemblyPointsHelper() ausführen
+      // Alle Bilder vorhanden, soll mapDrawAssemblyPointsHelper() ausführen
       if (this.map.hasImage('marker_CAP') && this.map.hasImage('marker_DAP') && this.map.hasImage('marker_UNAP')) {
         if (this.map.getLayer('assemblyPoints') === undefined) {
           this.mapDrawAssemblyPointsHelper();
         }
       } else {
-        //Sonst alle Bilder hinzuladen
+        // Sonst alle Bilder hinzuladen
         const img2 = new Image(66.7, 79.38);
         img2.src = 'assets/icon/Sammelpunkt.svg';
         img2.onload = () => {
@@ -290,7 +290,7 @@ export class MapBoxComponent implements OnInit {
       }
     });
   }
-  //Nutzerpositions-Beacon drawn
+  // Nutzerpositions-Beacon drawn
   drawUserPoint() {
     const geolocate = new mapboxgl.GeolocateControl({
       positionOptions: { enableHighAccuracy: true },
@@ -304,14 +304,14 @@ export class MapBoxComponent implements OnInit {
     });
   }
 
-  //Nutzer-Auswahl von AssemblyPoints deaktivieren
+  // Nutzer-Auswahl von AssemblyPoints deaktivieren
   disableAssemblyClick(): Promise<any> {
     return new Promise<any>(resolve => {
       resolve(this.map.off('click', 'assemblyPoints', this.drawChooseAssemblyPoints));
     });
   }
 
-  //AssemblyPoints mit neuen Wertern erstzen und für Auswahl  bereit halten
+  // AssemblyPoints mit neuen Wertern erstzen und für Auswahl  bereit halten
   drawUpdateChooseAssemblyPoints() {
     if (this.map.getSource('assemblyPoints') !== undefined) {
       let data2;
@@ -321,16 +321,16 @@ export class MapBoxComponent implements OnInit {
     }
   }
 
-  //Nutzerauswahl von AssemblyPoints Funktion
-  //Abhängig ob Element geklickt, wird dessen Bild geändert und darauf folgende AssemblyPoints deren Auswahl ermöglicht
-  //Abhängig von der Anzahl der schon ausgewählten Folge an Aps wird die Text-Nummerierung verändert
+  // Nutzerauswahl von AssemblyPoints Funktion
+  // Abhängig ob Element geklickt, wird dessen Bild geändert und darauf folgende AssemblyPoints deren Auswahl ermöglicht
+  // Abhängig von der Anzahl der schon ausgewählten Folge an Aps wird die Text-Nummerierung verändert
   drawChooseAssemblyPoints = (e) => {
-    //Wenn Ap nicht auswählbar, dann nichts tun
+    // Wenn Ap nicht auswählbar, dann nichts tun
     if (e.features[0].properties.iconName === 'marker_UNAP') {
     } else {
-      //AP deselektieren
-      //Aktuellen AP Text löschen und Image zurücksetzen
-      //Umliegende Aps aktualisieren
+      // AP deselektieren
+      // Aktuellen AP Text löschen und Image zurücksetzen
+      // Umliegende Aps aktualisieren
       if (e.features[0].properties.iconName === 'marker_CAP') {
         const n = e.features[0].properties.textField;
         const l = e.features[0].properties.title;
@@ -373,7 +373,7 @@ export class MapBoxComponent implements OnInit {
           });
         });
       } else {
-        //Initialauswahl vom ersten AssemblyPoint
+        // Initialauswahl vom ersten AssemblyPoint
         e.features[0].properties.iconName = 'marker_CAP';
         const s = e.features[0].properties.latitude;
         const l = e.features[0].properties.longitude;
@@ -381,16 +381,16 @@ export class MapBoxComponent implements OnInit {
         const m = e.features[0].properties.iconName;
         const count = e.features[0].properties.available_count;
         const arr = [];
-        //Darauffolgende Mögliche AssemblyPoints in Array laden
-        //identifiziert durch available_1/2/3/4/...
-        //Sind die an Ap nächst möglich anzufahrenden -> Alle Möglichen Richtungen möglich folgender Ap
+        // Darauffolgende Mögliche AssemblyPoints in Array laden
+        // identifiziert durch available_1/2/3/4/...
+        // Sind die an Ap nächst möglich anzufahrenden -> Alle Möglichen Richtungen möglich folgender Ap
         for (let i = 0; i < count; i++) {
           arr.push(e.features[0].properties['available_' + (i + 1)]);
         }
         this.routingUserService.getPoints().then(x => {
-          //Die Mögliche Auswahl an Aps an Service geben
+          // Die Mögliche Auswahl an Aps an Service geben
           this.routingUserService.setPoints(new RoutingGeoAssemblyPoint(s, l, n, arr, (x.length + 1).toString(), m)).then(() => {
-            //Update Assemblypoints
+            // Update Assemblypoints
             this.drawChooseUpdateAssemblyPoints_Helper(arr, n);
           });
         });
@@ -398,8 +398,8 @@ export class MapBoxComponent implements OnInit {
     }
   }
 
-  //Auswahl Assemblypoints festlegen der Images und Texte, für Aktion des Ersten-Auswählen
-  //Aktuell geklickten als Geklickt markieren und umliegend nächste Folgemöglichkeiten als Möglich Selektierbar markieren, alle anderen als unmöglich selektierbar
+  // Auswahl Assemblypoints festlegen der Images und Texte, für Aktion des Ersten-Auswählen
+  // Aktuell geklickten als Geklickt markieren und umliegend nächste Folgemöglichkeiten als Möglich Selektierbar markieren, alle anderen als unmöglich selektierbar
   drawChooseUpdateAssemblyPoints_Helper(arr: Array<any>, n: string): Promise<any> {
     return new Promise<any>(resolve => {
       const temp2 = this.assemblyPointMarkers;
@@ -420,14 +420,14 @@ export class MapBoxComponent implements OnInit {
             }
           }
         }
-        //Update der Assemblypoints auf der Karte
+        // Update der Assemblypoints auf der Karte
         resolve(this.drawUpdateChooseAssemblyPoints());
       });
     });
   }
 
-  //Route auf Karte drawn
-  //Übergebener String wird hier endgültig zusammengestellt und an Hilfe Funktion übergeben
+  // Route auf Karte drawn
+  // Übergebener String wird hier endgültig zusammengestellt und an Hilfe Funktion übergeben
   async drawRoute(pointString): Promise<any> {
     return new Promise(resolve => {
       this.routingActive = true;
@@ -446,12 +446,12 @@ export class MapBoxComponent implements OnInit {
   }
 
 
-  //Route Helper - Xhttp Calls an MapBox - Problems inside Funktion global Method usage, so
-  //Methoden müssen tlw. als Verweis durch drawRoute() übergeben werden
-  //cFunktion = drawRouteFunctionMap()
-  //map = Kartenelement Map.MapBoxGL Map Objekt
-  //bbox = BoundaryBox Koordinaten Start & Finish
-  //url = MapBox url mit String der Koordinaten und optionen zur Linienführung
+  // Route Helper - Xhttp Calls an MapBox - Problems inside Funktion global Method usage, so
+  // Methoden müssen tlw. als Verweis durch drawRoute() übergeben werden
+  // cFunktion = drawRouteFunctionMap()
+  // map = Kartenelement Map.MapBoxGL Map Objekt
+  // bbox = BoundaryBox Koordinaten Start & Finish
+  // url = MapBox url mit String der Koordinaten und optionen zur Linienführung
 
 
   drawRouteHelpMethod(url, cFunction, map, bbox): Promise<any> {
@@ -460,19 +460,19 @@ export class MapBoxComponent implements OnInit {
       // XMLHttpRequest is a bitch
       const xhttp = new XMLHttpRequest();
       xhttp.responseType = 'json';
-      //Anfrage an MapBox zu Routenanfrage
+      // Anfrage an MapBox zu Routenanfrage
       xhttp.open('GET', url, true);
       xhttp.onreadystatechange = () => {
         xhttp.onload = () => {
-          //Resultat onload
+          // Resultat onload
           const jsonResponse = xhttp.response;
           this.routingUserService.setPointsDetailed(jsonResponse.routes[0].legs).then(() => {
-            //Distanz und Zeit, Koordinaten der Punkte abfangen berechnen
+            // Distanz und Zeit, Koordinaten der Punkte abfangen berechnen
             const distance = jsonResponse.routes[0].distance * 0.001;
             const duration = jsonResponse.routes[0].duration / 60;
             const coords = jsonResponse.routes[0].geometry;
             const routeCoords = { coordinates: [], type: 'LineString' };
-            //Jedee Koordinate in routeCoords hinzufügen [FeinLinienführung -> Mehr Katen des Vectors = Feinere Linie]
+            // Jedee Koordinate in routeCoords hinzufügen [FeinLinienführung -> Mehr Katen des Vectors = Feinere Linie]
             jsonResponse.routes[0].legs.forEach(element => {
               element.steps.forEach(step => {
                 step.geometry.coordinates.forEach(coordinate => {
@@ -480,14 +480,14 @@ export class MapBoxComponent implements OnInit {
                 });
               });
             });
-            //onload beendet und if states = true
+            // onload beendet und if states = true
             if ((xhttp.readyState === 4) && (xhttp.status === 200)) {
-              //In Service Zeit und Distanz eintragen
+              // In Service Zeit und Distanz eintragen
               this.routingUserService.setDuration(duration);
               this.routingUserService.setDistance(distance);
-              //drawRouteFunctionMap() ausführen
+              // drawRouteFunctionMap() ausführen
               cFunction(routeCoords, map);
-              //Jeden Punkt hinzuladen
+              // Jeden Punkt hinzuladen
               this.routingUserService.getPoints().then(points => {
                 const arr = [];
                 points.forEach(p => {
@@ -497,10 +497,10 @@ export class MapBoxComponent implements OnInit {
                 arr.push(bbox[1]);
                 const line = turf.lineString(arr);
                 const bboxTurf = turf.bbox(line);
-                // Sicht des Nutzers an Start & Endpunkt herauszoomen/hereinzoomen 
+                // Sicht des Nutzers an Start & Endpunkt herauszoomen/hereinzoomen
                 // map.fitBounds(bboxTurf, { padding: { top: 200, bottom: 130, left: 40, right: 40 } });  //Probleme bei Abfragen und Prozess-Warten, führt zu späteren inkonsitenten Auslösen
-                //FinishMarker setzen
-                this.drawThisFinishMarker(map, arr);  
+                // FinishMarker setzen
+                this.drawThisFinishMarker(map, arr);
                 resolve();
               });
             }
@@ -510,16 +510,16 @@ export class MapBoxComponent implements OnInit {
       xhttp.send();
     });
   }
-  //Routen-Linie auf Karte mit Farbe und Layout darstellen und 
+  // Routen-Linie auf Karte mit Farbe und Layout darstellen und
   drawRouteFunctionMap(coords, map) {
-    //Wenn Map-Layer vorhanden, soll gelöscht werden
+    // Wenn Map-Layer vorhanden, soll gelöscht werden
     if (map.getLayer('route') !== undefined) {
       map.removeLayer('route');
       map.removeSource('routeSource');
     }
-    //Map-Source  get Koordinaten
+    // Map-Source  get Koordinaten
     map.addSource('routeSource', { type: 'geojson', data: { type: 'Feature', properties: {}, geometry: coords } });
-    //Map-Layer mit Routen-Koordinaten hinzufügen
+    // Map-Layer mit Routen-Koordinaten hinzufügen
     map.addLayer({
       id: 'route',
       type: 'line',
@@ -534,11 +534,11 @@ export class MapBoxComponent implements OnInit {
         'line-opacity': 0.8
       }
     });
-    //AssemblyPoints und route Bewegen
+    // AssemblyPoints und route Bewegen
     map.moveLayer('route', 'assemblyPoints');
   }
 
-  //Ziel-Marker hinzufügen
+  // Ziel-Marker hinzufügen
   drawFinishMarker(): Promise<boolean> {
     return new Promise(resolve => {
       this.drawExistingAssemblyPointRoute().then(x => {
@@ -606,7 +606,7 @@ export class MapBoxComponent implements OnInit {
     });
   }
 
-  //FinishMarker der Karte hinzufügen
+  // FinishMarker der Karte hinzufügen
   drawThisFinishMarker(map, pointArray?) {
     this.routingUserService.getPoints().then(points => {
       this.routingUserService.getfinishPoint().then(finishPoint => {
@@ -676,8 +676,8 @@ export class MapBoxComponent implements OnInit {
     });
 
   }
-  //Finish-Marker - HelperFunktion
-  //Fügt der Karte das Objekt/Layer des FinishMarkers mit Image hinzu
+  // Finish-Marker - HelperFunktion
+  // Fügt der Karte das Objekt/Layer des FinishMarkers mit Image hinzu
   mapDrawFinishMarkerHelper(): Promise<any> {
     return new Promise(resolve => {
       if (this.map.getLayer('finishMarker') !== undefined) {
@@ -711,7 +711,7 @@ export class MapBoxComponent implements OnInit {
     });
   }
 
-  //Route von Karte löschen
+  // Route von Karte löschen
   removeRoute(): Promise<any> {
     return new Promise(resolve => {
       this.routingActive = false;
@@ -729,7 +729,7 @@ export class MapBoxComponent implements OnInit {
     });
   }
 
-  //Alle AssemblyPoints von Karte löschen bzw. durch Aktualisierung der Aps ersetzen
+  // Alle AssemblyPoints von Karte löschen bzw. durch Aktualisierung der Aps ersetzen
   removeAllPoints(): Promise<any> {
     return new Promise(resolve => {
       if (this.tempSaveingassemblyPointMarkers != undefined) {
@@ -755,7 +755,7 @@ export class MapBoxComponent implements OnInit {
     });
   }
 
-  //Disable Auswahl von AssemblyPoints -> Zurücksetzen der temp. AssemblyPoint Markers
+  // Disable Auswahl von AssemblyPoints -> Zurücksetzen der temp. AssemblyPoint Markers
   disableFutureChooseAssemblyPoints(): Promise<any> {
     return new Promise(resolve => {
       const temp = this.assemblyPointMarkers;
@@ -772,7 +772,7 @@ export class MapBoxComponent implements OnInit {
 
     });
   }
-  //Aktivieren der Auswahlmöglichkeit von AssemblyPoints
+  // Aktivieren der Auswahlmöglichkeit von AssemblyPoints
   enableFutureChooseAssemblyPoints(): Promise<any> {
     return new Promise(resolve => {
       const temp = this.assemblyPointMarkers;
