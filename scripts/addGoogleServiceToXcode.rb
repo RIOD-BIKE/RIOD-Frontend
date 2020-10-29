@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# Automatically add GoogleService-Info.plist to Xcode project
+
 require 'xcodeproj'
 file_name = 'GoogleService-Info.plist'
 project_path = 'platforms/ios/RIOD.xcodeproj'

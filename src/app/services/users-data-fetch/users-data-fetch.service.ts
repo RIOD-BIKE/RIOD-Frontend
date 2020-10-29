@@ -159,6 +159,7 @@ export class UsersDataFetchService {
     }
   }
 
+  // retriebe content from URL and convert it to base64
   private async urlToBase64Blob(url: string) {
     const blob = await (await fetch(url)).blob();
     const reader = new FileReader();
@@ -171,6 +172,8 @@ export class UsersDataFetchService {
     });
   }
 
+  // check, if special avatar has changed by comparing its filehashes,
+  // donwload the new one and save it and its new filehash to storage
   private async refreshCurrentSpecialAvatar() {
     try {
       var metadata = await firebase.storage().ref('special-avatar.png').getMetadata();
@@ -193,6 +196,7 @@ export class UsersDataFetchService {
     }
   }
 
+  // if there´s a special avatar available, use it, otherwise use the default one
   async storage_getSpecialAvatar() {
     return await this.storage.get('special_avatar') ?? '../../../assets/settings/profile-pic.jpg';
   }

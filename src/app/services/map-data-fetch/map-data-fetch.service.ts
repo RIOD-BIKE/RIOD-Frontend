@@ -47,9 +47,10 @@ export class MapDataFetchService {
   }
 
   async initFirestoreObservables() {
+    // only subscribe to Firestore once to lower amount of reads
     this.userFirestore = this.db.collection('users').doc(await this.auth.getCurrentUID()).valueChanges();
-
-    // Init activeCluster Observable
+    
+    // detect current cluster state
     this.userFirestore.subscribe(async data => {
       if (!data || this.activeClusterRef?.path === data.activeCluster?.path) { return; }
       if (data.activeCluster === null) {
@@ -60,6 +61,7 @@ export class MapDataFetchService {
         this.lastClusterStatus = Status.ALONE;
         return;
       }
+      // subscribe to currently active cluster
       this.activeClusterRef = data.activeCluster;
       this.activeClusterSubscription = this.db.doc(data.activeCluster).valueChanges().subscribe(clusterData => {
         // this.activeCluster.next(clusterData);
@@ -72,6 +74,7 @@ export class MapDataFetchService {
         }
         if (status === this.lastClusterStatus) { return; }
         this.lastClusterStatus = status;
+        // yield current cluster status
         this.activeClusterStatus.next(status);
       });
     });
@@ -119,6 +122,7 @@ export class MapDataFetchService {
       if (!data) {
         return null;
       }
+      // prevent yielding of new APs/Clusters w/o any change
       const equals = data['assemblyPoints'].length === this.lastAPs.length
         && data['assemblyPoints'].every((AP, index) => this.lastAPs[index] === this.db.doc(AP).ref.path);
       if (equals) return;

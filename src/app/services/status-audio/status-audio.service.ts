@@ -22,6 +22,7 @@ export class StatusAudioService {
   private async init() {
     if (this.platform.is('cordova')) {
       await Promise.all([
+        // use preloadComplext to specify volume level
         this.nativeAudio.preloadComplex(Status.ALONE, `${this.path}${Status.ALONE}.mp3`, 1, 1, 0),
         this.nativeAudio.preloadComplex(Status.GROUP, `${this.path}${Status.GROUP}.mp3`, 1, 1, 0),
         this.nativeAudio.preloadComplex(Status.ASSOCIATION, `${this.path}${Status.ASSOCIATION}.mp3`, 1, 1, 0)
